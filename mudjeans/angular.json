@@ -124,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "mudjeans"
+    }
+  },
+  "defaultProject": "mudjeans",
+  "cli": {
+    "analytics": "a99a585e-127b-4c00-bd72-7f7bc396fe9b"
+  }
 }
