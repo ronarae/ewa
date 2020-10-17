@@ -25,12 +25,12 @@
             ],
             "styles": [
               "src/styles.css",
-              "../mudjeans/node_modules/bootstrap/dist/css/bootstrap.css"
+              "../mudjeans/node_modules/bootstrap/dist/css/bootstrap.css",
             ],
             "scripts": [
               "../mudjeans/node_modules/jquery/dist/jquery.js",
               "../mudjeans/node_modules/bootstrap/dist/js/bootstrap.js",
-              "../mudjeans/node_modules/@popperjs/core/dist/cjs/popper.js"
+              "../mudjeans/node_modules/@popperjs/core/dist/cjs/popper.js",
             ]
           },
           "configurations": {
