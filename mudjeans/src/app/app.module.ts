@@ -12,6 +12,7 @@ import { WrapperComponent } from './components/mainpage/wrapper/wrapper.componen
 import {RouterModule, Routes} from "@angular/router";
 import { ManagejeansoverviewComponent } from './components/managejeans/managejeansoverview.component';
 import {FormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
 
 const appRoutes: Routes = [
   {path: '',   redirectTo: '/home', pathMatch: 'full'},
@@ -35,7 +36,8 @@ const appRoutes: Routes = [
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(appRoutes),
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

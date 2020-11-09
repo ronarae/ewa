@@ -1,6 +1,14 @@
 <div class="container-fluid">
   <div class="row">
-      <p><b>Manage jeans</b></p>
+      <h3><b>Manage jeans</b></h3>
+    <div class="input-group">
+      <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-dark" type="button">
+          <i class="fas fa-search fa-sm"></i>
+        </button>
+      </div>
+    </div>
       <table class="table table-hover">
         <thead>
         <tr>
@@ -11,30 +19,49 @@
         </tr>
         </thead>
         <tbody>
-        <tr data-toggle="modal" data-target="#exampleModal">
+        <tr data-toggle="modal" data-target="#exampleModal1">
           <th scope="row">1</th>
           <td>MB0001C001D001-28-32</td>
           <td>Regular Bryce - Strong Blue</td>
           <td>W28 L32</td>
         </tr>
-        <tr data-toggle="modal" data-target="#exampleModal">
+        <tr data-toggle="modal" data-target="#exampleModal2">
           <th scope="row">2</th>
           <td>MB0001C001D001-29-32</td>
           <td>Regular Bryce - Authentic Indigo</td>
           <td>W29 L32</td>
         </tr>
-        <tr data-toggle="modal" data-target="#exampleModal">
+        <tr data-toggle="modal" data-target="#exampleModal3">
           <th scope="row">3</th>
+          <td>MB0001C001D001-32-36</td>
+          <td>Regular Bryce - Authentic Indigo</td>
+          <td>W32 L36</td>
+        </tr>
+        <tr data-toggle="modal" data-target="#exampleModal4">
+          <th scope="row">4</th>
+          <td>MB0001C001D001-36-38</td>
+          <td>Regular Bryce - Authentic Indigo</td>
+          <td>W36 L38</td>
+        </tr>
+        <tr data-toggle="modal" data-target="#exampleModal5">
+          <th scope="row">5</th>
           <td>MB0001C001D001-32-36</td>
           <td>Regular Bryce - Heavy Stone</td>
           <td>W32 L36</td>
         </tr>
+        <tr data-toggle="modal" data-target="#exampleModal6">
+          <th scope="row">6</th>
+          <td>MB0001C001D001-36-38</td>
+          <td>Regular Bryce - Heavy Stone</td>
+          <td>W36 L38</td>
+        </tr>
+        <button class="btn btn-event" (click)="addJean()">Add jean</button>
         </tbody>
       </table>
     </div>
   </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div *ngFor="let index of [1,2,3,4,5,6]" class="modal fade" id="{{'exampleModal'+index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

@@ -1,14 +1,11 @@
 export class jean {
-productCode: String;
-description: String;
-Size: String;
+  productCode: String;
+  description: String;
+  size: String;
 
-
-  constructor(productCode: String, description: String, Size: String) {
+  constructor(productCode, description, size) {
     this.productCode = productCode;
     this.description = description;
-    this.Size = Size;
+    this.size = size;
   }
-
-
 }
