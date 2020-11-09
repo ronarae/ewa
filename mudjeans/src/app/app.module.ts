@@ -10,11 +10,14 @@ import { FooterComponent } from './components/mainpage/footer/footer.component';
 import { LoginComponent } from './components/mainpage/login/login.component';
 import { WrapperComponent } from './components/mainpage/wrapper/wrapper.component';
 import {RouterModule, Routes} from "@angular/router";
+import { ManagejeansoverviewComponent } from './components/managejeans/managejeansoverview.component';
+import {FormsModule} from "@angular/forms";
 
 const appRoutes: Routes = [
   {path: '',   redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: WrapperComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'managejeans', component: ManagejeansoverviewComponent},
 ]
 
 @NgModule({
@@ -25,12 +28,14 @@ const appRoutes: Routes = [
     HomeComponent,
     FooterComponent,
     LoginComponent,
-    WrapperComponent
+    WrapperComponent,
+    ManagejeansoverviewComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
