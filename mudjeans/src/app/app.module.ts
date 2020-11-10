@@ -14,6 +14,9 @@ import { ManagejeansoverviewComponent } from './components/managejeans/managejea
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import { OrderhistoryComponent } from './components/orderhistory/orderhistory.component';
+import { CreateorderComponent } from './components/orders/createorder/createorder.component';
+import { CustomizeOrderComponent } from './components/orders/customize-order/customize-order.component';
+import { PendingOrderComponent } from './components/orders/pending-order/pending-order.component';
 
 const appRoutes: Routes = [
   {path: '',   redirectTo: '/home', pathMatch: 'full'},
@@ -21,7 +24,10 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'managejeans', component: ManagejeansoverviewComponent},
   {path: 'orderhistory', component: OrderhistoryComponent},
-]
+  {path: 'createorder', component: CreateorderComponent},
+  {path: 'customizeorder', component: CustomizeOrderComponent},
+  {path: 'pendingorder', component: PendingOrderComponent}
+];
 
 @NgModule({
   declarations: [
@@ -34,6 +40,9 @@ const appRoutes: Routes = [
     WrapperComponent,
     ManagejeansoverviewComponent,
     OrderhistoryComponent,
+    CreateorderComponent,
+    CustomizeOrderComponent,
+    PendingOrderComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +51,9 @@ const appRoutes: Routes = [
     FormsModule,
     CommonModule
   ],
+
+  exports:[RouterModule],
+
   providers: [],
   bootstrap: [AppComponent]
 })

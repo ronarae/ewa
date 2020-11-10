@@ -20,7 +20,6 @@
     "@angular/platform-browser-dynamic": "~10.1.4",
     "@angular/router": "~10.1.4",
     "@popperjs/core": "^2.5.4",
-    "angular-font-awesome": "file:node_modules/angular-font-awesome",
     "bootstrap": "^4.5.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",

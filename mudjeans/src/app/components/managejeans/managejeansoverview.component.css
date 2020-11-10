@@ -7,4 +7,29 @@
   font-weight: bolder;
 }
 
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.mudjeansimg {
+  display: flex;
+  justify-content: center;
+  width: 33.33%;
+  padding: 5px;
+
+}
+
+.mudjeansimg:before{
+  display:block;
+  content:'';
+  position: fixed;
+  width:100%;
+  height:100%;
+  opacity: 0.8;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
 
