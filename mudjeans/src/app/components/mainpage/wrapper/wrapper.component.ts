@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
+// @ts-ignore
 @Component({
   selector: 'app-wrapper',
   templateUrl: './wrapper.component.html',
@@ -7,10 +8,8 @@ import {Component, OnInit} from '@angular/core';
 })
 export class WrapperComponent implements OnInit {
   constructor() {
-
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }

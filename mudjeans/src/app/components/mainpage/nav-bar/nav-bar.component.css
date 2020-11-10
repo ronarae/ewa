@@ -10139,6 +10139,7 @@ a:focus {
 .topbar .nav-item .nav-link .img-profile {
   height: 2rem;
   width: 2rem;
+  height: 100%
 }
 
 .topbar {
@@ -11220,4 +11221,8 @@ footer.sticky-footer .copyright {
 
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
+}
+
+#accordionSidebar {
+  height: 100%;
 }
