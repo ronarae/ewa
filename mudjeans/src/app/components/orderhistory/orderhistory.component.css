@@ -2,3 +2,14 @@
   margin: 10px;
   padding: 20px;
 }
+.fa-clock {
+  color: rgb(255, 204, 0);
+}
+
+.fa-check {
+  color: green;
+}
+
+.fa-times {
+  color: red;
+}
