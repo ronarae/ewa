@@ -13,12 +13,14 @@ import {RouterModule, Routes} from "@angular/router";
 import { ManagejeansoverviewComponent } from './components/managejeans/managejeansoverview.component';
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
+import { OrderhistoryComponent } from './components/orderhistory/orderhistory.component';
 
 const appRoutes: Routes = [
   {path: '',   redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: WrapperComponent},
   {path: 'login', component: LoginComponent},
   {path: 'managejeans', component: ManagejeansoverviewComponent},
+  {path: 'orderhistory', component: OrderhistoryComponent},
 ]
 
 @NgModule({
@@ -31,6 +33,7 @@ const appRoutes: Routes = [
     LoginComponent,
     WrapperComponent,
     ManagejeansoverviewComponent,
+    OrderhistoryComponent,
   ],
   imports: [
     BrowserModule,
