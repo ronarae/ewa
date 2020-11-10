@@ -42,6 +42,9 @@ const appRoutes: Routes = [
     FormsModule,
     CommonModule
   ],
+
+  exports:[RouterModule],
+
   providers: [],
   bootstrap: [AppComponent]
 })
