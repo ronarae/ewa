@@ -11226,3 +11226,18 @@ body.sidebar-toggled footer.sticky-footer {
 #accordionSidebar {
   height: 100%;
 }
+
+
+/**
+design
+ */
+
+.logo-title {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  padding: 5px
+}
+.sidebar-brand-text>img{
+  margin-top: 50px;
+}
