@@ -27,12 +27,10 @@ public class JeansController {
     @GetMapping("/jeans/{productCode}")
     public Jeans getJeansByCode(@PathVariable String productCode) {
         Jeans j = repository.find(productCode);
-
         if (j == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Jeans with productCode " + productCode + " could not be found.");
         }
-
         return j;
     }
 
