@@ -1,72 +1,79 @@
 <div class="container">
-<!-- Content Row -->
+  <!-- Content Row -->
   <h2 class="text-center">Create Order</h2>
   <hr>
   <div class="row">
-  <div class="col">
-    <!-- Content Column -->
-    <div class="col-lg mb-4">
-      <form>
-        <div class="form-group">
-          <label for="exampleFormControlInput1">Jean model</label>
-          <select class="form-control" id="exampleFormControlInput1">
-            <option>Slim lassen - Strong Blue</option>
-            <option>Slim Lassen - Pure Blue</option>
-            <option>Slim Lassen - Dip Dry</option>
-            <option>Slim Lassen - O3 grey</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="check1">Example multiple select</label>
-          <br>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="check1"
-                       value="option1">
-                <label class="form-check-label" for="inlineCheckbox1">W28 L32</label>
+    <div class="col">
+      <!-- Content Column -->
+      <div class="col-lg mb-4">
+        <form>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Jean model</label>
+            <select class="form-control" id="exampleFormControlInput1">
+              <option>Slim lassen - Strong Blue</option>
+              <option>Slim Lassen - Pure Blue</option>
+              <option>Slim Lassen - Dip Dry</option>
+              <option>Slim Lassen - O3 grey</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="check1">Example multiple select</label>
+            <br>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="check1"
+                         value="option1">
+                  <label class="form-check-label" for="inlineCheckbox1">W28 L32</label>
+                </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <label for="check2">Amount:</label>
-              <input type="number" id="check2"
-                     placeholder="0">
-            </div>
-            <div class="col-md-4">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="check3"
-                       value="option1">
-                <label class="form-check-label" for="check3">W28 L32</label>
+              <div class="col-md-6">
+                <label for="check2">Amount:</label>
+                <input type="number" id="check2"
+                       placeholder="0">
               </div>
-            </div>
-            <div class="col-md-6">
-              <label for="check4">Amount:</label>
-              <input type="number" id="check4"
-                     placeholder="0">
-            </div>
-            <div class="col-md-4">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                       value="option1">
-                <label class="form-check-label" for="inlineCheckbox1">W28 L32</label>
+              <div class="col-md-4">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="check3"
+                         value="option1">
+                  <label class="form-check-label" for="check3">W28 L32</label>
+                </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <label for="exampleInputPassword1">Amount:</label>
-              <input type="number" id="exampleInputPassword1"
-                     placeholder="0">
+              <div class="col-md-6">
+                <label for="check4">Amount:</label>
+                <input type="number" id="check4"
+                       placeholder="0">
+              </div>
+              <div class="col-md-4">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                         value="option1">
+                  <label class="form-check-label" for="inlineCheckbox1">W28 L32</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="exampleInputPassword1">Amount:</label>
+                <input type="number" id="exampleInputPassword1"
+                       placeholder="0">
+              </div>
             </div>
           </div>
-        </div>
-        <br>
-        <div class="form-group">
-          <label for="exampleFormControlTextarea1">Additional information</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
-        </div>
-        <button class="btn btn-primary" id="placeOrderBtn" onclick="placeOrder()">Place order
-        </button>
-      </form>
+          <br>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Additional information</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+          </div>
+          <div class="row">
+            <div class="col-2">
+              <button class="btn btn-info" id="addJean">Add Jean</button>
+            </div>
+            <div class="col-2">
+              <button class="btn btn-primary" id="placeOrderBtn">Place order</button>
+            </div>
+
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
 </div>
