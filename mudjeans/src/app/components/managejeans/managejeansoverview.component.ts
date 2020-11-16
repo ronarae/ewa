@@ -21,8 +21,8 @@ export class ManagejeansoverviewComponent implements OnInit {
 
   }
 
-
   addJean() {
 
   }
+
 }
