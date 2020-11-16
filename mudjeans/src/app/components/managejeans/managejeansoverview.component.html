@@ -55,9 +55,44 @@
       <td>Regular Bryce - Heavy Stone</td>
       <td>W36 L38</td>
     </tr>
-    <button class="btn btn-event" (click)="addJean()">Add jean</button>
+    <button class="btn btn-event" data-toggle="modal" data-target="#myModal"(click)="addJean()">Add jean</button>
     </tbody>
   </table>
+
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addJean">Add jean</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product code</th>
+            <th scope="col">Description</th>
+            <th scope="col">Size</th>
+          </tr>
+          </thead>
+          <tr>
+            <th scope="row">id number here</th>
+            <td>Production code here</td>
+            <td>Description here</td>
+            <td>Size here</td>
+          </tr>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-danger">Delete changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-sm-4">
       <img class="img" src="assets/images/mudjeans.jpg" alt="Jeans" >
