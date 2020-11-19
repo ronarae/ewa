@@ -44,9 +44,9 @@ public class JeansMockRepository implements RepositoryInterface<Jeans, String> {
 
     @Override
     public Jeans find(String productCode) {
-        for(Jeans jeansInList : jeans) {
-            if (productCode.equals(jeansInList.getProductCode())) {
-                return jeansInList;
+        for(Jeans j : jeans) {
+            if (productCode.equals(j.getProductCode())) {
+                return j;
             }
         }
         return null;
