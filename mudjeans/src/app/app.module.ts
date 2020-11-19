@@ -44,7 +44,7 @@ const appRoutes: Routes = [
     CommonModule
   ],
 
-  exports:[RouterModule],
+  exports: [RouterModule],
 
   providers: [],
   bootstrap: [AppComponent]
