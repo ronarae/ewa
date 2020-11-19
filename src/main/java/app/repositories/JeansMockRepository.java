@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class JeansMockRepository implements JeansRepository {
+public class JeansMockRepository implements RepositoryInterface<Jeans, String> {
     List<Jeans> jeans;
 
     public JeansMockRepository() {
