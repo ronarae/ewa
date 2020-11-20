@@ -9,6 +9,7 @@ deploy_be:
     changes:
       - "mudjeansserver/**/*"
   script:
+    - git branch -D splitting-staging-be12 || true
     - git remote rm heroku-be-app || true
     - git remote add heroku-be-app https://heroku:2cacea79-b69f-40ba-b12d-f851f0ad0094@git.heroku.com/ewa-be-app-staging.git || true
     - git subtree split --prefix mudjeansserver -b splitting-staging-be12
@@ -23,6 +24,7 @@ deploy_fe:
     changes:
       - "mudjeans/**/*"
   script:
+    - git branch -D splitting-staging-fe12 || true
     - git remote rm heroku-fe-app || true
     - git remote add heroku-fe-app https://heroku:2cacea79-b69f-40ba-b12d-f851f0ad0094@git.heroku.com/ewa-fe-app-staging.git || true
     - git subtree split --prefix mudjeans -b splitting-staging-fe12
