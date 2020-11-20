@@ -1,5 +1,5 @@
 export const environment = {
-  apiUrl: 'https://acme.app.com',
+  apiUrl: 'https://ewa-be-app-staging.herokuapp.com/jeans',
   environmentName: 'production',
   production: true
 };
