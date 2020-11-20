@@ -5,7 +5,7 @@ deploy_be:
   stage: deploy
   only:
     refs:
-      - master
+      - staging
     changes:
       - "mudjeansserver/**/*"
   script:
@@ -19,7 +19,7 @@ deploy_fe:
   stage: deploy
   only:
     refs:
-      - master
+      - staging
     changes:
       - "mudjeans/**/*"
   script:
