@@ -5,26 +5,26 @@ deploy_be:
   stage: deploy
   only:
     refs:
-      - master
+      - staging
     changes:
       - "mudjeansserver/**/*"
   script:
     - git remote rm ewa-be-app-staging || true
     - git remote add ewa-be-app-staging https://heroku:$HEROKU_API_KEY@git.heroku.com/ewa-be-app-staging.git || true
-    - git subtree split --prefix mudjeansserver -b splitting-staging-be
-    - git push --force heroku-be-app splitting-staging-be:master
-    - git branch -D splitting-staging-be
+    - git subtree split --prefix mudjeansserver -b splitting-staging-be2
+    - git push --force heroku-be-app splitting-staging-be2:master
+    - git branch -D splitting-staging-be2
 
 deploy_fe:
   stage: deploy
   only:
     refs:
-      - master
+      - staging
     changes:
       - "mudjeans/**/*"
   script:
     - git remote rm ewa-fe-app-staging || true
     - git remote add ewa-fe-app-staging https://heroku:$HEROKU_API_KEY@git.heroku.com/ewa-fe-app-staging.git || true
-    - git subtree split --prefix mudjeans -b splitting-staging-fe
-    - git push --force heroku-fe-app splitting-staging-fe:master
-    - git branch -D splitting-staging-fe
+    - git subtree split --prefix mudjeans -b splitting-staging-fe2
+    - git push --force heroku-fe-app splitting-staging-fe2:master
+    - git branch -D splitting-staging-fe2
