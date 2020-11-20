@@ -5,12 +5,12 @@
     "node": "12.16.1"
   },
   "scripts": {
-    "ng": "mudjeans/node_modules/.bin/ng",
+    "ng": "mudjeans-1/mudjeans/node_modules/.bin/ng",
     "start": "node server.js",
-    "build": "mudjeans/node_modules/.bin/ng build --configuration $ENVIRONMENT",
-    "test": "mudjeans/node_modules/.bin/ng test",
-    "lint": "mudjeans/node_modules/.bin/ng lint",
-    "e2e": "mudjeans/node_modules/.bin/ng e2e"
+    "build": "mudjeans-1/mudjeans/node_modules/.bin/ng build --configuration $ENVIRONMENT",
+    "test": "mudjeans-1/mudjeans/node_modules/.bin/ng test",
+    "lint": "mudjeans-1/mudjeans/node_modules/.bin/ng lint",
+    "e2e": "mudjeans-1/mudjeans/node_modules/.bin/ng e2e"
   },
   "private": true,
   "dependencies": {
