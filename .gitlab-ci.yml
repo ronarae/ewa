@@ -7,13 +7,13 @@ deploy_be:
     refs:
       - master
     changes:
-      - "be-app/**/*"
+      - "mudjeansserver/**/*"
   script:
-    - git remote rm heroku-be-app || true
-    - git remote add heroku-be-app https://heroku:$HEROKU_API_KEY@git.heroku.com/hbo-ict-be-app-staging0.git || true
-    - git subtree split --prefix be-app -b splitting-be
-    - git push --force heroku-be-app splitting-be2:master
-    - git branch -D splitting-be2
+    - git remote rm ewa-be-app-staging || true
+    - git remote add ewa-be-app-staging https://heroku:$HEROKU_API_KEY@git.heroku.com/ewa-be-app-staging.git || true
+    - git subtree split --prefix mudjeansserver -b splitting-staging-be
+    - git push --force heroku-be-app splitting-staging-be:master
+    - git branch -D splitting-staging-be
 
 deploy_fe:
   stage: deploy
@@ -21,10 +21,10 @@ deploy_fe:
     refs:
       - master
     changes:
-      - "fe-app/**/*"
+      - "mudjeans/**/*"
   script:
-    - git remote rm heroku-fe-app || true
-    - git remote add heroku-fe-app https://heroku:$HEROKU_API_KEY@git.heroku.com/hbo-ict-fe-app-staging0.git || true
-    - git subtree split --prefix fe-app -b splitting-fe
-    - git push --force heroku-fe-app splitting-fe2:master
-    - git branch -D splitting-fe2
+    - git remote rm ewa-fe-app-staging || true
+    - git remote add ewa-fe-app-staging https://heroku:$HEROKU_API_KEY@git.heroku.com/ewa-fe-app-staging.git || true
+    - git subtree split --prefix mudjeans -b splitting-staging-fe
+    - git push --force heroku-fe-app splitting-staging-fe:master
+    - git branch -D splitting-staging-fe
