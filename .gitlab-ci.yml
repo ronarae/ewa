@@ -11,7 +11,7 @@ deploy_be:
   script:
     - git remote rm heroku-be-app || true
     - git remote add heroku-be-app https://heroku:$HEROKU_API_KEY@git.heroku.com/hbo-ict-be-app-staging0.git || true
-    - git subtree split --prefix be-app -b splitting-be2
+    - git subtree split --prefix be-app -b splitting-be
     - git push --force heroku-be-app splitting-be2:master
     - git branch -D splitting-be2
 
@@ -25,6 +25,6 @@ deploy_fe:
   script:
     - git remote rm heroku-fe-app || true
     - git remote add heroku-fe-app https://heroku:$HEROKU_API_KEY@git.heroku.com/hbo-ict-fe-app-staging0.git || true
-    - git subtree split --prefix fe-app -b splitting-fe2
+    - git subtree split --prefix fe-app -b splitting-fe
     - git push --force heroku-fe-app splitting-fe2:master
     - git branch -D splitting-fe2
