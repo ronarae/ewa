@@ -1,5 +1,5 @@
 export const environment = {
-  apiUrl: 'https://localhost:8080/rest/',
+  apiUrl: 'https://ewa-be-app-staging.herokuapp.com/jeans',
   environmentName: 'development',
   production: false
 };
