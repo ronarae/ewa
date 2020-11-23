@@ -1,6 +1,16 @@
 package app.models;
 
+
+import org.springframework.context.annotation.Primary;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class User {
+    @Id
+    @Column
     private int id;
     private String name;
     private String role;
