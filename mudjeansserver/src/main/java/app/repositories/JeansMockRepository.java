@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class JeansMockRepository implements JeansRepository {
+public class JeansMockRepository implements RepositoryInterface<Jeans, String> {
     List<Jeans> jeans;
 
     public JeansMockRepository() {
@@ -44,9 +44,9 @@ public class JeansMockRepository implements JeansRepository {
 
     @Override
     public Jeans find(String productCode) {
-        for(Jeans jeansInList : jeans) {
-            if (productCode.equals(jeansInList.getProductCode())) {
-                return jeansInList;
+        for(Jeans j : jeans) {
+            if (productCode.equals(j.getProductCode())) {
+                return j;
             }
         }
         return null;

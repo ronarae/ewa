@@ -1,6 +1,7 @@
 package app.models;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
@@ -21,6 +22,15 @@ public class Order {
         this.reviewer = reviewer;
         this.note = note;
         this.date = date;
+        orderedJeans = new HashMap<>();
+    }
+
+    public boolean addToOrder(Jeans j, int amount) {
+        if (orderedJeans.get(j) != null) {
+            return false;
+        }
+        orderedJeans.put(j, amount);
+        return true;
     }
 
     public int getOrderId() {
