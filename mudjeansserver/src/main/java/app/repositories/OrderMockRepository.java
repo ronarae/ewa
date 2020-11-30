@@ -52,16 +52,16 @@ public class OrderMockRepository implements RepositoryInterface<Order, Integer> 
     }
 
     @Override
-    public Order delete(Integer id) {
+    public boolean delete(Integer id) {
         Iterator<Order> it = orders.iterator();
         while (it.hasNext()) {
             Order order = it.next();
 
             if(order.getOrderId() == id) {
                 it.remove();
-                return order;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 }

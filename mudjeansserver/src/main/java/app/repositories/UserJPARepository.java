@@ -2,6 +2,7 @@ package app.repositories;
 
 import app.models.User;
 import org.jboss.jandex.TypeTarget;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +10,8 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
+@Repository
+@Transactional
 public class UserJPARepository implements JPARepositoryInterface<User, Integer> {
     @PersistenceContext
     private EntityManager entityManager;
@@ -16,8 +19,18 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
     @Transactional
     @Override
     public List<User> findByQuery(String jpqlName, Object... params) {
-        TypedQuery<User> q = entityManager.createNamedQuery(jpqlName, User.class);
-        return q.setParameter("id", params[0]).getResultList();
+        TypedQuery<User> query = entityManager.createNamedQuery(jpqlName, User.class);
+
+        switch (jpqlName) {
+            case "user_find_by_id":
+                query.setParameter("id", params[0]);
+                break;
+            case "user_find_by_role":
+                query.setParameter("role", params[0]);
+                break;
+        }
+
+        return query.setParameter("id", params[0]).getResultList();
     }
 
     @Override
@@ -29,10 +42,9 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
     @Override
     public User save(User user) {
         if (user.getId() == 0) {
-            entityManager.persist(user);
-        } else {
-            entityManager.merge(user);
+            return null;
         }
+        entityManager.merge(user);
         return user;
     }
 
@@ -42,7 +54,9 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
     }
 
     @Override
-    public User delete(Integer id) {
-        return null;
+    public boolean delete(Integer id) {
+        if (find(id) != null) return false;
+        entityManager.remove(find(id));
+        return true;
     }
 }

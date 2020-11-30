@@ -9,5 +9,5 @@ public interface RepositoryInterface<E, U> {
 
     E find(U u);
 
-    E delete(U u);
+    boolean delete(U u);
 }

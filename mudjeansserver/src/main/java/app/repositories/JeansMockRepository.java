@@ -53,16 +53,16 @@ public class JeansMockRepository implements RepositoryInterface<Jeans, String> {
     }
 
     @Override
-    public Jeans delete(String productCode) {
+    public boolean delete(String productCode) {
         Iterator<Jeans> it = jeans.iterator();
         while (it.hasNext()) {
             Jeans jeans = it.next();
 
             if(jeans.getProductCode().equals(productCode)) {
                 it.remove();
-                return jeans;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 }
