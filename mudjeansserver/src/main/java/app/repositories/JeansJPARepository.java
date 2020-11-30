@@ -37,7 +37,6 @@ public class JeansJPARepository implements JPARepositoryInterface<Jeans, String>
             return null;
         }
         entityManager.merge(jean);
-
         return jean;
     }
 

@@ -14,9 +14,18 @@ public class OrderJPARepository implements JPARepositoryInterface<Order, Integer
 
     @Override
     public List<Order> findByQuery(String jpqlName, Object... params) {
-        TypedQuery<Order> order = entityManager.createNamedQuery(jpqlName, Order.class);
+        TypedQuery<Order> query = entityManager.createNamedQuery(jpqlName, Order.class);
 
-        return null;
+        switch (jpqlName) {
+            case "Order_find_by_status":
+                query.setParameter("status", params[0]);
+                break;
+            case "Order_find_by_date":
+                query.setParameter("date", params[0]);
+                break;
+        }
+
+        return query.getResultList();
     }
 
     @Override

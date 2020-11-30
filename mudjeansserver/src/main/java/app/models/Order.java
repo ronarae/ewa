@@ -5,6 +5,13 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+
+@NamedQueries({
+        @NamedQuery(name = "Order_find_by_status", query = "select o from Order o where o.status = :status"),
+        @NamedQuery(name = "Order_find_by_date",
+                query = "select o from Order o where o.date = :date"),
+
+})
 @Entity
 public class Order {
     @Id
@@ -18,7 +25,7 @@ public class Order {
 
     @ManyToOne
     private User reviewer;
-
+    private OrderStatus status;
     private String note;
     private LocalDate date;
 
@@ -73,5 +80,12 @@ public class Order {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public enum OrderStatus {
+        ADJUSTMENT,
+        PENDING,
+        DECLINED,
+        ACCEPTED
     }
 }

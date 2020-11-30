@@ -1,9 +1,6 @@
 package app.rest;
-
-import app.models.Order;
 import app.models.User;
 import app.repositories.UserJPARepository;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +11,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+@RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
     @Autowired
@@ -65,10 +64,15 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<User> saveUser(@PathVariable int id, @RequestBody User user) throws ResponseStatusException{
+    public ResponseEntity<User> saveUser(@PathVariable Integer id, @RequestBody User user) throws ResponseStatusException{
     if (id == user.getId()) {
         User updatedUser = userJPARepository.save(user);
         return ResponseEntity.created(getLocationURI(updatedUser.getId())).body(updatedUser);
+    }
+
+    if (id == null) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "User with the ID " + user.getId() + " could not be found.");
     }
     throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "The requested ID does not meet the ID provided in the body");
     }
