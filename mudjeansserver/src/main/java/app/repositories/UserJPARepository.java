@@ -16,8 +16,18 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
     @Transactional
     @Override
     public List<User> findByQuery(String jpqlName, Object... params) {
-        TypedQuery<User> q = entityManager.createNamedQuery(jpqlName, User.class);
-        return q.setParameter("id", params[0]).getResultList();
+        TypedQuery<User> query = entityManager.createNamedQuery(jpqlName, User.class);
+
+        switch (jpqlName) {
+            case "user_find_by_id":
+                query.setParameter("id", params[0]);
+                break;
+            case "user_find_by_role":
+                query.setParameter("role", params[0]);
+                break;
+        }
+
+        return query.setParameter("id", params[0]).getResultList();
     }
 
     @Override
@@ -42,7 +52,9 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
     }
 
     @Override
-    public User delete(Integer id) {
-        return null;
+    public boolean delete(Integer id) {
+        if(find(id) != null) return false;
+        entityManager.remove(find(id));
+        return true;
     }
 }
