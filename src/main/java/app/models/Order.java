@@ -9,16 +9,19 @@ import java.util.Map;
 public class Order {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_gen1")
-    @SequenceGenerator(name = "id_gen1", sequenceName = "id_seq1", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_gen3")
+    @SequenceGenerator(name = "id_gen3", sequenceName = "id_seq3", initialValue = 1, allocationSize = 1)
     private int orderId;
 
+    @ManyToOne
     private User creator;
+
+    @ManyToOne
     private User reviewer;
+
     private String note;
     private LocalDate date;
 
-    private Map<Jeans, Integer> orderedJeans;
 
     public Order() {
     }
@@ -29,16 +32,8 @@ public class Order {
         this.reviewer = reviewer;
         this.note = note;
         this.date = date;
-        orderedJeans = new HashMap<>();
     }
 
-    public boolean addToOrder(Jeans j, int amount) {
-        if (orderedJeans.get(j) != null) {
-            return false;
-        }
-        orderedJeans.put(j, amount);
-        return true;
-    }
 
     public int getOrderId() {
         return orderId;
