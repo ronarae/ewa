@@ -41,11 +41,12 @@ public class UserMockRepository implements RepositoryInterface<User, Integer> {
     }
 
     @Override
-    public User delete(Integer id) {
+    public boolean delete(Integer id) {
         User user = find(id);
         if (user != null){
             this.users.remove(user);
+            return true;
         }
-        return null;
+        return false;
     }
 }
