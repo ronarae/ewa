@@ -2,6 +2,7 @@ package app.repositories;
 
 import app.models.User;
 import org.jboss.jandex.TypeTarget;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +10,8 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
+@Repository
+@Transactional
 public class UserJPARepository implements JPARepositoryInterface<User, Integer> {
     @PersistenceContext
     private EntityManager entityManager;
@@ -39,10 +42,9 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
     @Override
     public User save(User user) {
         if (user.getId() == 0) {
-            entityManager.persist(user);
-        } else {
-            entityManager.merge(user);
+            return null;
         }
+        entityManager.merge(user);
         return user;
     }
 
@@ -53,7 +55,7 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
 
     @Override
     public boolean delete(Integer id) {
-        if(find(id) != null) return false;
+        if (find(id) != null) return false;
         entityManager.remove(find(id));
         return true;
     }
