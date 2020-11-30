@@ -1,7 +1,5 @@
 package app.models;
 
-import org.springframework.context.annotation.Primary;
-
 import javax.persistence.*;
 
 @Entity
@@ -11,17 +9,19 @@ public class JeansStock {
     @SequenceGenerator(name = "id_gen", sequenceName = "id_seq", initialValue = 1, allocationSize = 1)
     private int stockId;
     private int month;
+    private int year;
     private int currentStock;
     private int soldStock;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Jeans jeans;
 
     public JeansStock() {}
 
-    public JeansStock(int stockId, int month, int currentStock, int soldStock) {
+    public JeansStock(int stockId, int month, int year, int currentStock, int soldStock) {
         this.stockId = stockId;
         this.month = month;
+        this.year = year;
         this.currentStock = currentStock;
         this.soldStock = soldStock;
     }
@@ -56,5 +56,13 @@ public class JeansStock {
 
     public void setSoldStock(int soldStock) {
         this.soldStock = soldStock;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }
