@@ -1,1 +1,28 @@
-<p>uploadfile works!</p>
+<div class="container">
+    <h3>Upload PO File</h3>
+    <br>
+    <div class="row">
+        <div class="col-4">
+            <form>
+                <div class="custom-file">
+                    <input type="file" (change)="readPOFile($event)" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+            </form>
+        </div>
+    </div>
+<br>
+    <!--    <input type="file" (change)="readFile($event)" multiple="false">-->
+    <div class="table">
+        <table class="table table-hover">
+            <tbody>
+            <tr *ngFor="let row of data; let i = index">
+                <td>{{i}}</td>
+                <td *ngFor="let cell of row">
+                    {{cell}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
