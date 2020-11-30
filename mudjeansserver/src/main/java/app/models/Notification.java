@@ -1,9 +1,25 @@
 package app.models;
 
+import javax.persistence.*;
+
 public class Notification {
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_gen1")
+    @SequenceGenerator(name = "id_gen1", sequenceName = "id_seq1", initialValue = 1, allocationSize = 1)
     private int id;
+
+    @ManyToOne
     private User target;
+
+    @ManyToOne
+    @Column(nullable = false)
+    private Order order;
+
+    @Column(nullable = true)
     private String targetRole;
+
+    @Column(nullable = false)
     private String message;
 
     public Notification(){}
