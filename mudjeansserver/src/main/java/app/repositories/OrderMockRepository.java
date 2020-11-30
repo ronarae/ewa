@@ -18,14 +18,14 @@ public class OrderMockRepository implements RepositoryInterface<Order, Integer> 
 
     private void addRandomData() {
         Order order = new Order(0, null, null, "note order 0", LocalDate.now());
-        order.addToOrder(new Jeans("MB0004S001D001-28-32", "Slim Lassen - Strong Blue - W28 L32", 20, 10, "All"), 10);
-        order.addToOrder(new Jeans("MB0004S001D001-29-32", "Slim Lassen - Strong Blue - W28 L32", 10, 30, "All"), 20);
+        order.addToOrder(new Jeans("MB0004S001D001-28-32", "Slim Lassen - Strong Blue - W28 L32", "All", "RCY-Dave"), 10);
+        order.addToOrder(new Jeans("MB0004S001D001-29-32", "Slim Lassen - Strong Blue - W28 L32", "All", "RCY-Dave"), 20);
 
         orders.add(order);
 
         Order order1 = new Order(1, null, null, "note order 1", LocalDate.now());
-        order1.addToOrder(new Jeans("MB0004S001D001-30-32", "Slim Lassen - Strong Blue - W30 L32", 20, 10, "All"), 10);
-        order1.addToOrder(new Jeans("MB0004S001D001-32-32", "Slim Lassen - Strong Blue - W32 L32", 10, 30, "All"), 20);
+        order1.addToOrder(new Jeans("MB0004S001D001-30-32", "Slim Lassen - Strong Blue - W30 L32", "All", "RCY-Dave"), 10);
+        order1.addToOrder(new Jeans("MB0004S001D001-32-32", "Slim Lassen - Strong Blue - W32 L32", "All", "RCY-Dave"), 20);
     }
 
     @Override

@@ -1,11 +1,18 @@
 package app.models;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+@Entity
 public class Order {
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_gen1")
+    @SequenceGenerator(name = "id_gen1", sequenceName = "id_seq1", initialValue = 1, allocationSize = 1)
     private int orderId;
+
     private User creator;
     private User reviewer;
     private String note;
