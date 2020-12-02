@@ -1,12 +1,12 @@
 <div class="container">
-    <h3>Upload PO File</h3>
+    <h3>Upload Sales Analysis File</h3>
     <br>
     <div class="row">
         <div class="col-4">
             <form>
                 <div class="custom-file">
-                    <input type="file" (change)="readPOFile($event)" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
+                    <input type="file"  accept=".xlsx" (change)="readSalesAnalysis($event)" class="custom-file-input" id="salesAnalysisInput">
+                    <label class="custom-file-label" for="salesAnalysisInput">Choose File</label>
                 </div>
             </form>
         </div>
@@ -17,7 +17,6 @@
         <table class="table table-hover">
             <tbody>
             <tr *ngFor="let row of data; let i = index">
-                <td>{{i}}</td>
                 <td *ngFor="let cell of row">
                     {{cell}}
                 </td>
