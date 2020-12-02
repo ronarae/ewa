@@ -17,6 +17,7 @@
         <table class="table table-hover">
             <tbody>
             <tr *ngFor="let row of data; let i = index">
+                <td>{{i}}</td>
                 <td *ngFor="let cell of row">
                     {{cell}}
                 </td>
