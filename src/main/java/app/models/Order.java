@@ -5,14 +5,13 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Entity(name = "Order_table")
 @NamedQueries({
-        @NamedQuery(name = "Order_find_by_status", query = "select o from Order o where o.status = :status"),
+        @NamedQuery(name = "Order_find_by_status", query = "select o from Order_table o where o.status = :status"),
         @NamedQuery(name = "Order_find_by_date",
-                query = "select o from Order o where o.date = :date"),
+                query = "select o from Order_table o where o.date = :date"),
 
 })
-@Entity
 public class Order {
     @Id
     @Column

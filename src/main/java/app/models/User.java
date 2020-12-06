@@ -1,17 +1,14 @@
 package app.models;
 
-
-import org.springframework.context.annotation.Primary;
-
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "User_table")
 @NamedQueries({
         @NamedQuery(name = "user_find_by_id",
-        query = "select u from User u where u.id = :id"),
+        query = "select u from User_table u where u.id = :id"),
 
         @NamedQuery(name = "user_find_by_role",
-        query = "select u from User u where u.role = :role")
+        query = "select u from User_table u where u.role = :role")
 
 
 })

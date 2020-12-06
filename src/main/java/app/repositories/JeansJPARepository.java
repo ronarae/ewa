@@ -1,6 +1,7 @@
 package app.repositories;
 
 import app.models.Jeans;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Repository
 public class JeansJPARepository implements JPARepositoryInterface<Jeans, String> {
     @PersistenceContext
     private EntityManager entityManager;
@@ -18,7 +20,7 @@ public class JeansJPARepository implements JPARepositoryInterface<Jeans, String>
         TypedQuery<Jeans> q = entityManager.createNamedQuery(jpqlName, Jeans.class);
 
         return switch (jpqlName) {
-            case "find_all_general_types" -> new ArrayList<>(q.getResultStream().map(Jeans::removeTypeSpecification).collect(Collectors.toSet()));
+            case "find_all_general_types" -> new ArrayList<>(q.getResultStream().collect(Collectors.toSet()));
             case "find_sizes_per_general_type" -> q.setParameter("productCode", params[0]).getResultList();
             default -> q.getResultList();
         };
