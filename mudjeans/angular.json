@@ -30,7 +30,8 @@
             "scripts": [
               "../mudjeans/node_modules/jquery/dist/jquery.js",
               "../mudjeans/node_modules/@popperjs/core/dist/umd/popper.js",
-              "../mudjeans/node_modules/bootstrap/dist/js/bootstrap.js"
+              "../mudjeans/node_modules/bootstrap/dist/js/bootstrap.js",
+              "../mudjeans/node_modules/lodash/lodash.min.js"
             ]
           },
           "configurations": {
