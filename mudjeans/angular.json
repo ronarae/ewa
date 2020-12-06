@@ -94,9 +94,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
-            "scripts": []
+            "scripts": [
+              "../mudjeans/node_modules/jquery/dist/jquery.js",
+              "../mudjeans/node_modules/@popperjs/core/dist/umd/popper.js",
+              "../mudjeans/node_modules/bootstrap/dist/js/bootstrap.js",
+              "../mudjeans/node_modules/lodash/lodash.min.js"
+            ]
           }
         },
         "lint": {
