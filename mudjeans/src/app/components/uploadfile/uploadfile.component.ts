@@ -17,7 +17,6 @@ export class UploadfileComponent implements OnInit {
     readSalesAnalysis(e: any) {
         let docname = (document.getElementById('salesAnalysisInput') as HTMLInputElement).value;
         docname = docname.toLowerCase();
-
         // Check if the docname contains the "sales" and "analysis"
         if (docname.includes('sales') && docname.includes('analysis')) {
             const target: DataTransfer = (e.target) as DataTransfer;
