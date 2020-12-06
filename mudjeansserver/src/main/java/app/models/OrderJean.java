@@ -1,12 +1,15 @@
 package app.models;
 
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.io.Serializable;
 
-public class OrderJean {
+@Entity
+public class OrderJean implements Serializable {
+    @Id
     @ManyToOne
     private Order order;
 
+    @Id
     @ManyToOne
     private Jeans jeans;
 
