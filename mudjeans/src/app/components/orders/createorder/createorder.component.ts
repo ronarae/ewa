@@ -11,5 +11,4 @@ export class CreateorderComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
