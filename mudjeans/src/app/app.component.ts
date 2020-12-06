@@ -10,4 +10,4 @@ export class AppComponent {
 }
 
 
-// TEST COMMENT VOOR HEROKU testtest
+// TEST COMMENT VOOR HEROKU doubletest

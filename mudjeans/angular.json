@@ -25,21 +25,21 @@
             ],
             "styles": [
               "src/styles.css",
-              "../mudjeans/node_modules/bootstrap/dist/css/bootstrap.css"
+              "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [
-              "../mudjeans/node_modules/jquery/dist/jquery.js",
-              "../mudjeans/node_modules/@popperjs/core/dist/umd/popper.js",
-              "../mudjeans/node_modules/bootstrap/dist/js/bootstrap.js",
-              "../mudjeans/node_modules/lodash/lodash.min.js"
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/@popperjs/core/dist/umd/popper.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js",
+              "node_modules/lodash/lodash.min.js"
             ]
           },
           "configurations": {
-            "production": {
+            "staging": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.staging.ts"
                 }
               ],
               "optimization": true,
@@ -52,14 +52,14 @@
               "buildOptimizer": true,
               "budgets": [
                 {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "type": "any",
+                  "maximumWarning": "4mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "2mb"
                 }
               ]
             }
@@ -94,9 +94,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/@popperjs/core/dist/umd/popper.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js",
+              "node_modules/lodash/lodash.min.js"
+            ]
           }
         },
         "lint": {
@@ -130,5 +136,8 @@
   "defaultProject": "mudjeans",
   "cli": {
     "analytics": "a99a585e-127b-4c00-bd72-7f7bc396fe9b"
+  },
+  "cli": {
+    "analytics": false
   }
 }
