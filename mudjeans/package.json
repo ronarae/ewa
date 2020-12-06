@@ -25,11 +25,11 @@
     "jquery": "^3.5.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "xlsx": "^0.16.9",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "xlsx": "0.13.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.1100.3",
+    "@angular-devkit/build-angular": "~0.1001.4",
     "@angular/cli": "~10.1.4",
     "@angular/compiler-cli": "~10.1.4",
     "@fortawesome/fontawesome-free": "^5.15.1",
