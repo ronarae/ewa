@@ -8,6 +8,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
 
+@Entity
 public class Notification {
     @Id
     @Column
@@ -19,7 +20,6 @@ public class Notification {
     private User target;
 
     @ManyToOne
-    @Column(nullable = false)
     private Order order;
 
     @Column(nullable = true)
