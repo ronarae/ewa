@@ -1,16 +1,34 @@
 package app.models;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 
+
+@NamedQueries({
+        @NamedQuery(name = "Order_find_by_status", query = "select o from Order o where o.status = :status"),
+        @NamedQuery(name = "Order_find_by_date",
+                query = "select o from Order o where o.date = :date"),
+
+})
+@Entity
 public class Order {
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_gen3")
+    @SequenceGenerator(name = "id_gen3", sequenceName = "id_seq3", initialValue = 1, allocationSize = 1)
     private int orderId;
+
+    @ManyToOne
     private User creator;
+
+    @ManyToOne
     private User reviewer;
+    private OrderStatus status;
     private String note;
     private LocalDate date;
 
-    private Map<Jeans, Integer> orderedJeans;
 
     public Order() {
     }
@@ -22,6 +40,7 @@ public class Order {
         this.note = note;
         this.date = date;
     }
+
 
     public int getOrderId() {
         return orderId;
@@ -61,5 +80,12 @@ public class Order {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public enum OrderStatus {
+        ADJUSTMENT,
+        PENDING,
+        DECLINED,
+        ACCEPTED
     }
 }

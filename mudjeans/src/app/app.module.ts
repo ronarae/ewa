@@ -17,6 +17,7 @@ import { OrderhistoryComponent } from './components/orderhistory/orderhistory.co
 import { CreateorderComponent } from './components/orders/createorder/createorder.component';
 import { CustomizeOrderComponent } from './components/orders/customize-order/customize-order.component';
 import { PendingOrderComponent } from './components/orders/pending-order/pending-order.component';
+import { UploadfileComponent } from './components/uploadfile/uploadfile.component';
 
 const appRoutes: Routes = [
 ];
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
     CreateorderComponent,
     CustomizeOrderComponent,
     PendingOrderComponent,
+    UploadfileComponent,
   ],
   imports: [
     BrowserModule,

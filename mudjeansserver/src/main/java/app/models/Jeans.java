@@ -1,30 +1,33 @@
 package app.models;
 
+import javax.persistence.*;
+
+@Entity
+@NamedQueries({
+        @NamedQuery(name = "find_all_general_types",
+        query = "select j.productCode, j.description from Jeans j"),
+
+        @NamedQuery(name = "find_sizes_per_general_type",
+        query = "select j from Jeans j where j.productCode like concat(:productCode, '%')")
+})
 public class Jeans {
+    @Id
+    @Column
     private String productCode;
+    @Column
     private String description;
-    private int stock;
-    private int sold;
+    @Column
     private String season;
+    @Column
+    private String fabric;
 
     public Jeans(){}
 
-    public Jeans(String productCode, String description, int stock, int sold, String season) {
+    public Jeans(String productCode, String description, String season, String fabric) {
         this.productCode = productCode;
         this.description = description;
-        this.stock = stock;
-        this.sold = sold;
         this.season = season;
-    }
-
-    public boolean updateStock(int sold) {
-        if (sold > stock || stock < 1) {
-            return false;
-        }
-
-        stock -= sold;
-        this.sold += sold;
-        return true;
+        this.fabric = fabric;
     }
 
     public String getProductCode() {
@@ -43,27 +46,22 @@ public class Jeans {
         this.description = description;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public int getSold() {
-        return sold;
-    }
-
-    public void setSold(int sold) {
-        this.sold = sold;
-    }
-
     public String getSeason() {
         return season;
     }
 
     public void setSeason(String season) {
         this.season = season;
+    }
+
+    public String getFabric() { return fabric; }
+
+    public void setFabric(String fabric) {
+        this.fabric = fabric;
+    }
+
+    public Jeans removeTypeSpecification() {
+        productCode = productCode.substring(14);
+        return this;
     }
 }
