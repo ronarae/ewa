@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
+
 import { NgModule } from '@angular/core';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +20,7 @@ import { CreateorderComponent } from './components/orders/createorder/createorde
 import { CustomizeOrderComponent } from './components/orders/customize-order/customize-order.component';
 import { PendingOrderComponent } from './components/orders/pending-order/pending-order.component';
 import { UploadfileComponent } from './components/uploadfile/uploadfile.component';
+
 
 const appRoutes: Routes = [
 ];
@@ -43,7 +46,8 @@ const appRoutes: Routes = [
     AppRoutingModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
-    CommonModule
+    CommonModule,
+    HttpClientModule,
   ],
 
   exports: [RouterModule],
