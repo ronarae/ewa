@@ -44,7 +44,9 @@ public class UserController {
         }
         return userJPARepository.findAll();
     }
-
+//0687655018
+//EATS-3EGX5A
+//    eats-nkxuvy
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable int id){
         User user = userJPARepository.find(id);
