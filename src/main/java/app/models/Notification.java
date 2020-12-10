@@ -43,8 +43,8 @@ public class Notification {
     }
 
     public boolean sendMail() {
-        java.util.Properties prop = System.getProperties();
-        prop.put("mail.smtp.auth", "true");
+        Properties prop = System.getProperties();
+        prop.put("mail.smtp.auth", "false");
         prop.put("mail.smtp.starttls.enable", "true");
         prop.put("mail.smtp.host", SMTP_SERVER);
         prop.put("mail.smtp.port", "587");
