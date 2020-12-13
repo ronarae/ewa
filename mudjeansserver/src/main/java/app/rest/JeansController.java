@@ -1,7 +1,7 @@
 package app.rest;
 
 import app.models.Jeans;
-import app.repositories.JeansMockRepository;
+import app.repositories.JeansJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.List;
 public class JeansController {
 
     @Autowired
-    private JeansMockRepository repository;
+    private JeansJPARepository repository;
 
     @GetMapping("/jeans")
     public List<Jeans> getAllJeans() {
