@@ -26,7 +26,7 @@ public class JWTokenUtils {
     @Value("${jwt.pass-phrase}")
     private String passphrase;
 
-    @Value("${jwt.expiration-seconds}")
+    @Value("${jwt.expiration}")
     private int expiration;
 
     @Value("${jwt.refresh-expiration-seconds}")

@@ -2,13 +2,13 @@ package app.models;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Jean")
 @NamedQueries({
         @NamedQuery(name = "find_all_general_types",
-        query = "select j.mainCode, j.description from Jeans j"),
+        query = "select j.mainCode, j.description from Jean j"),
 
         @NamedQuery(name = "find_sizes_per_general_type",
-        query = "select j from Jeans j where j.productCode like concat(:productCode, '%')")
+        query = "select j from Jean j where j.productCode like concat(:productCode, '%')")
 })
 public class Jeans {
     @Id
@@ -22,7 +22,7 @@ public class Jeans {
     private String fabric;
     @Column
     private int latestStock;
-    @Column
+    @Column()
     private boolean shouldOrder;
     @Column
     private String mainCode;
