@@ -8,14 +8,16 @@ import javax.persistence.*;
         query = "select u from User_table u where u.id = :id"),
 
         @NamedQuery(name = "user_find_by_role",
-        query = "select u from User_table u where u.role = :role")
+        query = "select u from User_table u where u.role = :role"),
 
-
+        @NamedQuery(name = "user_find_by_email",
+        query = "select u from User_table u where u.email = :email")
 })
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_gen2")
     @SequenceGenerator(name = "id_gen2", sequenceName = "id_seq2", initialValue = 1, allocationSize = 1)
+    @Column(name = "id_user")
     private int id;
     private String name;
     private String role;

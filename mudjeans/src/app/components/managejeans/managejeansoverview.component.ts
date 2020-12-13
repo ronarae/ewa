@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {jean} from '../../models/jean';
+import {jean} from '../../models/Jean';
 
 @Component({
   selector: 'app-managejeansoverview',
