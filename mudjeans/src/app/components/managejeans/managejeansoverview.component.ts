@@ -17,10 +17,12 @@ export class ManagejeansoverviewComponent implements OnInit {
   constructor() {
   }
 
+  // tslint:disable-next-line:typedef
   ngOnInit() {
 
   }
 
+  // tslint:disable-next-line:typedef
   addJean() {
 
   }
