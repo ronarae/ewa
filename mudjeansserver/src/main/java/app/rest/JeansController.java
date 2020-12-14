@@ -62,9 +62,7 @@ public class JeansController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Jeans with productCode " + j.getProductCode() + " could not be found.");
         }
-
         repository.save(j);
-
         return ResponseEntity.ok().build();
     }
 }
