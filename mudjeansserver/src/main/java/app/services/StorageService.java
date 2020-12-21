@@ -1,14 +1,14 @@
 package app.services;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-
+@Service
 public class StorageService {
     // pointing to the folder that will store the file
     private static final String storageLocation = "../../uploads";
@@ -21,6 +21,7 @@ public class StorageService {
 
     public String storeFile(MultipartFile file) throws StorageException {
         // Normalize file name
+        System.out.println("FILENAME: " + file);
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
         try {
