@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {jean} from '../../models/Jean';
+import {Jean} from '../../models/Jean';
+import {SalesService} from '../../services/sales.service';
 
 @Component({
   selector: 'app-managejeansoverview',
@@ -12,9 +13,9 @@ export class ManagejeansoverviewComponent implements OnInit {
   description = ['Regular Bryce - Strong Blue', 'Regular Bryce - Authentic Indigo', 'Regular Bryce - Heavy Stone', 'Slim Lassen - Sea Stone', 'Slim Rick - Drip Dry'];
   size = ['W28 L32', 'W29 L32', 'W30 L32', 'W32 L36', 'W36 L38'];
 
-  public jeans: jean[];
-
-  constructor() {
+  public jeans: Jean[];
+  selectedJeanDescription = null;
+  constructor(public jeanService: SalesService) {
   }
 
   // tslint:disable-next-line:typedef
@@ -24,7 +25,10 @@ export class ManagejeansoverviewComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   addJean() {
-
   }
+
+onJeanSelected(jean: Jean): void {
+    this.selectedJeanDescription = jean.description;
+}
 
 }
