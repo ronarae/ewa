@@ -4,42 +4,38 @@ import javax.persistence.*;
 
 @Entity(name = "Jean")
 @NamedQueries({
-        @NamedQuery(name = "find_all_general_types",
-        query = "select j.mainCode, j.description from Jean j"),
-
         @NamedQuery(name = "find_sizes_per_general_type",
-        query = "select j from Jean j where j.productCode like concat(:productCode, '%')")
+                query = "select j from Jean j where j.productCode like concat(:productCode, '%')")
 })
 public class Jeans {
     @Id
     @Column
     private String productCode;
     @Column
-    private String description;
-    @Column
-    private String season;
+    private String styleName;
     @Column
     private String fabric;
     @Column
-    private int latestStock;
-    @Column()
-    private boolean shouldOrder;
+    private String washing;
     @Column
-    private String mainCode;
+    private String productCategory;
+    @Column
+    private int latestStock;
+    @Column
+    private boolean shouldOrder;
 
 
-    public Jeans(){}
+    public Jeans() {
+    }
 
-    public Jeans(String productCode, String description, String season, String fabric, int latestStock) {
+    public Jeans(String productCode, String styleName, String fabric, String washing, String productCategory, int latestStock, boolean shouldOrder) {
         this.productCode = productCode;
-        this.description = description;
-        this.season = season;
+        this.styleName = styleName;
         this.fabric = fabric;
+        this.washing = washing;
+        this.productCategory = productCategory;
         this.latestStock = latestStock;
-        this.shouldOrder = true;
-        if (productCode.length() > 14) {
-            this.mainCode = productCode.substring(14);
-        }
+        this.shouldOrder = shouldOrder;
     }
 
     public String getProductCode() {
@@ -50,23 +46,9 @@ public class Jeans {
         this.productCode = productCode;
     }
 
-    public String getDescription() {
-        return description;
+    public String getFabric() {
+        return fabric;
     }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getSeason() {
-        return season;
-    }
-
-    public void setSeason(String season) {
-        this.season = season;
-    }
-
-    public String getFabric() { return fabric; }
 
     public void setFabric(String fabric) {
         this.fabric = fabric;
@@ -88,11 +70,27 @@ public class Jeans {
         this.shouldOrder = order;
     }
 
-    public String getMainCode() {
-        return mainCode;
+    public String getStyleName() {
+        return styleName;
     }
 
-    public void setMainCode(String mainCode) {
-        this.mainCode = mainCode;
+    public void setStyleName(String styleName) {
+        this.styleName = styleName;
+    }
+
+    public String getWashing() {
+        return washing;
+    }
+
+    public void setWashing(String washing) {
+        this.washing = washing;
+    }
+
+    public String getProductCategory() {
+        return productCategory;
+    }
+
+    public void setProductCategory(String productCategory) {
+        this.productCategory = productCategory;
     }
 }
