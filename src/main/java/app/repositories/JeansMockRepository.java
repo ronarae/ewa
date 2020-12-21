@@ -17,7 +17,11 @@ public class JeansMockRepository implements RepositoryInterface<Jeans, String> {
     }
 
     private void addRandomJeans() {
-        save(new Jeans("MB0001C001D001-29-32","Regular Bryce ", "ORGANIC CASSIE", "Strong Blue", "MENS BOTTOMS", 1, true));
+        save(new Jeans("jeans01", "Mock jeans 1", "All", "RCY-Dave", 1));
+        save(new Jeans("jeans02", "Mock jeans 2", "Spring", "RCY-Dave", 1));
+        save(new Jeans("jeans03", "Mock jeans 3", "Autumn", "RCY-Dave", 1));
+        save(new Jeans("jeans04", "Mock jeans 4", "Autumn", "RCY-Dave", 1));
+        save(new Jeans("jeans05", "Mock jeans 5", "Summer", "RCY-Dave", 1));
     }
 
     @Override
