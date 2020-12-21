@@ -13,48 +13,51 @@
     <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Product code</th>
+      <th scope="col">Main type</th>
       <th scope="col">Description</th>
-      <th scope="col">Size</th>
+      <th scope="col">Season</th>
     </tr>
     </thead>
     <tbody>
-    <tr data-toggle="modal" data-target="#exampleModal1">
-      <th scope="row">1</th>
-      <td>MB0001C001D001-28-32</td>
-      <td>Regular Bryce - Strong Blue</td>
-      <td>W28 L32</td>
-    </tr>
-    <tr data-toggle="modal" data-target="#exampleModal2">
-      <th scope="row">2</th>
-      <td>MB0001C001D001-29-32</td>
-      <td>Regular Bryce - Authentic Indigo</td>
-      <td>W29 L32</td>
-    </tr>
-    <tr data-toggle="modal" data-target="#exampleModal3">
-      <th scope="row">3</th>
-      <td>MB0001C001D001-32-36</td>
-      <td>Regular Bryce - Authentic Indigo</td>
-      <td>W32 L36</td>
-    </tr>
-    <tr data-toggle="modal" data-target="#exampleModal4">
-      <th scope="row">4</th>
-      <td>MB0001C001D001-36-38</td>
-      <td>Regular Bryce - Authentic Indigo</td>
-      <td>W36 L38</td>
-    </tr>
-    <tr data-toggle="modal" data-target="#exampleModal5">
-      <th scope="row">5</th>
-      <td>MB0001C001D001-32-36</td>
-      <td>Regular Bryce - Heavy Stone</td>
-      <td>W32 L36</td>
-    </tr>
-    <tr data-toggle="modal" data-target="#exampleModal6">
-      <th scope="row">6</th>
-      <td>MB0001C001D001-36-38</td>
-      <td>Regular Bryce - Heavy Stone</td>
-      <td>W36 L38</td>
-    </tr>
+    <tr *ngFor="let jean of jeanService.findAll()"
+    (click)="selectedJeanDescription = jean.description" [class.active]="jean.description == selectedJeanDescription"></tr>
+<!--  FUCKING TEST HEROKU  -->
+<!--    <tr data-toggle="modal" data-target="#exampleModal1">-->
+<!--      <th scope="row">1</th>-->
+<!--      <td>Regular Bryce</td>-->
+<!--      <td>Regular Bryce - Strong Blue</td>-->
+<!--      <td>Winter</td>-->
+<!--    </tr>-->
+<!--    <tr data-toggle="modal" data-target="#exampleModal2">-->
+<!--      <th scope="row">2</th>-->
+<!--      <td>Regular Bryce</td>-->
+<!--      <td>Regular Bryce - Authentic Indigo</td>-->
+<!--      <td>Autumn</td>-->
+<!--    </tr>-->
+<!--    <tr data-toggle="modal" data-target="#exampleModal3">-->
+<!--      <th scope="row">3</th>-->
+<!--      <td>Slim Lassen</td>-->
+<!--      <td>Slim Lassen - Pure blue</td>-->
+<!--      <td>Summer</td>-->
+<!--    </tr>-->
+<!--    <tr data-toggle="modal" data-target="#exampleModal5">-->
+<!--      <th scope="row">5</th>-->
+<!--      <td>Slim Lassen</td>-->
+<!--      <td>Slim Lassen - Dip Dry</td>-->
+<!--      <td>Spring</td>-->
+<!--    </tr>-->
+<!--    <tr data-toggle="modal" data-target="#exampleModal4">-->
+<!--      <th scope="row">4</th>-->
+<!--      <td>Beverly short</td>-->
+<!--      <td>Beverly short - Dip Black</td>-->
+<!--      <td>Summer</td>-->
+<!--    </tr>-->
+<!--    <tr data-toggle="modal" data-target="#exampleModal6">-->
+<!--      <th scope="row">6</th>-->
+<!--      <td>Regular Swan</td>-->
+<!--      <td>Regular Swan - Strong blue</td>-->
+<!--      <td>Autumn</td>-->
+<!--    </tr>-->
     <button class="btn btn-event" data-toggle="modal" data-target="#myModal"(click)="addJean()">Add jean</button>
     </tbody>
   </table>

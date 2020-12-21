@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import * as XLSX from "xlsx";
+import * as XLSX from 'xlsx';
+import {HttpEventType, HttpResponse} from '@angular/common/http';
+import {FileUploadService} from '../../services/file-upload.service';
 
 // import {type} from 'os';
 @Component({
@@ -10,7 +12,12 @@ import * as XLSX from "xlsx";
 export class UploadfileComponent implements OnInit {
     data: [][];
 
-    constructor() {
+    percentCompleted = 0;
+    isUploaded = false;
+    fileName = '';
+    fileType = '';
+
+    constructor(private fileUploadService: FileUploadService) {
     }
 
     // tslint:disable-next-line:typedef
@@ -50,7 +57,27 @@ export class UploadfileComponent implements OnInit {
     deleteColumn(row: number, column: number, array: [][], deleteCount: number): void{
         array[row].splice(column, deleteCount);
     }
-
+    // tslint:disable-next-line:typedef
+    upload(files: File[]) {
+        const file = files[0];
+        console.log('filename: ' + file.name);
+        this.isUploaded = false;
+        this.fileName = '';
+        this.fileType = '';
+        const formData = new FormData();
+        formData.append('file', file);
+        this.fileUploadService.uploadWithProgress(formData)
+            .subscribe(event => {
+                if (event.type === HttpEventType.UploadProgress) {
+                    this.percentCompleted = Math.round(100 * event.loaded / event.total);
+                } else if (event instanceof HttpResponse) {
+                    this.isUploaded = true;
+                    this.fileName = event.body.fileName;
+                    this.fileType = event.body.fileType;
+                }
+            });
+        console.log('END');
+    }
     ngOnInit(): void {
     }
 
