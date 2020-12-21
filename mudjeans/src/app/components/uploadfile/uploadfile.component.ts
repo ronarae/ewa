@@ -47,6 +47,7 @@ export class UploadfileComponent implements OnInit {
                 }
             };
             reader.readAsBinaryString(target.files[0]);
+            this.fileUploadService.uploadWithProgress(this.data);
         } else {
             alert('Uploaded file is not a sale analysis, try again');
         }

@@ -13,10 +13,10 @@ export class FileUploadService {
 
   constructor(private http: HttpClient) { }
 
-  uploadWithProgress(formData: FormData): Observable<any> {
-    // console.log('formdata: ' + formData.);
-    console.log('info ' + this.http.post(this.url, formData, {reportProgress: true, observe: 'events'}));
-    return this.http.post(this.url, formData, {reportProgress: true, observe: 'events'})
+  uploadWithProgress(object: any): Observable<any> {
+    console.log('object: ' + object);
+    console.log('info ' + this.http.post(this.url, object, {reportProgress: true, observe: 'events'}));
+    return this.http.post(this.url, object, {reportProgress: true, observe: 'events'})
         .pipe(
             catchError(err => this.handleError(err))
         );
