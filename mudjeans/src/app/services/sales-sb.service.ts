@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Jean} from '../models/Jean';
 import {Observable} from 'rxjs';
 
+// @ts-ignore
 @Injectable({
     providedIn: 'root'
 })
