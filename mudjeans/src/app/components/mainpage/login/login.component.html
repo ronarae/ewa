@@ -11,17 +11,24 @@
               <img src="assets/images/logo-mud.png" alt="logo" class="logo">
             </div>
             <p class="login-title pt-3">Sign into your account</p>
-            <form class="pb-3">
+            <form class="pb-3" (ngSubmit)="onSubmit()" #f="ngForm">
               <div class="form-group">
-                <input type="text" name="email" class="form-control" placeholder="Email Address" id="email">
+                <input type="text" name="email" class="form-control" placeholder="Email Address" id="email"
+                       [(ngModel)]="user.email" #emailComponent=ngModel required email>
               </div>
 
               <div class="form-group mb-4">
-                <input type="password" name="password" class="form-control" placeholder="**********" id="password">
+                <input type="password" name="password" class="form-control" placeholder="**********" id="password"
+                       [(ngModel)]="user.password" #passwordComponent="ngModel" required>
               </div>
 
+              <div *ngIf="!emailComponent.valid && emailComponent.touched && !errorMessage"
+                   class="alert alert-danger">Please enter a valid Email address</div>
+              <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
               <div class="">
-                <button (click)="loginButton()" id="login-button" routerLink="/home" class="btn btn-block button-size mb-4">Login</button>
+                <button type="submit" id="login-button" class="btn btn-block button-size mb-4"
+                        [disabled]="!f.valid">Login</button>
               </div>
               <a href="#!" class="forgot-password-link">Forgot password?</a>
             </form>
