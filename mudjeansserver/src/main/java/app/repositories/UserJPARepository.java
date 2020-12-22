@@ -22,11 +22,19 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
         TypedQuery<User> query = entityManager.createNamedQuery(jpqlName, User.class);
 
         switch (jpqlName) {
-            case "user_find_by_id" -> query.setParameter("id", params[0]);
-            case "user_find_by_role" -> query.setParameter("role", params[0]);
-            case "user_find_by_email" -> query.setParameter("email", params[0]);
+            case "user_find_by_id" -> {
+                return query.setParameter("id", params[0]).getResultList();
+            }
+            case "user_find_by_role" -> {
+                return query.setParameter("role", params[0]).getResultList();
+            }
+            case "user_find_by_email" -> {
+                return query.setParameter("email", params[0]).getResultList();
+            }
+            default -> {
+                return null;
+            }
         }
-        return query.setParameter("id", params[0]).getResultList();
     }
 
     @Override
