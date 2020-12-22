@@ -4,11 +4,7 @@ import app.models.UploadFileResponse;
 import app.services.StorageException;
 import app.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -20,18 +16,8 @@ public class FileUploadController {
     private StorageService storageService;
 
     @PostMapping("/upload")
-    public UploadFileResponse uploadFile(@RequestBody Object file) throws StorageException {
-        System.out.println("FILE: " + file);
-        System.out.println("FILE: " + file);
-        System.out.println("FILE: " + file);
-        System.out.println("FILE: " + file);
-        System.out.println("FILE: " + file);
-        System.out.println("FILE: " + file);
-        System.out.println("FILE: " + file);
-        System.out.println("FILE: " + file);
-        System.out.println("FILE: " + file);
-        System.out.println("FILE: " + file);
-        String fileName = storageService.storeFile((MultipartFile)file);
+    public UploadFileResponse uploadFile(@RequestParam ("file")MultipartFile file) throws StorageException {
+        String fileName = storageService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
@@ -39,7 +25,7 @@ public class FileUploadController {
                 .toUriString();
 
         return new UploadFileResponse(fileName, fileDownloadUri,
-                ((MultipartFile) file).getContentType(), ((MultipartFile) file).getSize());
+                (file).getContentType(), (file).getSize());
     }
 
 

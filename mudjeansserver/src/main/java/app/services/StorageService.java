@@ -11,19 +11,17 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class StorageService {
     // pointing to the folder that will store the file
-    private static final String storageLocation = "../../uploads";
+    private static final String storageLocation = "mudjeansserver/src/main/java/app/uploads";
 
     private Path fileStorageLocationObject;
 
     public StorageService() {
-        this.fileStorageLocationObject = Paths.get(storageLocation).toAbsolutePath().normalize();
+        this.fileStorageLocationObject = Paths.get(storageLocation).toAbsolutePath();
     }
 
     public String storeFile(MultipartFile file) throws StorageException {
         // Normalize file name
-        System.out.println("FILENAME: " + file);
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
         try {
             // Copy file to the target location (Replacing existing file with the same name)
             Path targetLocation = this.fileStorageLocationObject.resolve(fileName);
