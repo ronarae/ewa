@@ -19,6 +19,7 @@ import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 public class AuthController {
@@ -38,12 +39,11 @@ public class AuthController {
     public ResponseEntity<Object> postLogin(@RequestBody ObjectNode userInfo, HttpServletRequest request,
                                             HttpServletResponse response) throws AuthenticationException {
 
-        String email = userInfo.get("email").asText();
-        System.out.println("MAIL " + email);
-        String password = userInfo.get("password").asText();
+        String email = userInfo.get("eMail").asText();
+        String password = userInfo.get("passWord").asText();
 
         try {
-            User user = userJPARepository.findByQuery(email).get(0);
+            User user = userJPARepository.findByQuery("user_find_by_email", email).get(0);
 
             if (!passWordEncoder.encode(password).equals(user.getPassword())) {
                 throw new AuthenticationException("Invalid user and/or password");
@@ -51,11 +51,10 @@ public class AuthController {
 
             User savedUser = userJPARepository.save(user);
 
-            URI location = ServletUriComponentsBuilder.
-                    fromCurrentRequest().path("/{id}").
-                    buildAndExpand(savedUser.getEmail()).toUri();
+            String tokenString = tokenGenerator.encode(user.getEmail(), user.getId(), user.getRole());
 
-            return ResponseEntity.created(location).build();
+            return ResponseEntity.accepted()
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenString).body(user);
         } catch (Exception e) {
             throw new AuthenticationException("Invalid user and/or password");
         }
