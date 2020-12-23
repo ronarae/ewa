@@ -48,8 +48,8 @@ export class AuthSbInterceptor implements HttpInterceptor {
     }
 
     private forceLogOff(): any {
-        this.session.LogOff();
-        this.router.navigate(['login'], {queryParams: {msg: 'Session expired'}});
+        this.session.logOff();
+        this.router.navigate(['/login'], {queryParams: {msg: 'Session expired'}});
     }
 
     // Adds the token header to the request.

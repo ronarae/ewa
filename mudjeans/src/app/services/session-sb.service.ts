@@ -52,7 +52,7 @@ export class SessionSbService {
     return signInRespons;
   }
 
-  LogOff(): any {
+  logOff(): any {
     sessionStorage.removeItem('token');
     this.updateUserInformation();
   }
@@ -83,7 +83,7 @@ export class SessionSbService {
           this.updateUserInformation();
         },
         (err) => {
-          this.LogOff();
+          this.logOff();
         });
     return observable;
   }

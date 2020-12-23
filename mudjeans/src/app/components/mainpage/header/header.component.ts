@@ -14,9 +14,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  logout() {
-    this.session.LogOff();
-    this.router.navigate(['/']);
+  logOff() {
+    this.session.logOff();
+    this.router.navigate(['/login']);
   }
 
 }
