@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import {User} from "../models/User";
-import { JwtHelperService } from '@auth0/angular-jwt';
-import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
-import {share, shareReplay} from "rxjs/operators";
-import {environment} from "../../environments/environment";
+import {User} from '../models/User';
+import { JwtHelperService } from "@auth0/angular-jwt";
+import {Observable} from 'rxjs';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {share, shareReplay} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -70,7 +70,7 @@ export class SessionSbService {
         { headers: new HttpHeaders({Authorization: this.getToken()}), observe: 'response'}).pipe(share());
 
     observable.subscribe(data => {
-          let refreshedToken = data['headers'].get('Authorization');
+          let refreshedToken = data.headers.get('Authorization');
 
           if (refreshedToken == null) {
             throw new Error('token was not present in the response');

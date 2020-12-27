@@ -14,10 +14,12 @@ export class SalesSbService {
         this.jeans = [];
         this.restGetJean().subscribe(
             (data) => {
+                console.log('DATA: ' + data.length);
                 // tslint:disable-next-line:prefer-for-of
                 for (let i = 0; i < data.length; i++) {
                     this.jeans.push(Jean.trueCopy(data[i]));
                 }
+                console.log('Jean length: ' + this.jeans.length);
             },
             (error) => {
                 alert('Error:' + error);
@@ -26,6 +28,7 @@ export class SalesSbService {
     }
 
     findAll(): Jean[] {
+        console.log('Jean length in function: ' + this.jeans.length);
         return this.jeans;
     }
 

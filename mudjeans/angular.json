@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
@@ -94,6 +95,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
@@ -134,9 +136,6 @@
     }
   },
   "defaultProject": "mudjeans",
-  "cli": {
-    "analytics": "a99a585e-127b-4c00-bd72-7f7bc396fe9b"
-  },
   "cli": {
     "analytics": false
   }
