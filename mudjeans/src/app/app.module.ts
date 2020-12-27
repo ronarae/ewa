@@ -1,8 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 
 import { NgModule } from '@angular/core';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-
+import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/mainpage/nav-bar/nav-bar.component';
@@ -20,6 +19,10 @@ import { CreateorderComponent } from './components/orders/createorder/createorde
 import { CustomizeOrderComponent } from './components/orders/customize-order/customize-order.component';
 import { PendingOrderComponent } from './components/orders/pending-order/pending-order.component';
 import { UploadfileComponent } from './components/uploadfile/uploadfile.component';
+import {MatTableModule} from '@angular/material/table';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 
 const appRoutes: Routes = [
@@ -48,6 +51,10 @@ const appRoutes: Routes = [
     FormsModule,
     CommonModule,
     HttpClientModule,
+    MatTableModule,
+    BrowserAnimationsModule,
+    MatPaginatorModule,
+    MatFormFieldModule
   ],
 
   exports: [RouterModule],

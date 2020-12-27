@@ -52,12 +52,15 @@ export class UploadfileComponent implements OnInit {
             alert('Uploaded file is not a sale analysis, try again');
         }
     }
+
     deleteRow(row: number, array: [][], deleteCount: number): void{
         array.splice(row, deleteCount);
     }
+
     deleteColumn(row: number, column: number, array: [][], deleteCount: number): void{
         array[row].splice(column, deleteCount);
     }
+
     // tslint:disable-next-line:typedef
     upload(files: File[]) {
         const file = files[0];

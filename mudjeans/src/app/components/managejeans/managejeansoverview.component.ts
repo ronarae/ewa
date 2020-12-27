@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Jean} from '../../models/Jean';
-import {SalesService} from '../../services/sales.service';
+import {SalesSbService} from '../../services/sales-sb.service';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-managejeansoverview',
@@ -8,14 +10,18 @@ import {SalesService} from '../../services/sales.service';
   styleUrls: ['./managejeansoverview.component.css']
 })
 export class ManagejeansoverviewComponent implements OnInit {
-  productCode = ['MB0001C001D001-28-32', 'MB0001C001D001-29-32', 'MB0001C001D001-30-32', 'MB0001C001D001-32-36', 'MB0001C001D001-36-38'];
-  // tslint:disable-next-line:max-line-length
-  description = ['Regular Bryce - Strong Blue', 'Regular Bryce - Authentic Indigo', 'Regular Bryce - Heavy Stone', 'Slim Lassen - Sea Stone', 'Slim Rick - Drip Dry'];
-  size = ['W28 L32', 'W29 L32', 'W30 L32', 'W32 L36', 'W36 L38'];
 
-  public jeans: Jean[];
   selectedJeanDescription = null;
-  constructor(public jeanService: SalesService) {
+  displayedColumns = ['Product Code', 'Style Name', 'Fabric', 'Washing', 'Product Category', 'Latest Stock', 'Should Order'];
+  dataSource;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  constructor(public jeanService: SalesSbService) {
+    this.dataSource = new MatTableDataSource<Jean>(this.jeanService.findAll());
+  }
+
+  // tslint:disable-next-line:typedef
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   // tslint:disable-next-line:typedef
@@ -23,12 +29,23 @@ export class ManagejeansoverviewComponent implements OnInit {
 
   }
 
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
+  // tslint:disable-next-line:typedef
+  toggleStyleName(styleName: string) {
+    this.dataSource.filter = styleName;
+  }
+
   // tslint:disable-next-line:typedef
   addJean() {
   }
 
-onJeanSelected(jean: Jean): void {
-    this.selectedJeanDescription = jean.description;
-}
+  onJeanSelected(jean: Jean): void {
+      this.selectedJeanDescription = jean.styleName;
+  }
 
 }
