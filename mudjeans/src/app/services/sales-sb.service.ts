@@ -37,9 +37,16 @@ export class SalesSbService {
     }
 
     save(jeans: Jean): void {
-        this.jeans[this.jeans.findIndex((x) => x.productCode === jeans.productCode)] = jeans;
+        const id = this.jeans.findIndex((x) => x.productCode === jeans.productCode);
+        //jean not found
+        if (id === -1) {
+            this.jeans.push(jeans);
+        } else {
+            this.jeans[id] = jeans;
+        }
         this.restPutJean(jeans).subscribe((data) => console.log(data));
     }
+
 
     deleteById(productcode: string): Jean {
         this.restDeleteJean(productcode);

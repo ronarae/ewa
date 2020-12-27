@@ -56,7 +56,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatPaginatorModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
   ],
 
   exports: [RouterModule],

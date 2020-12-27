@@ -2,9 +2,12 @@
     <h3 class="text-center">Manage jeans</h3>
     <div>
         <div>
+
             <mat-form-field>
                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter"/>
             </mat-form-field>
+            <button class="btn btn-event" data-toggle="modal" data-target="#myModal" (click)="addJean()">Add jean
+            </button>
         </div>
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="Product Code">
@@ -45,9 +48,9 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row (click)="onJeanSelected(row)" data-toggle="modal" data-target="#myModal" *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+
         <mat-paginator [pageSizeOptions]="[5, 10, 20, 30, 40]" showFirstLastButtons> </mat-paginator>
-        <button class="btn btn-event" data-toggle="modal" data-target="#myModal" (click)="addJean()">Add jean
-        </button>
+
     </div>
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
@@ -93,8 +96,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-danger">Delete changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveCurrentJean(currentJean)">Save changes</button>
+                    <button type="button" class="btn btn-danger"(click)="deleteCurrentJean(currentJean)" >Delete changes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
