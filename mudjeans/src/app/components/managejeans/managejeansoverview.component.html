@@ -2,9 +2,12 @@
     <h3 class="text-center">Manage jeans</h3>
     <div>
         <div>
+
             <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter"/>
             </mat-form-field>
+            <button class="btn btn-event" data-toggle="modal" data-target="#myModal" (click)="addJean()">Add jean
+            </button>
         </div>
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="Product Code">
@@ -43,11 +46,11 @@
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            <button class="btn btn-event" data-toggle="modal" data-target="#myModal" (click)="addJean()">Add jean
-            </button>
+            <tr mat-row (click)="onJeanSelected(row)" data-toggle="modal" data-target="#myModal" *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20, 30, 40]" showFirstLastButtons></mat-paginator>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20, 30, 40]" showFirstLastButtons> </mat-paginator>
+
     </div>
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
@@ -60,24 +63,41 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Product code</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Size</th>
-                    </tr>
-                    </thead>
-                    <tr>
-                        <th scope="row">id number here</th>
-                        <td>Production code here</td>
-                        <td>Description here</td>
-                        <td>Size here</td>
-                    </tr>
+                    <form>
+                        <div class="form-group">
+                            <label for="productCode">Product Code</label>
+                            <input type="text" [(ngModel)]="currentJean.productCode" name="productCode" class="form-control" id="productCode" aria-describedby="productCode" placeholder="Enter Product Code">
+                        </div>
+                        <div class="form-group">
+                            <label for="styleName">Style Name</label>
+                            <input type="text" [(ngModel)]="currentJean.styleName" name="styleName"class="form-control" id="styleName" aria-describedby="styleName" placeholder="Enter Style Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="fabric">Fabric</label>
+                            <input type="text" [(ngModel)]="currentJean.fabric" name="fabric"class="form-control" id="fabric" aria-describedby="fabric" placeholder="Enter Fabric">
+                        </div>
+                        <div class="form-group">
+                            <label for="washing">Washing</label>
+                            <input type="text" [(ngModel)]="currentJean.washing" name="washing" class="form-control" id="washing" aria-describedby="washing" placeholder="Enter Washing">
+                        </div>
+                        <div class="form-group">
+                            <label for="productCategory">Product Category</label>
+                            <input type="text" [(ngModel)]="currentJean.productCategory" name="productCategory" class="form-control" id="productCategory" aria-describedby="productCategory" placeholder="Enter Product Category">
+                        </div>
+                        <div class="form-group">
+                            <label for="latestStock">Latest Stock</label>
+                            <input type="number" [(ngModel)]="currentJean.latestStock" name="latestStock" class="form-control" id="latestStock" aria-describedby="latestStock" placeholder="Enter Latest Stock">
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" [(ngModel)]="currentJean.shouldOrder" name="shouldOrder" class="form-check-input" id="shouldOrder">
+                            <label class="form-check-label" for="shouldOrder">Should Order</label>
+                        </div>
+                    </form>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-danger">Delete changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveCurrentJean(currentJean)">Save changes</button>
+                    <button type="button" class="btn btn-danger"(click)="deleteCurrentJean(currentJean)" >Delete changes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -96,39 +116,4 @@
     </div>
 </div>
 
-<div *ngFor="let jean of jeanService.findAll()" class="modal fade" id="{{'exampleModal'}}" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit jean</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Product code</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Size</th>
-                </tr>
-                </thead>
-                <tr>
-                    <th scope="row">id number here</th>
-                    <td>Production code here</td>
-                    <td>Description here</td>
-                    <td>Size here</td>
-                </tr>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-danger">Delete changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-
-</div>
 

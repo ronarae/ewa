@@ -3,6 +3,7 @@ import {Jean} from '../../models/Jean';
 import {SalesSbService} from '../../services/sales-sb.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import {getMatScrollStrategyAlreadyAttachedError} from "@angular/cdk/overlay/scroll/scroll-strategy";
 
 @Component({
   selector: 'app-managejeansoverview',
@@ -11,7 +12,9 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class ManagejeansoverviewComponent implements OnInit {
 
-  selectedJeanDescription = null;
+  // @ts-ignore
+  currentJean: Jean = new Jean();
+
   displayedColumns = ['Product Code', 'Style Name', 'Fabric', 'Washing', 'Product Category', 'Latest Stock', 'Should Order'];
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -42,10 +45,25 @@ export class ManagejeansoverviewComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   addJean() {
+    // @ts-ignore
+    this.currentJean = new Jean();
   }
 
   onJeanSelected(jean: Jean): void {
-      this.selectedJeanDescription = jean.styleName;
+    this.currentJean = jean;
+    console.log(jean);
   }
+
+  deleteCurrentJean(jean: Jean) {
+    if(confirm("Are you sure to delete "+ jean.styleName + "?")) {
+      this.jeanService.deleteById(jean.productCode);
+    }
+  }
+
+  saveCurrentJean(jean: Jean) {
+  this.jeanService.save(jean);
+  alert("Succesfully saved!")
+  }
+
 
 }
