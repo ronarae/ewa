@@ -23,6 +23,7 @@ import {MatTableModule} from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 
 
 const appRoutes: Routes = [
@@ -54,7 +55,8 @@ const appRoutes: Routes = [
     MatTableModule,
     BrowserAnimationsModule,
     MatPaginatorModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule
   ],
 
   exports: [RouterModule],

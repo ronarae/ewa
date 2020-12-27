@@ -11,7 +11,9 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class ManagejeansoverviewComponent implements OnInit {
 
-  selectedJeanDescription = null;
+  // @ts-ignore
+  currentJean: Jean = new Jean();
+
   displayedColumns = ['Product Code', 'Style Name', 'Fabric', 'Washing', 'Product Category', 'Latest Stock', 'Should Order'];
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -42,10 +44,13 @@ export class ManagejeansoverviewComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   addJean() {
+    // @ts-ignore
+    this.currentJean = new Jean();
   }
 
   onJeanSelected(jean: Jean): void {
-      this.selectedJeanDescription = jean.styleName;
+    this.currentJean = jean;
+    console.log(jean);
   }
 
 }
