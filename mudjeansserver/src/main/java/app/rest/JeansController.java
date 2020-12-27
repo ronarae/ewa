@@ -46,11 +46,10 @@ public class JeansController {
 
     @DeleteMapping("/jeans/{productCode}")
     public boolean deleteJeans(@PathVariable String productCode) {
-        if (repository.delete(productCode)) {
+        if (!repository.delete(productCode)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Jeans with productCode " + productCode + " could not be found.");
         }
-
         return true;
     }
 
