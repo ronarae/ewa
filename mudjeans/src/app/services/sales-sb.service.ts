@@ -38,18 +38,19 @@ export class SalesSbService {
 
     save(jeans: Jean): void {
         const id = this.jeans.findIndex((x) => x.productCode === jeans.productCode);
-        //jean not found
+        // jean not found
         if (id === -1) {
             this.jeans.push(jeans);
+            this.restPostJean(jeans).subscribe((data) => console.log(data));
         } else {
             this.jeans[id] = jeans;
+            this.restPutJean(jeans).subscribe((data) => console.log(data));
         }
-        this.restPutJean(jeans).subscribe((data) => console.log(data));
     }
 
 
     deleteById(productcode: string): Jean {
-        this.restDeleteJean(productcode);
+        this.restDeleteJean(productcode).subscribe(() => {console.log('deleted'); });
         const index = this.jeans.findIndex((x) => x.productCode === productcode);
         if (index === -1) {
             return null;
@@ -71,9 +72,9 @@ export class SalesSbService {
         return this.httpClient.put<Jean>(url, jean);
     }
 
-    private restDeleteJean(productcode: string): void {
+    private restDeleteJean(productcode: string): Observable<any> {
         const url = `http://localhost:8085/jeans/${productcode}`;
-        this.httpClient.delete(url);
+        return this.httpClient.delete(url);
     }
 
 
