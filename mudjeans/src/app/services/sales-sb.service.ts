@@ -20,6 +20,7 @@ export class SalesSbService {
                     this.jeans.push(Jean.trueCopy(data[i]));
                 }
                 console.log('Jean length: ' + this.jeans.length);
+                console.log(data[0]);
             },
             (error) => {
                 alert('Error:' + error);
