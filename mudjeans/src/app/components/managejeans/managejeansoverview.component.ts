@@ -56,8 +56,9 @@ export class ManagejeansoverviewComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   deleteCurrentJean(jean: Jean) {
-    if (confirm('Are you sure to delete ' + jean.styleName + '?')) {
+    if (confirm('Are you sure you want to delete ' + jean.styleName + '?')) {
       this.jeanService.deleteById(jean.productCode);
+      alert('Succesfully deleted');
     }
   }
 
