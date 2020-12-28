@@ -68,7 +68,7 @@ export class SalesSbService {
     }
 
     private restPutJean(jean: Jean): Observable<Jean> {
-        const url = `http://localhost:8085/jeans/${jean.productCode}`;
+        const url = `http://localhost:8085/jeans/`;
         return this.httpClient.put<Jean>(url, jean);
     }
 
