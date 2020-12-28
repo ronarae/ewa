@@ -18,7 +18,13 @@ export class ManagejeansoverviewComponent implements OnInit {
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(public jeanService: SalesSbService) {
-    this.dataSource = new MatTableDataSource<Jean>(this.jeanService.findAll());
+    // inside subscribe wordt elke keer gebruikt wanneer data wordt aangepast -> direct update in view
+    this.jeanService.restGetJean().subscribe((data) => {
+          this.dataSource = new MatTableDataSource<Jean>(data);
+        },
+        (error) => {
+          alert('Error:' + error);
+        });
   }
 
   // tslint:disable-next-line:typedef use-lifecycle-interface

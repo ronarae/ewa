@@ -1,5 +1,8 @@
 package app.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 @Entity(name = "Jean")
@@ -21,7 +24,8 @@ public class Jeans {
     private String productCategory;
     @Column
     private int latestStock;
-    @Column
+    @Column(columnDefinition = "TINYINT(1)", nullable = false)
+    @JsonProperty
     private boolean shouldOrder;
 
 

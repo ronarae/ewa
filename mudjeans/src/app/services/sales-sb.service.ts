@@ -20,6 +20,7 @@ export class SalesSbService {
                     this.jeans.push(Jean.trueCopy(data[i]));
                 }
                 console.log('Jean length: ' + this.jeans.length);
+                console.log(data[0]);
             },
             (error) => {
                 alert('Error:' + error);
@@ -59,7 +60,7 @@ export class SalesSbService {
         }
     }
 
-    private restGetJean(): Observable<Jean[]> {
+    public restGetJean(): Observable<Jean[]> {
         return this.httpClient.get<Jean[]>('http://localhost:8085/jeans');
     }
 

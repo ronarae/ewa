@@ -37,19 +37,25 @@
 
             <ng-container matColumnDef="Latest Stock">
                 <th mat-header-cell *matHeaderCellDef> Latest Stock</th>
-                <td mat-cell *matCellDef="let jean"> {{jean.latestStock}} </td>
+                <td mat-cell *matCellDef="let jean">
+                    <div
+                            [ngClass]="{'redWarningStock':jean.latestStock == 0}">{{jean.latestStock}} </div></td>
             </ng-container>
 
             <ng-container matColumnDef="Should Order">
                 <th mat-header-cell *matHeaderCellDef> Should Order</th>
-                <td mat-cell *matCellDef="let jean"> {{jean.shouldOrder}} </td>
+                <td mat-cell *matCellDef="let jean">
+                    <span
+                         [ngClass]="{'redWarningShouldOrder':!jean.shouldOrder}">{{jean.shouldOrder}} </span>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row (click)="onJeanSelected(row)" data-toggle="modal" data-target="#myModal" *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row (click)="onJeanSelected(row)" data-toggle="modal" data-target="#myModal"
+                *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-        <mat-paginator [pageSizeOptions]="[5, 10, 20, 30, 40]" showFirstLastButtons> </mat-paginator>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20, 30, 40]" showFirstLastButtons></mat-paginator>
 
     </div>
     <!-- Modal -->
@@ -66,38 +72,51 @@
                     <form>
                         <div class="form-group">
                             <label for="productCode">Product Code</label>
-                            <input type="text" [(ngModel)]="currentJean.productCode" name="productCode" class="form-control" id="productCode" aria-describedby="productCode" placeholder="Enter Product Code">
+                            <input type="text" [(ngModel)]="currentJean.productCode" name="productCode"
+                                   class="form-control" id="productCode" aria-describedby="productCode"
+                                   placeholder="Enter Product Code">
                         </div>
                         <div class="form-group">
                             <label for="styleName">Style Name</label>
-                            <input type="text" [(ngModel)]="currentJean.styleName" name="styleName"class="form-control" id="styleName" aria-describedby="styleName" placeholder="Enter Style Name">
+                            <input type="text" [(ngModel)]="currentJean.styleName" name="styleName" class="form-control"
+                                   id="styleName" aria-describedby="styleName" placeholder="Enter Style Name">
                         </div>
                         <div class="form-group">
                             <label for="fabric">Fabric</label>
-                            <input type="text" [(ngModel)]="currentJean.fabric" name="fabric"class="form-control" id="fabric" aria-describedby="fabric" placeholder="Enter Fabric">
+                            <input type="text" [(ngModel)]="currentJean.fabric" name="fabric" class="form-control"
+                                   id="fabric" aria-describedby="fabric" placeholder="Enter Fabric">
                         </div>
                         <div class="form-group">
                             <label for="washing">Washing</label>
-                            <input type="text" [(ngModel)]="currentJean.washing" name="washing" class="form-control" id="washing" aria-describedby="washing" placeholder="Enter Washing">
+                            <input type="text" [(ngModel)]="currentJean.washing" name="washing" class="form-control"
+                                   id="washing" aria-describedby="washing" placeholder="Enter Washing">
                         </div>
                         <div class="form-group">
                             <label for="productCategory">Product Category</label>
-                            <input type="text" [(ngModel)]="currentJean.productCategory" name="productCategory" class="form-control" id="productCategory" aria-describedby="productCategory" placeholder="Enter Product Category">
+                            <input type="text" [(ngModel)]="currentJean.productCategory" name="productCategory"
+                                   class="form-control" id="productCategory" aria-describedby="productCategory"
+                                   placeholder="Enter Product Category">
                         </div>
                         <div class="form-group">
                             <label for="latestStock">Latest Stock</label>
-                            <input type="number" [(ngModel)]="currentJean.latestStock" name="latestStock" class="form-control" id="latestStock" aria-describedby="latestStock" placeholder="Enter Latest Stock">
+                            <input type="number" [(ngModel)]="currentJean.latestStock" name="latestStock"
+                                   class="form-control" id="latestStock" aria-describedby="latestStock"
+                                   placeholder="Enter Latest Stock">
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" [(ngModel)]="currentJean.shouldOrder" name="shouldOrder" class="form-check-input" id="shouldOrder">
+                            <input type="checkbox" [(ngModel)]="currentJean.shouldOrder" name="shouldOrder"
+                                   class="form-check-input" id="shouldOrder">
                             <label class="form-check-label" for="shouldOrder">Should Order</label>
                         </div>
                     </form>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="saveCurrentJean(currentJean)">Save changes</button>
-                    <button type="button" class="btn btn-danger"(click)="deleteCurrentJean(currentJean)" >Delete changes</button>
+                    <button type="button" class="btn btn-primary" (click)="saveCurrentJean(currentJean)">Save changes
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="deleteCurrentJean(currentJean)">Delete
+                        changes
+                    </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
