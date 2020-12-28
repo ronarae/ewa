@@ -24,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 const appRoutes: Routes = [
@@ -45,19 +46,20 @@ const appRoutes: Routes = [
     PendingOrderComponent,
     UploadfileComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterModule.forRoot(appRoutes),
-    FormsModule,
-    CommonModule,
-    HttpClientModule,
-    MatTableModule,
-    BrowserAnimationsModule,
-    MatPaginatorModule,
-    MatFormFieldModule,
-    MatInputModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        RouterModule.forRoot(appRoutes),
+        FormsModule,
+        CommonModule,
+        HttpClientModule,
+        MatTableModule,
+        BrowserAnimationsModule,
+        MatPaginatorModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatProgressBarModule,
+    ],
 
   exports: [RouterModule],
 
