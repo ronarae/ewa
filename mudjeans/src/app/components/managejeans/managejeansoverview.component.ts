@@ -3,7 +3,6 @@ import {Jean} from '../../models/Jean';
 import {SalesSbService} from '../../services/sales-sb.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {getMatScrollStrategyAlreadyAttachedError} from "@angular/cdk/overlay/scroll/scroll-strategy";
 
 @Component({
   selector: 'app-managejeansoverview',
@@ -19,10 +18,16 @@ export class ManagejeansoverviewComponent implements OnInit {
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(public jeanService: SalesSbService) {
-    this.dataSource = new MatTableDataSource<Jean>(this.jeanService.findAll());
+    // inside subscribe wordt elke keer gebruikt wanneer data wordt aangepast -> direct update in view
+    this.jeanService.restGetJean().subscribe((data) => {
+          this.dataSource = new MatTableDataSource<Jean>(data);
+        },
+        (error) => {
+          alert('Error:' + error);
+        });
   }
 
-  // tslint:disable-next-line:typedef
+  // tslint:disable-next-line:typedef use-lifecycle-interface
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
@@ -32,6 +37,7 @@ export class ManagejeansoverviewComponent implements OnInit {
 
   }
 
+  // tslint:disable-next-line:typedef
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
@@ -54,15 +60,18 @@ export class ManagejeansoverviewComponent implements OnInit {
     console.log(jean);
   }
 
+  // tslint:disable-next-line:typedef
   deleteCurrentJean(jean: Jean) {
-    if(confirm("Are you sure to delete "+ jean.styleName + "?")) {
+    if (confirm('Are you sure you want to delete ' + jean.styleName + '?')) {
       this.jeanService.deleteById(jean.productCode);
+      alert('Succesfully deleted');
     }
   }
 
+  // tslint:disable-next-line:typedef
   saveCurrentJean(jean: Jean) {
   this.jeanService.save(jean);
-  alert("Succesfully saved!")
+  alert('Succesfully saved!');
   }
 
 

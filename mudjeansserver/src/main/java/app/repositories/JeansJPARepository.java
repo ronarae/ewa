@@ -50,6 +50,7 @@ public class JeansJPARepository implements JPARepositoryInterface<Jeans, String>
     }
 
     @Override
+    @Transactional
     public boolean delete(String s) {
         if (find(s) == null) return false;
         entityManager.remove((find(s)));
