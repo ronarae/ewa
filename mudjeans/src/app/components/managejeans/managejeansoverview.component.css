@@ -41,4 +41,12 @@ table {
   width: 100%;
 }
 
+.redWarningShouldOrder {
+  background-color: indianred;
+}
+
+.redWarningStock {
+  color: red;
+}
+
 

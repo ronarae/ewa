@@ -60,7 +60,7 @@ export class SalesSbService {
         }
     }
 
-    private restGetJean(): Observable<Jean[]> {
+    public restGetJean(): Observable<Jean[]> {
         return this.httpClient.get<Jean[]>('http://localhost:8085/jeans');
     }
 
