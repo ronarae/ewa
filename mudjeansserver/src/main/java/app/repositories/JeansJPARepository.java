@@ -56,4 +56,11 @@ public class JeansJPARepository implements JPARepositoryInterface<Jeans, String>
         entityManager.remove((find(s)));
         return true;
     }
+
+    @Transactional
+    public boolean shouldOrderJean(String productCode) {
+        TypedQuery<Boolean> q = this.entityManager
+                .createQuery("select j.shouldOrder from Jean j where j.productCode = :productCode", Boolean.class);
+        return q.setParameter("productCode", productCode).getSingleResult();
+    }
 }

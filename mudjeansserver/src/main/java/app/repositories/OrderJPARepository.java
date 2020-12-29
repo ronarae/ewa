@@ -1,12 +1,14 @@
 package app.repositories;
 
 import app.models.Order;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+@Repository
 public class OrderJPARepository implements JPARepositoryInterface<Order, Integer> {
 
     @PersistenceContext
@@ -31,7 +33,7 @@ public class OrderJPARepository implements JPARepositoryInterface<Order, Integer
     @Override
     public List<Order> findAll() {
         TypedQuery<Order> query = this.entityManager.createQuery(
-          "select o from Order o", Order.class);
+          "select o from Order_table o", Order.class);
         return query.getResultList();
     }
 

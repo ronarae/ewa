@@ -24,18 +24,31 @@ public class Order {
 
     @ManyToOne
     private User reviewer;
+
+    @Column
     private OrderStatus status;
+    @Column
     private String note;
+    @Column
     private LocalDate date;
 
 
     public Order() {
     }
 
-    public Order(int orderId, User creator, User reviewer, String note, LocalDate date) {
+    public Order(int orderId, User creator, User reviewer, OrderStatus status, String note, LocalDate date) {
         this.orderId = orderId;
         this.creator = creator;
         this.reviewer = reviewer;
+        this.status = status;
+        this.note = note;
+        this.date = date;
+    }
+
+    public Order(User creator, User reviewer, OrderStatus status, String note, LocalDate date) {
+        this.creator = creator;
+        this.reviewer = reviewer;
+        this.status = status;
         this.note = note;
         this.date = date;
     }

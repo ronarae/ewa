@@ -2,13 +2,10 @@ package app.rest;
 
 import app.models.Order;
 import app.models.UploadFileResponse;
+import app.repositories.JeansJPARepository;
+import app.repositories.OrderJPARepository;
 import app.services.StorageException;
 import app.services.StorageService;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -16,15 +13,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.yaml.snakeyaml.util.ArrayUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import static org.apache.poi.xssf.usermodel.XSSFWorkbookType.XLSX;
+import java.time.LocalDate;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -32,6 +24,12 @@ public class FileUploadController {
 
     @Autowired
     private StorageService storageService;
+
+    @Autowired
+    private JeansJPARepository jeansRepo;
+
+    @Autowired
+    private OrderJPARepository orderRepo;
 
     @PostMapping("/upload")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws StorageException, IOException {
@@ -95,10 +93,6 @@ public class FileUploadController {
                 }
             }
             list = formatArray(data);
-            for (int i = 0; i <list.size() ; i++) {
-                System.out.println(list.get(i));
-            }
-//            System.out.println(list);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,62 +123,66 @@ public class FileUploadController {
             list.add(array[i][17]);
         }
 
-        for (int i = 0; i < (list.size() / 3); i++) {
-            System.out.println("total sold " + i + ": " + calculateTotalSold(list));
-        }
         return list;
     }
 
     public Order createOrder(ArrayList<String> list) {
-        Order order = new Order();
+        // TODO Get user from request and add random reviewer
+        Order order = new Order(null, null, Order.OrderStatus.PENDING, "Automatic generation", LocalDate.now());
+        orderRepo.save(order);
 
-        // Totaal berekenen
+        Map<String, Integer> toOrder = calculateAllToOrder(list);
+
+        // TODO Add order and jean to OrderJean with quantity from toOrder map
 
         return null;
     }
 
-    public ArrayList<Integer> calculateTotalSold(ArrayList<String> list) {
-        ArrayList<Integer> toReturn = new ArrayList<>();
+    public Map<String, Integer> calculateAllToOrder(ArrayList<String> list) {
+        Map<String, Integer> totalSoldPerType = calculateTotal(list, 1);
+        Map<String, Integer> toOrder = new HashMap<>();
 
+        for (int i = 0; i < list.size(); i += 3) {
+            String productCode = list.get(i);
+            if (!jeansRepo.shouldOrderJean(productCode)) {
+                continue;
+            }
+
+            int soldPerJeanSize = (int) Double.parseDouble(list.get(i + 1));
+            int stockPerJean = (int) Double.parseDouble(list.get(i + 2));
+            int totalSold = totalSoldPerType.get(productCode.split("-", 2)[0]);
+
+            // calculate percentage
+            double percentage = Math.ceil((soldPerJeanSize / totalSold) * 100);
+            int totalToOrder = (int) ((percentage / 100) * totalSold) - stockPerJean;
+            if (totalToOrder > 0) {
+                toOrder.put(productCode, totalToOrder);
+            }
+        }
+
+        return toOrder;
+    }
+
+    public Map<String, Integer> calculateTotal(ArrayList<String> list, int loopadder) {
+        Map<String, Integer> toReturn = new HashMap();
         int index = 0;
-
         do {
             // Split the productcode
             String currentJeanCode = list.get(index).split("-", 2)[0];
-            int totalSoldPerJean = 0;
+            int totalNumber = 0;
 
-            for (int i = index; i < list.size(); i +=3) {
-                if(list.get(i).contains(currentJeanCode)) {
-                    totalSoldPerJean += Integer.parseInt(list.get(i+1));
+            for (int i = index; i < list.size(); i += 3) {
+                if (list.get(i).contains(currentJeanCode)) {
+                    totalNumber += (int) Double.parseDouble(list.get(i + loopadder));
                     index = i;
                 }
             }
 
-            toReturn.add(totalSoldPerJean);
+            toReturn.put(currentJeanCode, totalNumber);
 
             index += 3;
         } while (index < list.size());
 
         return toReturn;
     }
-
-    public int calculateTotalStock(ArrayList<String> list, int index) {
-        // Split the productcode
-        String currentJeanCode = list.get(index).split("-", 2)[0];
-        int totalStockPerJean = 0;
-        // Loop through list
-        for (int i = 0; i < list.size(); i++) {
-            // Check if it is the same jean (jeans are paired by 3)
-            if (i % 3 == 0) {
-                // Check if productcodes are similar
-                if (list.get(i).contains(currentJeanCode)) {
-                    // Add up all the jeans stock
-                    totalStockPerJean += Double.parseDouble(list.get(i + 1));
-                }
-            }
-        }
-        return totalStockPerJean;
-    }
-
-
 }
