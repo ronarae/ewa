@@ -130,10 +130,7 @@ public class FileUploadController {
         }
 
         for (int i = 0; i < (list.size() / 3); i++) {
-            System.out.println("total sold: " + calculateTotalSold(list, 0));
-//          System.out.println(list.get(63));
-//            System.out.println("total sold: " + calculateTotalSold(list, 63));
-//            System.out.println(i + 1);
+            System.out.println("total sold " + i + ": " + calculateTotalSold(list));
         }
         return list;
     }
@@ -143,26 +140,32 @@ public class FileUploadController {
 
         // Totaal berekenen
 
-
         return null;
     }
 
-    public int calculateTotalSold(ArrayList<String> list, int index) {
-        // Split the productcode
-        String currentJeanCode = list.get(index).split("-", 2)[0];
-        int totalSoldPerJean = 0;
-        // Loop through list
-        for (int i = 0; i < list.size(); i++) {
-            // Check if it is the same jean (jeans are paired by 3)
-            if (i % 3 == 0) {
-                // Check if productcodes are similar
-                if (list.get(i).contains(currentJeanCode)) {
-                    // Add up all the sold jeans
-                    totalSoldPerJean += Double.parseDouble(list.get(i + 1));
+    public ArrayList<Integer> calculateTotalSold(ArrayList<String> list) {
+        ArrayList<Integer> toReturn = new ArrayList<>();
+
+        int index = 0;
+
+        do {
+            // Split the productcode
+            String currentJeanCode = list.get(index).split("-", 2)[0];
+            int totalSoldPerJean = 0;
+
+            for (int i = index; i < list.size(); i +=3) {
+                if(list.get(i).contains(currentJeanCode)) {
+                    totalSoldPerJean += Integer.parseInt(list.get(i+1));
+                    index = i;
                 }
             }
-        }
-        return totalSoldPerJean;
+
+            toReturn.add(totalSoldPerJean);
+
+            index += 3;
+        } while (index < list.size());
+
+        return toReturn;
     }
 
     public int calculateTotalStock(ArrayList<String> list, int index) {
