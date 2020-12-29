@@ -1,4 +1,6 @@
 package app.rest;
+
+import app.models.Jeans;
 import app.models.User;
 import app.repositories.UserJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,22 +35,32 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers(@RequestParam(name = "id") Integer id,
-                                  @RequestParam(name = "role") String role) {
+    public List<User> getAllUsers(@RequestParam(required = false, name = "id") Integer id,
+                                  @RequestParam(required = false, name = "email") String email,
+                                  @RequestParam(required = false, name = "role") String role) {
 
         if (id != null) {
             return userJPARepository.findByQuery("user_find_by_id", id);
+        }
+        if (email != null) {
+            return userJPARepository.findByQuery("user_find_by_email", email);
         }
         if (role != null) {
             return userJPARepository.findByQuery("user_find_by_role", role);
         }
         return userJPARepository.findAll();
     }
-//0687655018
+
+    @GetMapping("/users2")
+    public List<User> getAllJeans() {
+        return userJPARepository.findAll();
+    }
+
+    //0687655018
 //EATS-3EGX5A
 //    eats-nkxuvy
     @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable int id){
+    public User getUserById(@PathVariable int id) {
         User user = userJPARepository.find(id);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -59,29 +71,28 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        user.setId(0);
         User createdUser = userJPARepository.save(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdUser.getId()).toUri();
         return ResponseEntity.created(location).body(createdUser);
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<User> saveUser(@PathVariable Integer id, @RequestBody User user) throws ResponseStatusException{
-    if (id == user.getId()) {
-        User updatedUser = userJPARepository.save(user);
-        return ResponseEntity.created(getLocationURI(updatedUser.getId())).body(updatedUser);
-    }
+    public ResponseEntity<User> saveUser(@PathVariable Integer id, @RequestBody User user) throws ResponseStatusException {
+        if (id == user.getId()) {
+            User updatedUser = userJPARepository.save(user);
+            return ResponseEntity.created(getLocationURI(updatedUser.getId())).body(updatedUser);
+        }
 
-    if (id == null) {
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "User with the ID " + user.getId() + " could not be found.");
-    }
-    throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "The requested ID does not meet the ID provided in the body");
+        if (id == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "User with the ID " + user.getId() + " could not be found.");
+        }
+        throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "The requested ID does not meet the ID provided in the body");
     }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Boolean> deleteByUserId(@PathVariable int id) throws ResponseStatusException {
-        if(userJPARepository.delete(id)) {
+        if (userJPARepository.delete(id)) {
             return ResponseEntity.ok(true);
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot delete the User because the provided ID: " + id + " does not exist");
