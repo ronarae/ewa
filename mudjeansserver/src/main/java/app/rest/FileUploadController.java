@@ -1,6 +1,7 @@
 package app.rest;
 
 import app.models.Order;
+import app.models.OrderJean;
 import app.models.UploadFileResponse;
 import app.repositories.JeansJPARepository;
 import app.repositories.OrderJPARepository;
@@ -30,6 +31,7 @@ public class FileUploadController {
 
     @Autowired
     private OrderJPARepository orderRepo;
+
 
     @PostMapping("/upload")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws StorageException, IOException {
@@ -133,9 +135,17 @@ public class FileUploadController {
 
         Map<String, Integer> toOrder = calculateAllToOrder(list);
 
-        // TODO Add order and jean to OrderJean with quantity from toOrder map
+        addToOrder(order, toOrder);
 
-        return null;
+        return order;
+    }
+
+    public void addToOrder(Order order, Map<String, Integer> toOrder) {
+        Order orderFromDB = orderRepo.find(order.getOrderId());
+        for(String key : toOrder.keySet()) {
+            OrderJean newOrder = new OrderJean(orderFromDB, jeansRepo.find(key), toOrder.get(key));
+            orderRepo.save(newOrder);
+        }
     }
 
     public Map<String, Integer> calculateAllToOrder(ArrayList<String> list) {
@@ -153,7 +163,7 @@ public class FileUploadController {
             int totalSold = totalSoldPerType.get(productCode.split("-", 2)[0]);
 
             // calculate percentage
-            double percentage = Math.ceil((soldPerJeanSize / totalSold) * 100);
+            double percentage = Math.ceil(((double) soldPerJeanSize / (double) totalSold) * 100);
             int totalToOrder = (int) ((percentage / 100) * totalSold) - stockPerJean;
             if (totalToOrder > 0) {
                 toOrder.put(productCode, totalToOrder);
@@ -164,7 +174,7 @@ public class FileUploadController {
     }
 
     public Map<String, Integer> calculateTotal(ArrayList<String> list, int loopadder) {
-        Map<String, Integer> toReturn = new HashMap();
+        HashMap<String, Integer> toReturn = new HashMap();
         int index = 0;
         do {
             // Split the productcode
