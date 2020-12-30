@@ -3,8 +3,10 @@ package app.rest;
 import app.models.Order;
 import app.models.OrderJean;
 import app.models.UploadFileResponse;
+import app.models.User;
 import app.repositories.JeansJPARepository;
 import app.repositories.OrderJPARepository;
+import app.repositories.UserJPARepository;
 import app.services.StorageException;
 import app.services.StorageService;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -32,9 +34,11 @@ public class FileUploadController {
     @Autowired
     private OrderJPARepository orderRepo;
 
+    @Autowired
+    private UserJPARepository userRepo;
 
     @PostMapping("/upload")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws StorageException, IOException {
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("username") String username) throws StorageException, IOException {
 //        String fileName = storageService.storeFile(file);
 //        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
 //                .path("/downloadFile/")
@@ -129,8 +133,17 @@ public class FileUploadController {
     }
 
     public Order createOrder(ArrayList<String> list) {
-        // TODO Get user from request and add random reviewer
-        Order order = new Order(null, null, Order.OrderStatus.PENDING, "Automatic generation", LocalDate.now());
+        // Get all administrators.
+        List<User> reviewers = userRepo.findByQuery("user_find_by_role", "admin");
+
+        // Remove system from administrators list and save it to a usable variable.
+        User system = reviewers.remove(0);
+
+        // Create random for assigning a random administrator to the order (system has been removed as a reviewer).
+        Random rand = new Random();
+        User reviewer = reviewers.get(rand.nextInt(reviewers.size()));
+
+        Order order = new Order(system, reviewer, Order.OrderStatus.PENDING, "Automatic generation", LocalDate.now());
         orderRepo.save(order);
 
         Map<String, Integer> toOrder = calculateAllToOrder(list);
