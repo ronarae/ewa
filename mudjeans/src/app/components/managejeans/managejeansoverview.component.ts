@@ -3,6 +3,7 @@ import {Jean} from '../../models/Jean';
 import {SalesSbService} from '../../services/sales-sb.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-managejeansoverview',
@@ -17,7 +18,7 @@ export class ManagejeansoverviewComponent implements OnInit {
   displayedColumns = ['Product Code', 'Style Name', 'Fabric', 'Washing', 'Product Category', 'Latest Stock', 'Should Order'];
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(public jeanService: SalesSbService) {
+  constructor(public jeanService: SalesSbService, private toastr: ToastrService) {
     // inside subscribe wordt elke keer gebruikt wanneer data wordt aangepast -> direct update in view
     this.jeanService.restGetJean().subscribe((data) => {
           this.dataSource = new MatTableDataSource<Jean>(data);
@@ -64,14 +65,15 @@ export class ManagejeansoverviewComponent implements OnInit {
   deleteCurrentJean(jean: Jean) {
     if (confirm('Are you sure you want to delete ' + jean.styleName + '?')) {
       this.jeanService.deleteById(jean.productCode);
-      alert('Succesfully deleted');
+      this.toastr.success('You have succesfully deleted ' + jean.styleName, 'Succesfully deleted');
     }
   }
+
 
   // tslint:disable-next-line:typedef
   saveCurrentJean(jean: Jean) {
   this.jeanService.save(jean);
-  alert('Succesfully saved!');
+  this.toastr.success('You have succesfully saved your changes', 'Succesfully saved');
   }
 
 

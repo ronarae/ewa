@@ -11,6 +11,7 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
 
+  // @ts-ignore
   user: User = new User();
   errorMessage: string;
   expectedUrl: string;
