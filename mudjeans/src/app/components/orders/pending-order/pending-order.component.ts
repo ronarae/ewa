@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-pending-order',
@@ -7,14 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PendingOrderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
   deleteInfo(): void {
     const confirmation = confirm('Are you sure you want to delete this order? This action cannot be undone!');
     if (confirmation === true){
-      alert('Order has been successfully deleted');
+      this.toastr.success('You have succesfully deleted this pending order', 'Succesfully deleted!');
       document.getElementById('closeModal').click();
     }
   }

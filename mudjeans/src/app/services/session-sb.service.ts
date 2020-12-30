@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {User} from '../models/User';
-import { JwtHelperService } from "@auth0/angular-jwt";
+import { JwtHelperService } from '@auth0/angular-jwt';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {share, shareReplay} from 'rxjs/operators';
@@ -96,7 +96,7 @@ export class SessionSbService {
     if (this.getToken() !== null) {
       const decodedToken = this.jwtService.decodeToken(this.getToken());
 
-      this.currentUser = new User();
+      this.currentUser = new User(1, 'test', 'test', 'test', 'test', 10);
       this.currentUser.email = decodedToken.sub;
       this.currentUser.role = decodedToken.role;
       this.currentUser.exp = decodedToken.exp;

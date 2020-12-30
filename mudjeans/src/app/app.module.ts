@@ -22,10 +22,11 @@ import { UploadfileComponent } from './components/uploadfile/uploadfile.componen
 import {MatTableModule} from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
-import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { ToastrModule } from 'ngx-toastr';
 
 
 const appRoutes: Routes = [
@@ -61,11 +62,12 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatProgressBarModule,
+    ToastrModule.forRoot(),
   ],
 
   exports: [RouterModule],
 
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
