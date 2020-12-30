@@ -166,6 +166,10 @@ public class FileUploadController {
 
         for (int i = 0; i < list.size(); i += 3) {
             String productCode = list.get(i);
+            if (jeansRepo.find(productCode) == null) {
+                System.out.println("Product code not in DB");
+                continue;
+            }
             if (!jeansRepo.shouldOrderJean(productCode)) {
                 continue;
             }
