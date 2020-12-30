@@ -39,7 +39,8 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
 
     @Override
     public List<User> findAll() {
-        TypedQuery<User> q = entityManager.createQuery("select u from User u", User.class);
+        TypedQuery<User> q = this.entityManager.createQuery(
+                "select u from User_table u", User.class);
         return q.getResultList();
     }
 
@@ -59,8 +60,11 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
 
     @Override
     public boolean delete(Integer id) {
-        if (find(id) != null) return false;
-        entityManager.remove(find(id));
-        return true;
+        System.out.println(find(id));
+        if (find(id) != null) {
+            entityManager.remove(find(id));
+            return true;
+        }
+        return false;
     }
 }

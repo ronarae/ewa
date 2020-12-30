@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SessionSbService} from "../../../services/session-sb.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private session: SessionSbService) { }
 
   ngOnInit(): void {
     // @ts-ignore
@@ -23,6 +24,10 @@ export class NavBarComponent implements OnInit {
         $('.sidebar .collapse').collapse('hide');
       }
     });
+  }
+
+  isAdmin(): boolean {
+    return this.session.isAdmin();
   }
 
 }

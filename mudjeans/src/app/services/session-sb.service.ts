@@ -61,6 +61,10 @@ export class SessionSbService {
     return this.getToken() != null;
   }
 
+  isAdmin(): boolean {
+      return this.currentUser.role === 'admin';
+  }
+
   get email(): string {
     return this.currentUser.email;
   }
