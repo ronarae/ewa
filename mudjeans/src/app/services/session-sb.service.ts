@@ -96,7 +96,7 @@ export class SessionSbService {
     if (this.getToken() !== null) {
       const decodedToken = this.jwtService.decodeToken(this.getToken());
 
-      this.currentUser = new User(1, 'test', 'test', 'test', 'test', 10);
+      this.currentUser = new User(null, null, null, null, null, null);
       this.currentUser.email = decodedToken.sub;
       this.currentUser.role = decodedToken.role;
       this.currentUser.exp = decodedToken.exp;
