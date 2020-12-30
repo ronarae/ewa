@@ -17,7 +17,7 @@ export class OrderhistoryComponent implements OnInit {
   deleteOrderHistory(){
     const confirmation = confirm('Are you sure you want to delete this order? THIS ACTION CANNOT BE UNDONE!');
     if (confirmation === true) {
-      this.toastr.success('You have succesfully deleted this order', 'Succesfully deleted!');
+      this.toastr.success('You have successfully deleted this order', 'Successfully deleted!');
       document.getElementById('closeModal').click();
     }
   }

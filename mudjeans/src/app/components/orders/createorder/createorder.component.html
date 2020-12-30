@@ -1,82 +1,116 @@
-<div class="container">
-  <!-- Content Row -->
-  <h2 class="text-center">Create Order</h2>
-  <hr>
-  <div class="row">
-    <div class="col">
-      <!-- Content Column -->
-      <div class="col-lg mb-4">
-        <form>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Jean model</label>
-            <select class="form-control" id="exampleFormControlInput1">
-              <option>Slim lassen - Strong Blue</option>
-              <option>Slim Lassen - Pure Blue</option>
-              <option>Slim Lassen - Dip Dry</option>
-              <option>Slim Lassen - O3 grey</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="check1">Example multiple select</label>
-            <br>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="check1"
-                         value="option1">
-                  <label class="form-check-label" for="inlineCheckbox1">W28 L32</label>
-                </div>
-                <input type="button" value="-" class="minus">
-                <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="2" pattern="" inputmode="">
-                <input type="button" value="+" class="plus">
-              </div>
-              <div class="col-md-6">
-                <label for="check2">Amount:</label>
-                <input type="number" id="check2"
-                       placeholder="0">
-              </div>
-              <div class="col-md-4">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="check3"
-                         value="option1">
-                  <label class="form-check-label" for="check3">W28 L32</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label for="check4">Amount:</label>
-                <input type="number" id="check4"
-                       placeholder="0">
-              </div>
-              <div class="col-md-4">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                         value="option1">
-                  <label class="form-check-label" for="inlineCheckbox1">W28 L32</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label for="exampleInputPassword1">Amount:</label>
-                <input type="number" id="exampleInputPassword1"
-                       placeholder="0">
-              </div>
+<ng-template #newRowModal>
+    <h2 mat-dialog-title>Add order row</h2>
+    <form>
+        <mat-dialog-content>
+            <div class="form-group">
+                <label for="productCategorySelect">Product Category</label>
+                <select (change)="categorySelectChange()" [formControl]="categorySelect" class="form-control"
+                        id="productCategorySelect">
+                    <option></option>
+                    <option *ngFor="let category of categories" value="{{category}}">
+                        {{ category }}
+                    </option>
+                </select>
             </div>
-          </div>
-          <br>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Additional information</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
-          </div>
-          <div class="row">
-            <div class="col-2">
-              <button class="btn btn-info" id="addJean">Add Jean</button>
+            <div class="form-group">
+                <label for="styleNameSelect">Style Name</label>
+                <select (change)="styleNameSelectChange()" [formControl]="styleNameSelect" class="form-control"
+                        id="styleNameSelect">
+                    <option></option>
+                    <option *ngFor="let styleName of styleNames" value="{{styleName}}">
+                        {{ styleName }}
+                    </option>
+                </select>
             </div>
-            <div class="col-2">
-              <button (click)="showSuccessOrder()" class="btn btn-primary" id="placeOrderBtn">Place order</button>
+            <div class="form-group">
+                <label for="fabricSelect">Fabric</label>
+                <select (change)="fabricSelectChange()" [formControl]="fabricSelect" class="form-control"
+                        id="fabricSelect">
+                    <option></option>
+                    <option *ngFor="let fabric of fabrics" value="{{fabric}}">
+                        {{ fabric }}
+                    </option>
+                </select>
             </div>
+            <div class="form-group">
+                <label for="washingSelect">Washing</label>
+                <select (change)="washingSelectChange()" [formControl]="washingSelect" class="form-control"
+                        id="washingSelect">
+                    <option></option>
+                    <option *ngFor="let washing of washings" value="{{washing}}">
+                        {{ washing }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="productCodeSelect">Product Code</label>
+                <select [formControl]="productCodeSelect" class="form-control" id="productCodeSelect">
+                    <option></option>
+                    <option *ngFor="let productCode of productCodes" value="{{productCode}}">
+                        {{ productCode }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amountInput">Amount</label>
+                <input type="number" [formControl]="amountInput" class="form-control" id="amountInput">
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button mat-button [mat-dialog-close]="true">Add product</button>
+            <button mat-button mat-dialog-close>Cancel</button>
+        </mat-dialog-actions>
+    </form>
+</ng-template>
 
-          </div>
-        </form>
-      </div>
+<div class="container">
+    <!-- Content Row -->
+    <h2 class="text-center">Create Order</h2>
+    <hr>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    <div class="row" *ngIf="!loading">
+        <div class="col">
+            <!-- Content Column -->
+            <div class="col-lg mb-4">
+                <form>
+                    <button mat-button (click)="createRow(newRowModal)">New product</button>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td colspan="3" *ngIf="rows.length === 0">
+                                <span style="text-align:center">No products added to order yet</span>
+                            </td>
+                        </tr>
+                        <tr *ngFor="let row of rows; let i = index">
+                            <td>{{ row.productCode }}</td>
+                            <td>{{ row.amount }}</td>
+                            <td>
+                                <button mat-button (click)="removeRow(i)">Remove</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Additional information</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <button class="btn btn-info" id="addJean">Add Jean</button>
+                        </div>
+                        <div class="col-2">
+                            <button (click)="showSuccessOrder()" class="btn btn-primary" id="placeOrderBtn">Place
+                                order
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

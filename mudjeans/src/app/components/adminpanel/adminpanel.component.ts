@@ -37,7 +37,7 @@ export class AdminpanelComponent implements OnInit {
   deleteUser(user: User) {
     if (confirm('Are you sure you want to delete ' + user.email + '?')) {
       this.userService.deleteById(user.id);
-      this.toastr.success('You have succesfully deleted ' + user.email, 'Succesfully deleted!');
+      this.toastr.success('You have successfully deleted ' + user.email, 'Successfully deleted!');
     }
   }
 
@@ -50,7 +50,7 @@ export class AdminpanelComponent implements OnInit {
   // tslint:disable-next-line:typedef
   saveUser(user: User) {
     this.userService.save(user);
-    this.toastr.success('You have succesfully saved this user', 'Succesfully saved!');
+    this.toastr.success('You have successfully saved this user', 'Successfully saved!');
   }
 
 }

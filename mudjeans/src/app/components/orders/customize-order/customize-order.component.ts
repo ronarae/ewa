@@ -26,7 +26,7 @@ export class CustomizeOrderComponent implements OnInit {
   deleteInfo(): void {
     const confirmation = confirm('Are you sure you want to delete this order? This action cannot be undone!');
     if (confirmation === true) {
-      this.toastr.success('You have succesfully deleted this order', 'Succesfully deleted!');
+      this.toastr.success('You have successfully deleted this order', 'Successfully deleted!');
       document.getElementById('closeModal').click();
     }
   }

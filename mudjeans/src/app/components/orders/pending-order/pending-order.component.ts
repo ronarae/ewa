@@ -15,7 +15,7 @@ export class PendingOrderComponent implements OnInit {
   deleteInfo(): void {
     const confirmation = confirm('Are you sure you want to delete this order? This action cannot be undone!');
     if (confirmation === true){
-      this.toastr.success('You have succesfully deleted this pending order', 'Succesfully deleted!');
+      this.toastr.success('You have successfully deleted this pending order', 'Successfully deleted!');
       document.getElementById('closeModal').click();
     }
   }
