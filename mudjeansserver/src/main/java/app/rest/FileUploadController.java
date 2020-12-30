@@ -38,7 +38,7 @@ public class FileUploadController {
     private UserJPARepository userRepo;
 
     @PostMapping("/upload")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("username") String username) throws StorageException, IOException {
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws StorageException, IOException {
 //        String fileName = storageService.storeFile(file);
 //        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
 //                .path("/downloadFile/")
@@ -51,7 +51,6 @@ public class FileUploadController {
             createOrder(resultList);
         }
         return null;
-
     }
 
 
