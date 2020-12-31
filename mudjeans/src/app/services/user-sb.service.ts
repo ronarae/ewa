@@ -43,6 +43,7 @@ export class UserSbService {
         const id = this.users.findIndex((x) => x.id === user.id);
         // jean not found
         if (id === -1) {
+            // user.id = this.findAll()[this.findAll().length - 1].id + 1;
             this.users.push(user);
             this.restPutUser(user).subscribe((data) => console.log(data));
         } else {

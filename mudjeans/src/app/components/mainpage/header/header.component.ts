@@ -9,9 +9,12 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
+  userName: string;
+
   constructor(private session: SessionSbService, private router: Router) { }
 
   ngOnInit(): void {
+    this.userName = this.session.currentUser.name;
   }
 
   logOff() {

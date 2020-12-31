@@ -12,7 +12,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 export class LoginComponent implements OnInit {
 
   // @ts-ignore
-  user: User = new User();
+  user: User = new User(null, null, null, null, null, null);
   errorMessage: string;
   expectedUrl: string;
 

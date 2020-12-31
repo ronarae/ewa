@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {User} from '../models/User';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtHelperService } from "@auth0/angular-jwt";
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {share, shareReplay} from 'rxjs/operators';

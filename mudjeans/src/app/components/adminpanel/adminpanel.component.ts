@@ -4,6 +4,7 @@ import {Jean} from '../../models/Jean';
 import {UserSbService} from '../../services/user-sb.service';
 import {User} from '../../models/User';
 import {ToastrService} from 'ngx-toastr';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-adminpanel',
@@ -12,11 +13,22 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class AdminpanelComponent implements OnInit {
 
+  newPassword = "";
   currentUser: User;
-  users;
+  users = [];
 
-  constructor(private userService: UserSbService, private toastr: ToastrService) {
-    this.users = userService.findAll();
+  constructor(private userService: UserSbService, private toastr: ToastrService, private router: Router) {
+    userService.restGetUser().subscribe(
+        (data) => {
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < data.length; i++) {
+            this.users.push(User.trueCopy(data[i]));
+          }
+        },
+        (error) => {
+          alert('Error:' + error);
+        }
+    );
   }
 
   ngOnInit(): void {
@@ -24,13 +36,7 @@ export class AdminpanelComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   addUser() {
-    // @ts-ignore
-    this.currentUser = new User();
-  }
-
-  // tslint:disable-next-line:typedef
-  newPassword(user: User) {
-
+    this.currentUser = new User(null, null, null, null, null, null);
   }
 
   // tslint:disable-next-line:typedef
@@ -49,8 +55,12 @@ export class AdminpanelComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   saveUser(user: User) {
+    if (this.newPassword !== "") {
+      user.password = this.newPassword;
+    }
     this.userService.save(user);
     this.toastr.success('You have successfully saved this user', 'Successfully saved!');
+    this.router.navigate(['/adminpanel']);
   }
 
 }
