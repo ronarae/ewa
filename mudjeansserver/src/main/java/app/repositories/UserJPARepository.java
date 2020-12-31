@@ -49,8 +49,7 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
         if (user.getId() == 0) {
             return null;
         }
-        entityManager.merge(user);
-        return user;
+        return entityManager.merge(user);
     }
 
     @Override

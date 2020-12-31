@@ -3,6 +3,7 @@ package app.rest;
 import app.models.Jeans;
 import app.models.User;
 import app.repositories.UserJPARepository;
+import app.security.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class UserController {
 
     @Autowired
     private UserJPARepository userJPARepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private URI getLocationURI(long id) {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().
@@ -71,6 +75,7 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<User> createUser(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User createdUser = userJPARepository.save(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdUser.getId()).toUri();
         return ResponseEntity.created(location).body(createdUser);
@@ -79,6 +84,7 @@ public class UserController {
     @PutMapping("/users/{id}")
     public ResponseEntity<User> saveUser(@PathVariable Integer id, @RequestBody User user) throws ResponseStatusException {
         if (id == user.getId()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             User updatedUser = userJPARepository.save(user);
             return ResponseEntity.created(getLocationURI(updatedUser.getId())).body(updatedUser);
         }
