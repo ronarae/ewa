@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
 
@@ -12,39 +13,42 @@ import java.util.Properties;
 public class Notification {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_gen1")
-    @SequenceGenerator(name = "id_gen1", sequenceName = "id_seq1", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "id_user")
     private User target;
 
-    @ManyToOne
-    private Order order;
-
-    @Column(nullable = true)
-    private String targetRole;
-
-    @Column(nullable = false)
+    @Column(name = "notification_message", nullable = false)
     private String message;
 
-    private final String SMTP_SERVER = "smtp.gmail.com ";
-    private final String USERNAME = "mudjeansemailtest@gmail.com";
-    private final String PASSWORD = "ybeyhrmjvrxyoghp";
-    private final String EMAIL_FROM = "mudjeansemailtest@gmail.com";
+    @Column
+    private String header;
+
+    private final transient String SMTP_SERVER = "smtp.googlemail.com";
+    private final transient String SMTP_USERNAME = "mudjeansemailtest@gmail.com";
+    private final transient String SMTP_PASSWORD = "ybeyhrmjvrxyoghp";
+    private final transient String EMAIL_FROM = "mudjeansemailtest@gmail.com";
 
     public Notification() {}
 
-    public Notification(int id, User target, String targetRole, String message) {
+    public Notification(int id, String header, User target, String message) {
         this.id = id;
         this.target = target;
-        this.targetRole = targetRole;
+        this.header = header;
+        this.message = message;
+    }
+
+    public Notification(User target, String header, String message)  {
+        this.target = target;
+        this.header = header;
         this.message = message;
     }
 
     public boolean sendMail() {
         Properties prop = System.getProperties();
-        prop.put("mail.smtp.auth", "false");
+        prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true");
         prop.put("mail.smtp.host", SMTP_SERVER);
         prop.put("mail.smtp.port", "587");
@@ -52,24 +56,24 @@ public class Notification {
         Session session = Session.getInstance(prop,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(USERNAME, PASSWORD);
+                        return new PasswordAuthentication(SMTP_USERNAME, SMTP_PASSWORD);
                     }
                 });
 
         try {
             Message msg = new MimeMessage(session);
 
-            msg.setFrom(new InternetAddress(EMAIL_FROM));
+            msg.setFrom(new InternetAddress(EMAIL_FROM, "MUDJEANS AUTOMATIC SYSTEM"));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(target.getEmail(), false));
 
-            msg.setSubject(order.getOrderId() + " " + order.getNote() + " Created by:" + order.getCreator());
+            msg.setSubject(header);
             msg.setText(message);
             msg.setSentDate(new Date());
 
             Transport.send(msg);
             return true;
 
-        } catch (MessagingException e) {
+        } catch (MessagingException | UnsupportedEncodingException e) {
             e.printStackTrace();
             return false;
         }
@@ -91,19 +95,19 @@ public class Notification {
         this.target = target;
     }
 
-    public String getTargetRole() {
-        return targetRole;
-    }
-
-    public void setTargetRole(String targetRole) {
-        this.targetRole = targetRole;
-    }
-
     public String getMessage() {
         return message;
     }
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
     }
 }

@@ -1,5 +1,6 @@
 package app.repositories;
 
+import app.models.Notification;
 import app.models.Order;
 import app.models.OrderJean;
 import org.springframework.stereotype.Repository;
@@ -44,11 +45,7 @@ public class OrderJPARepository implements JPARepositoryInterface<Order, Integer
     @Override
     @Transactional
     public Order save(Order order) {
-//        if (order.getOrderId() == 0) {
-//            return null;
-//        }
         return entityManager.merge(order);
-//        return order;
     }
 
     @Override
@@ -80,4 +77,14 @@ public class OrderJPARepository implements JPARepositoryInterface<Order, Integer
     public void flush() {
         entityManager.flush();
     }
+
+    @Transactional
+    public Notification save(Notification n) {
+        if (n.getHeader() == null || n.getTarget() == null || n.getMessage() == null) {
+            return null;
+        }
+        entityManager.persist(n);
+        return n;
+    }
+
 }

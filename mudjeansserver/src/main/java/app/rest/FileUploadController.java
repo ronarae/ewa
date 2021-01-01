@@ -47,7 +47,12 @@ public class FileUploadController {
 //                (file).getContentType(), (file).getSize());
         ArrayList<String> resultList = readFile(file);
         if (resultList != null) {
-            createOrder(resultList);
+            Order createdOrder = createOrder(resultList);
+            String header = "Automatic order with id " + createdOrder.getOrderId() + " has been created by the system.";
+            String message = "An order has been created by the system with the following id: " + createdOrder.getOrderId() + ", please review it when you have time.";
+            Notification notification = new Notification(createdOrder.getReviewer(), header , message);
+            orderRepo.save(notification);
+            notification.sendMail();
         }
         return null;
     }
@@ -141,15 +146,17 @@ public class FileUploadController {
         Random rand = new Random();
         User reviewer = reviewers.get(rand.nextInt(reviewers.size()));
 
+        Map<String, Integer> toOrder = calculateAllToOrder(list);
+        updateJeanStock(list);
+
         Order order = new Order(system, reviewer, "Pending", "Automatic generation", LocalDate.now());
         Order savedOrder = orderRepo.save(order);
         orderRepo.flush();
 
-        Map<String, Integer> toOrder = calculateAllToOrder(list);
 
         System.out.println("SavedOrder: " + savedOrder.getOrderId());
         addToOrder(savedOrder, toOrder);
-        return order;
+        return savedOrder;
     }
 
     public void addToOrder(Order order, Map<String, Integer> toOrder) {
@@ -187,6 +194,20 @@ public class FileUploadController {
         }
 
         return toOrder;
+    }
+
+    public void updateJeanStock(ArrayList<String> list) {
+        for (int i = 0; i < list.size(); i += 3) {
+            String productCode = list.get(i);
+            Jeans j = jeansRepo.find(productCode);
+            if (j == null) {
+                System.out.println("Product code not in DB: " + productCode);
+                continue;
+            }
+
+            j.setLatestStock((int) Double.parseDouble(list.get(i + 2)));
+            jeansRepo.save(j);
+        }
     }
 
     public Map<String, Integer> calculateTotal(ArrayList<String> list, int loopadder) {
