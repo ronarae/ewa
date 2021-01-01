@@ -37,7 +37,7 @@ export class CreateorderComponent implements OnInit {
         private dialog: MatDialog,
     ) {
         // tslint:disable-next-line:new-parens
-        this.order = new Order(0, "", Date.now(), sessionStorage.getItem("username"), "Pending", null);
+        this.order = new Order(0, "", new Date(), sessionStorage.getItem("username"), "Pending", null);
         this.loading = true;
         this.salesService.restGetJean().subscribe(
             (jeans) => {
