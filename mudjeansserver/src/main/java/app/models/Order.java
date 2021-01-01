@@ -14,19 +14,20 @@ import java.util.Map;
 })
 public class Order {
     @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_gen3")
-    @SequenceGenerator(name = "id_gen3", sequenceName = "id_seq3", initialValue = 1, allocationSize = 1)
+    @Column(name = "id_order")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
 
     @ManyToOne
+    @JoinColumn(name = "id_user")
     private User creator;
 
     @ManyToOne
+    @JoinColumn(name = "id_reviewer")
     private User reviewer;
 
     @Column
-    private OrderStatus status;
+    private String status;
     @Column
     private String note;
     @Column
@@ -36,7 +37,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(int orderId, User creator, User reviewer, OrderStatus status, String note, LocalDate date) {
+    public Order(int orderId, User creator, User reviewer, String status, String note, LocalDate date) {
         this.orderId = orderId;
         this.creator = creator;
         this.reviewer = reviewer;
@@ -45,7 +46,7 @@ public class Order {
         this.date = date;
     }
 
-    public Order(User creator, User reviewer, OrderStatus status, String note, LocalDate date) {
+    public Order(User creator, User reviewer, String status, String note, LocalDate date) {
         this.creator = creator;
         this.reviewer = reviewer;
         this.status = status;
@@ -94,10 +95,10 @@ public class Order {
         this.date = date;
     }
 
-    public enum OrderStatus {
-        ADJUSTMENT,
-        PENDING,
-        DECLINED,
-        ACCEPTED
-    }
+//    public enum OrderStatus {
+//        ADJUSTMENT,
+//        PENDING,
+//        DECLINED,
+//        ACCEPTED
+//    }
 }

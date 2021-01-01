@@ -44,11 +44,11 @@ public class OrderJPARepository implements JPARepositoryInterface<Order, Integer
     @Override
     @Transactional
     public Order save(Order order) {
-        if (order.getOrderId() == 0) {
-            return null;
-        }
-        entityManager.merge(order);
-        return order;
+//        if (order.getOrderId() == 0) {
+//            return null;
+//        }
+        return entityManager.merge(order);
+//        return order;
     }
 
     @Override
@@ -71,8 +71,13 @@ public class OrderJPARepository implements JPARepositoryInterface<Order, Integer
             return null;
         }
 
-        entityManager.merge(orderJean);
+        entityManager.persist(orderJean);
 
         return orderJean;
+    }
+
+    @Transactional
+    public void flush() {
+        entityManager.flush();
     }
 }

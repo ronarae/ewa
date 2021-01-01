@@ -16,11 +16,11 @@ public class OrderMockRepository implements RepositoryInterface<Order, Integer> 
     }
 
     private void addRandomData() {
-        Order order = new Order(null, null, Order.OrderStatus.ACCEPTED, "note order 0", LocalDate.now());
+        Order order = new Order(null, null, "Accepted", "note order 0", LocalDate.now());
 
         orders.add(order);
 
-        Order order1 = new Order(null, null, Order.OrderStatus.ACCEPTED, "note order 1", LocalDate.now());
+        Order order1 = new Order(null, null, "Accepted", "note order 1", LocalDate.now());
     }
 
     @Override

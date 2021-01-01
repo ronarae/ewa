@@ -1,9 +1,6 @@
 package app.rest;
 
-import app.models.Order;
-import app.models.OrderJean;
-import app.models.UploadFileResponse;
-import app.models.User;
+import app.models.*;
 import app.repositories.JeansJPARepository;
 import app.repositories.OrderJPARepository;
 import app.repositories.UserJPARepository;
@@ -13,10 +10,12 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -142,20 +141,21 @@ public class FileUploadController {
         Random rand = new Random();
         User reviewer = reviewers.get(rand.nextInt(reviewers.size()));
 
-        Order order = new Order(system, reviewer, Order.OrderStatus.PENDING, "Automatic generation", LocalDate.now());
-        orderRepo.save(order);
+        Order order = new Order(system, reviewer, "Pending", "Automatic generation", LocalDate.now());
+        Order savedOrder = orderRepo.save(order);
+        orderRepo.flush();
 
         Map<String, Integer> toOrder = calculateAllToOrder(list);
 
-        addToOrder(order, toOrder);
-
+        System.out.println("SavedOrder: " + savedOrder.getOrderId());
+        addToOrder(savedOrder, toOrder);
         return order;
     }
 
     public void addToOrder(Order order, Map<String, Integer> toOrder) {
-        Order orderFromDB = orderRepo.find(order.getOrderId());
         for(String key : toOrder.keySet()) {
-            OrderJean newOrder = new OrderJean(orderFromDB, jeansRepo.find(key), toOrder.get(key));
+            Jeans j = jeansRepo.find(key);
+            OrderJean newOrder = new OrderJean(order, j, toOrder.get(key));
             orderRepo.save(newOrder);
         }
     }
@@ -167,7 +167,7 @@ public class FileUploadController {
         for (int i = 0; i < list.size(); i += 3) {
             String productCode = list.get(i);
             if (jeansRepo.find(productCode) == null) {
-                System.out.println("Product code not in DB");
+                System.out.println("Product code not in DB: " + productCode);
                 continue;
             }
             if (!jeansRepo.shouldOrderJean(productCode)) {
