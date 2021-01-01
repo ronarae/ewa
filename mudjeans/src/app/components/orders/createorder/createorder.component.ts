@@ -4,6 +4,8 @@ import {FormControl} from '@angular/forms';
 import {SalesSbService} from "../../../services/sales-sb.service";
 import {Jean} from "../../../models/Jean";
 import {MatDialog} from "@angular/material/dialog";
+// @ts-ignore
+import {Order} from "../../../models/Order";
 
 @Component({
     selector: 'app-createorder',
@@ -27,12 +29,15 @@ export class CreateorderComponent implements OnInit {
     private jeans: Jean[];
     private rows = [];
     public loading = true;
+    public order: Order;
 
     constructor(
         private toastr: ToastrService,
         private salesService: SalesSbService,
         private dialog: MatDialog,
     ) {
+        // tslint:disable-next-line:new-parens
+        this.order = new Order(0, "", Date.now(), sessionStorage.getItem("username"), "Pending", null);
         this.loading = true;
         this.salesService.restGetJean().subscribe(
             (jeans) => {
@@ -50,7 +55,7 @@ export class CreateorderComponent implements OnInit {
 
     // tslint:disable-next-line:typedef
     showSuccessOrder() {
-        this.toastr.success('You placed your order', 'Successfully created an order');
+
     }
 
     ngOnInit(): void {
@@ -166,4 +171,11 @@ export class CreateorderComponent implements OnInit {
             this.productCodes.add(jean.productCode);
         });
     }
+
+    // tslint:disable-next-line:typedef
+    placeNewOrder(order: Jean) {
+        this.order.addJean(order);
+        this.toastr.success('You placed your order', 'Successfully created an order');
+    }
+
 }
