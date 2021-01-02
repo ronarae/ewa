@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity(name = "orderjean")
+@NamedQuery(name = "Get_by_order_id", query = "select o from orderjean o where o.order = :order")
 public class OrderJean implements Serializable {
     @Id
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})

@@ -23,12 +23,8 @@ public class OrderJPARepository implements JPARepositoryInterface<Order, Integer
         TypedQuery<Order> query = entityManager.createNamedQuery(jpqlName, Order.class);
 
         switch (jpqlName) {
-            case "Order_find_by_status":
-                query.setParameter("status", params[0]);
-                break;
-            case "Order_find_by_date":
-                query.setParameter("date", params[0]);
-                break;
+            case "Order_find_by_status" -> query.setParameter("status", params[0]);
+            case "Order_find_by_date" -> query.setParameter("date", params[0]);
         }
 
         return query.getResultList();
@@ -85,6 +81,12 @@ public class OrderJPARepository implements JPARepositoryInterface<Order, Integer
         }
         entityManager.persist(n);
         return n;
+    }
+
+    @Transactional
+    public List<OrderJean> findAllByOrder(int orderId) {
+        TypedQuery<OrderJean> query = this.entityManager.createNamedQuery("Get_by_order_id", OrderJean.class);
+        return query.setParameter("order", find(orderId)).getResultList();
     }
 
 }

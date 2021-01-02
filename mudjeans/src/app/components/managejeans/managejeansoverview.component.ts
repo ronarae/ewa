@@ -35,7 +35,6 @@ export class ManagejeansoverviewComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   ngOnInit() {
-
   }
 
   // tslint:disable-next-line:typedef

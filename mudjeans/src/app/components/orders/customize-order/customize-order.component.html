@@ -1,38 +1,42 @@
-<!-- End of Topbar -->
 <div class="container">
   <h2 class="text-center">Customize Existing Order</h2>
+  <div>
+    <div>
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter"/>
+      </mat-form-field>
+    </div>
+    <div class="loading-overlay" *ngIf="!dataSource">
+      <mat-progress-bar mode="buffer"></mat-progress-bar>
+    </div>
+    <table mat-table [dataSource]="dataSource" >
+      <ng-container matColumnDef="Order Id">
+        <th mat-header-cell *matHeaderCellDef> Order Id</th>
+        <td mat-cell *matCellDef="let order"> {{order.idOrder}} </td>
+      </ng-container>
 
-  <div class="dropdown">
-    <table class="table table-hover">
-      <thead>
-      <tr>
-        <th scope="col">Order #</th>
-        <th scope="col">Order Date</th>
-        <th scope="col">Order Time</th>
-        <th scope="col">Placed By</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr data-toggle="modal" data-target="#orderModal">
-        <th scope="row">1</th>
-        <td>03/09/2020</td>
-        <td>16:59 PM</td>
-        <td>Eva</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>06/10/2020</td>
-        <td>14:03 PM</td>
-        <td>Dion</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>01/11/2020</td>
-        <td>18:03 PM</td>
-        <td>Mark</td>
-      </tr>
-      </tbody>
+      <ng-container matColumnDef="Order Date">
+        <th mat-header-cell *matHeaderCellDef> Order Date</th>
+        <td mat-cell *matCellDef="let order"> {{order.date}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Order Message">
+        <th mat-header-cell *matHeaderCellDef> Order Message</th>
+        <td mat-cell *matCellDef="let order"> {{order.note}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Placed By">
+        <th mat-header-cell *matHeaderCellDef> Placed By </th>
+        <td mat-cell *matCellDef="let order"> {{order.idUser}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row (click)="onOrderSelected(row)" data-toggle="modal" data-target="#orderModal"
+          *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20, 30, 40]" showFirstLastButtons></mat-paginator>
+
   </div>
 </div>
 

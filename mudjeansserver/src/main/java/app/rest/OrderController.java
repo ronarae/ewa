@@ -1,7 +1,9 @@
 package app.rest;
 
 import app.models.Order;
-import app.repositories.OrderMockRepository;;
+import app.models.OrderJean;
+import app.repositories.OrderJPARepository;
+;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +14,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+@RestController
 public class OrderController {
 
     @Autowired
-    private OrderMockRepository orderMockRepository;
+    private OrderJPARepository orderRepository;
 
     private URI getLocationURI(long id) {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().
@@ -25,8 +28,8 @@ public class OrderController {
 
     @GetMapping("/orders/summary")
     public List<Order> getOrdersSummary() {
-        if (orderMockRepository.findAll().size() != 0) {
-            return orderMockRepository.findAll();
+        if (orderRepository.findAll().size() != 0) {
+            return orderRepository.findAll();
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "There are no orders found.");
@@ -34,12 +37,12 @@ public class OrderController {
 
     @GetMapping("/orders")
     public List<Order> getAllOrders() {
-        return orderMockRepository.findAll();
+        return orderRepository.findAll();
     }
 
     @GetMapping("/orders/{orderId}")
     public Order getOrderById(@PathVariable int orderId) {
-        Order o = orderMockRepository.find(orderId);
+        Order o = orderRepository.find(orderId);
         if (o == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Orders with orderId " + orderId + " could not be found.");
@@ -49,7 +52,7 @@ public class OrderController {
 
     @PostMapping("/orders")
     public ResponseEntity<Order> createOrder(@RequestBody Order o) {
-        Order savedOrders = orderMockRepository.save(o);
+        Order savedOrders = orderRepository.save(o);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{orderId}")
                 .buildAndExpand(savedOrders.getOrderId()).toUri();
@@ -59,7 +62,7 @@ public class OrderController {
 
     @DeleteMapping("/orders/{orderId}")
     public boolean deleteOrders(@PathVariable int orderId) {
-        if (!orderMockRepository.delete(orderId)) {
+        if (!orderRepository.delete(orderId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Orders with orderId " + orderId + " could not be found.");
         }
@@ -68,14 +71,24 @@ public class OrderController {
 
     @PutMapping("/orders")
     public ResponseEntity updateOrders(@RequestBody Order o) {
-        Order old = orderMockRepository.find(o.getOrderId());
+        Order old = orderRepository.find(o.getOrderId());
 
         if (old == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Orders with orderId " + o.getOrderId() + " could not be found.");
         }
-        orderMockRepository.save(o);
+        orderRepository.save(o);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/orders/pending")
+    public List<Order> getPendingOrders() {
+        return orderRepository.findByQuery("Order_find_by_status", "Pending");
+    }
+
+    @GetMapping("/orders/orderjeans/{orderId}")
+    public List<OrderJean> getOrderJeanById(@PathVariable int orderId) {
+        return orderRepository.findAllByOrder(orderId);
     }
 }

@@ -95,10 +95,11 @@ public class Order {
         this.date = date;
     }
 
-//    public enum OrderStatus {
-//        ADJUSTMENT,
-//        PENDING,
-//        DECLINED,
-//        ACCEPTED
-//    }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
