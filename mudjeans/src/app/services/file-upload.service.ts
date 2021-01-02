@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {SessionSbService} from "./session-sb.service";
 
 
 @Injectable({
@@ -14,8 +15,6 @@ export class FileUploadService {
   constructor(private http: HttpClient) { }
 
   uploadWithProgress(object: any): Observable<any> {
-    console.log('object: ' + object);
-    console.log('info ' + this.http.post(this.url, object, {reportProgress: true, observe: 'events'}));
     return this.http.post(this.url, object, {reportProgress: true, observe: 'events'})
         .pipe(
             catchError(err => this.handleError(err))

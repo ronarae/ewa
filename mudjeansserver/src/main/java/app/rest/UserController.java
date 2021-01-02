@@ -3,6 +3,7 @@ package app.rest;
 import app.models.Jeans;
 import app.models.User;
 import app.repositories.UserJPARepository;
+import app.security.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class UserController {
 
     @Autowired
     private UserJPARepository userJPARepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private URI getLocationURI(long id) {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().

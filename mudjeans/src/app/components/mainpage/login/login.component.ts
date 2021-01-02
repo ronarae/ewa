@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {User} from "../../../models/User";
-import {NgForm} from "@angular/forms";
-import {SessionSbService} from "../../../services/session-sb.service";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {User} from '../../../models/User';
+import {NgForm} from '@angular/forms';
+import {SessionSbService} from '../../../services/session-sb.service';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 export class LoginComponent implements OnInit {
 
   // @ts-ignore
-  user: User = new User();
+  user: User = new User(null, null, null, null, null, null);
   errorMessage: string;
   expectedUrl: string;
 

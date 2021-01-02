@@ -4,6 +4,7 @@ import {Jean} from '../../models/Jean';
 import {UserSbService} from '../../services/user-sb.service';
 import {User} from '../../models/User';
 import {ToastrService} from 'ngx-toastr';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-adminpanel',
@@ -12,11 +13,22 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class AdminpanelComponent implements OnInit {
 
+  newPassword = "";
   currentUser: User;
-  users;
+  users = [];
 
-  constructor(private userService: UserSbService, private toastr: ToastrService) {
-    this.users = userService.findAll();
+  constructor(private userService: UserSbService, private toastr: ToastrService, private router: Router) {
+    userService.restGetUser().subscribe(
+        (data) => {
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < data.length; i++) {
+            this.users.push(User.trueCopy(data[i]));
+          }
+        },
+        (error) => {
+          alert('Error:' + error);
+        }
+    );
   }
 
   ngOnInit(): void {
@@ -24,33 +36,31 @@ export class AdminpanelComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   addUser() {
-    // @ts-ignore
-    this.currentUser = new User();
-  }
-
-  // tslint:disable-next-line:typedef
-  newPassword(user: User) {
-
+    this.currentUser = new User(null, null, null, null, null, null);
   }
 
   // tslint:disable-next-line:typedef
   deleteUser(user: User) {
     if (confirm('Are you sure you want to delete ' + user.email + '?')) {
       this.userService.deleteById(user.id);
-      this.toastr.success('You have succesfully deleted ' + user.email, 'Succesfully deleted!');
+      this.toastr.success('You have successfully deleted ' + user.email, 'Successfully deleted!');
     }
   }
 
   // tslint:disable-next-line:typedef
   onUserSelected(user: User) {
     this.currentUser = user;
-    console.log(this.currentUser);
   }
 
   // tslint:disable-next-line:typedef
   saveUser(user: User) {
+    if (this.newPassword !== "") {
+      user.password = this.newPassword;
+      this.newPassword = "";
+    }
     this.userService.save(user);
-    this.toastr.success('You have succesfully saved this user', 'Succesfully saved!');
+    this.toastr.success('You have successfully saved this user', 'Successfully saved!');
+    this.router.navigate(['/adminpanel']);
   }
 
 }

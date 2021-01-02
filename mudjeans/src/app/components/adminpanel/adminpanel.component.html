@@ -11,9 +11,9 @@
             </tr>
             </thead>
 
-            <tbody>
-            <tr *ngFor="let user of users; index as i" data-toggle="modal" data-target="#userModal" (click)="onUserSelected(user)">
-                <th scope="row" >{{user.name}}</th>
+            <tbody *ngFor="let user of users; index as i">
+            <tr data-toggle="modal" data-target="#userModal" (click)="onUserSelected(user)">
+                <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.role}}</td>
             </tr>
@@ -51,14 +51,14 @@
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="text" [(ngModel)]="currentUser.password" name="role" class="form-control"
+                            <input type="text" [(ngModel)]="newPassword" name="password" class="form-control"
                                    id="password" aria-describedby="password" placeholder="Enter new password">
                         </div>
                     </form>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="saveUser(currentUser)">Save changes</button>
+                    <button type="button" class="btn btn-primary" routerLink="/adminpanel" (click)="saveUser(currentUser)">Save changes</button>
                     <button type="button" class="btn btn-danger" (click)="deleteUser(currentUser)">Delete user</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>

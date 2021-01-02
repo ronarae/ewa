@@ -1,19 +1,21 @@
 package app.rest;
 
-import app.models.Order;
-import app.models.UploadFileResponse;
+import app.models.*;
 import app.repositories.JeansJPARepository;
 import app.repositories.OrderJPARepository;
+import app.repositories.UserJPARepository;
 import app.services.StorageException;
 import app.services.StorageService;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -31,6 +33,9 @@ public class FileUploadController {
     @Autowired
     private OrderJPARepository orderRepo;
 
+    @Autowired
+    private UserJPARepository userRepo;
+
     @PostMapping("/upload")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws StorageException, IOException {
 //        String fileName = storageService.storeFile(file);
@@ -42,10 +47,14 @@ public class FileUploadController {
 //                (file).getContentType(), (file).getSize());
         ArrayList<String> resultList = readFile(file);
         if (resultList != null) {
-            createOrder(resultList);
+            Order createdOrder = createOrder(resultList);
+            String header = "Automatic order with id " + createdOrder.getOrderId() + " has been created by the system.";
+            String message = "An order has been created by the system with the following id: " + createdOrder.getOrderId() + ", please review it when you have time.";
+            Notification notification = new Notification(createdOrder.getReviewer(), header , message);
+            orderRepo.save(notification);
+            notification.sendMail();
         }
         return null;
-
     }
 
 
@@ -127,15 +136,35 @@ public class FileUploadController {
     }
 
     public Order createOrder(ArrayList<String> list) {
-        // TODO Get user from request and add random reviewer
-        Order order = new Order(null, null, Order.OrderStatus.PENDING, "Automatic generation", LocalDate.now());
-        orderRepo.save(order);
+        // Get all administrators.
+        List<User> reviewers = userRepo.findByQuery("user_find_by_role", "admin");
+
+        // Remove system from administrators list and save it to a usable variable.
+        User system = reviewers.remove(0);
+
+        // Create random for assigning a random administrator to the order (system has been removed as a reviewer).
+        Random rand = new Random();
+        User reviewer = reviewers.get(rand.nextInt(reviewers.size()));
 
         Map<String, Integer> toOrder = calculateAllToOrder(list);
+        updateJeanStock(list);
 
-        // TODO Add order and jean to OrderJean with quantity from toOrder map
+        Order order = new Order(system, reviewer, "Pending", "Automatic generation", LocalDate.now());
+        Order savedOrder = orderRepo.save(order);
+        orderRepo.flush();
 
-        return null;
+
+        System.out.println("SavedOrder: " + savedOrder.getOrderId());
+        addToOrder(savedOrder, toOrder);
+        return savedOrder;
+    }
+
+    public void addToOrder(Order order, Map<String, Integer> toOrder) {
+        for(String key : toOrder.keySet()) {
+            Jeans j = jeansRepo.find(key);
+            OrderJean newOrder = new OrderJean(order, j, toOrder.get(key));
+            orderRepo.save(newOrder);
+        }
     }
 
     public Map<String, Integer> calculateAllToOrder(ArrayList<String> list) {
@@ -144,6 +173,10 @@ public class FileUploadController {
 
         for (int i = 0; i < list.size(); i += 3) {
             String productCode = list.get(i);
+            if (jeansRepo.find(productCode) == null) {
+                System.out.println("Product code not in DB: " + productCode);
+                continue;
+            }
             if (!jeansRepo.shouldOrderJean(productCode)) {
                 continue;
             }
@@ -153,7 +186,7 @@ public class FileUploadController {
             int totalSold = totalSoldPerType.get(productCode.split("-", 2)[0]);
 
             // calculate percentage
-            double percentage = Math.ceil((soldPerJeanSize / totalSold) * 100);
+            double percentage = Math.ceil(((double) soldPerJeanSize / (double) totalSold) * 100);
             int totalToOrder = (int) ((percentage / 100) * totalSold) - stockPerJean;
             if (totalToOrder > 0) {
                 toOrder.put(productCode, totalToOrder);
@@ -163,8 +196,22 @@ public class FileUploadController {
         return toOrder;
     }
 
+    public void updateJeanStock(ArrayList<String> list) {
+        for (int i = 0; i < list.size(); i += 3) {
+            String productCode = list.get(i);
+            Jeans j = jeansRepo.find(productCode);
+            if (j == null) {
+                System.out.println("Product code not in DB: " + productCode);
+                continue;
+            }
+
+            j.setLatestStock((int) Double.parseDouble(list.get(i + 2)));
+            jeansRepo.save(j);
+        }
+    }
+
     public Map<String, Integer> calculateTotal(ArrayList<String> list, int loopadder) {
-        Map<String, Integer> toReturn = new HashMap();
+        HashMap<String, Integer> toReturn = new HashMap();
         int index = 0;
         do {
             // Split the productcode

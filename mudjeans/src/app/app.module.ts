@@ -12,7 +12,7 @@ import { LoginComponent } from './components/mainpage/login/login.component';
 import { WrapperComponent } from './components/mainpage/wrapper/wrapper.component';
 import {RouterModule, Routes} from '@angular/router';
 import { ManagejeansoverviewComponent } from './components/managejeans/managejeansoverview.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import { OrderhistoryComponent } from './components/orderhistory/orderhistory.component';
 import { CreateorderComponent } from './components/orders/createorder/createorder.component';
@@ -27,6 +27,9 @@ import {MatInputModule} from '@angular/material/input';
 import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ToastrModule } from 'ngx-toastr';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
 
 
 const appRoutes: Routes = [
@@ -63,6 +66,10 @@ const appRoutes: Routes = [
     MatInputModule,
     MatProgressBarModule,
     ToastrModule.forRoot(),
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
 
   exports: [RouterModule],

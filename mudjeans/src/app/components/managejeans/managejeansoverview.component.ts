@@ -35,7 +35,6 @@ export class ManagejeansoverviewComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   ngOnInit() {
-
   }
 
   // tslint:disable-next-line:typedef
@@ -65,7 +64,7 @@ export class ManagejeansoverviewComponent implements OnInit {
   deleteCurrentJean(jean: Jean) {
     if (confirm('Are you sure you want to delete ' + jean.styleName + '?')) {
       this.jeanService.deleteById(jean.productCode);
-      this.toastr.success('You have succesfully deleted ' + jean.styleName, 'Succesfully deleted');
+      this.toastr.success('You have successfully deleted ' + jean.styleName, 'Successfully deleted');
     }
   }
 
@@ -73,8 +72,6 @@ export class ManagejeansoverviewComponent implements OnInit {
   // tslint:disable-next-line:typedef
   saveCurrentJean(jean: Jean) {
   this.jeanService.save(jean);
-  this.toastr.success('You have succesfully saved your changes', 'Succesfully saved');
+  this.toastr.success('You have successfully saved your changes', 'Successfully saved');
   }
-
-
 }
