@@ -19,16 +19,18 @@ export class CustomizeOrderComponent implements OnInit {
   orderedJeans: OrderJean[] = [];
   count: number;
 
-  readOnly: boolean = true;
+  readOnly = true;
 
   displayedColumns = ['Order Id', 'Order Date', 'Order Message', 'Placed By'];
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private toastr: ToastrService, private orderService: OrderService) {
-    let array = [];
+    const array = [];
     this.orderService.restGetPendingOrders().subscribe((data) => {
-          for(let i = 0; i < data.length; i++) {
-            let order: Order = new Order(data[i].orderId, data[i].note, data[i].date, data[i].creator.name, data[i].status, data[i].reviewer.name);
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < data.length; i++) {
+            // tslint:disable-next-line:max-line-length
+            const order: Order = new Order(data[i].orderId, data[i].note, data[i].date, data[i].creator.name, data[i].status, data[i].reviewer.name);
             array.push(order);
           }
           this.dataSource = new MatTableDataSource<Order>(array);
@@ -53,13 +55,13 @@ export class CustomizeOrderComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  onOrderSelected(order: Order) {
+  onOrderSelected (order: Order) {
     this.currentOrder = order;
     this.count = 0;
     this.getOrderedJeans(this.count);
   }
 
-  hasSelection() {
+  hasSelection () {
     return !!this.currentOrder;
   }
 
@@ -68,7 +70,7 @@ export class CustomizeOrderComponent implements OnInit {
   }
 
 
-  public getOrderedJeans(page: number) {
+  public getOrderedJeans (page: number) {
     this.orderedJeans = [];
     this.orderService.getByOrderId(this.currentOrder.idOrder, page).subscribe(
         (data) => {
@@ -97,14 +99,15 @@ export class CustomizeOrderComponent implements OnInit {
     this.getOrderedJeans(this.count);
   }
 
-  save() {
+  save () {
     this.currentOrder.jeansArray = [];
 
     if (this.orderedJeans.length < 1) {
       return;
     }
 
-    for(let i = 0; i < this.orderedJeans.length; i++) {
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.orderedJeans.length; i++) {
       this.currentOrder.addJean(this.orderedJeans[i]);
     }
     console.log(this.currentOrder);

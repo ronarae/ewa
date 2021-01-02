@@ -10,6 +10,8 @@ import java.util.Map;
         @NamedQuery(name = "Order_find_by_status", query = "select o from Order_table o where o.status = :status"),
         @NamedQuery(name = "Order_find_by_date",
                 query = "select o from Order_table o where o.date = :date"),
+        @NamedQuery(name = "Order_find_by_not_pending", query = "select o from Order_table o where o.status <> :status"),
+
 
 })
 public class Order {

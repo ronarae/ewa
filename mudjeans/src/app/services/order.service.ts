@@ -23,4 +23,8 @@ export class OrderService {
     console.log("Sending request");
     return this.httpClient.put<Order>('http://localhost:8085/orders', order);
   }
+
+  public restGetOrder(): Observable<Order[]> {
+    return this.httpClient.get<Order[]>('http://localhost:8085/orders/notpending');
+  }
 }

@@ -6,10 +6,10 @@ export class Order {
     date: Date;
     idUser: string;
     status: string;
-    idReviewer: number;
+    idReviewer: string;
     jeansArray: OrderJean[];
 
-    constructor(idOrder: number, note: string, date: Date, idUser: string, status: string, idReviewer: number) {
+    constructor(idOrder: number, note: string, date: Date, idUser: string, status: string, idReviewer: string) {
         this.idOrder = idOrder;
         this.note = note;
         this.date = date;
@@ -27,6 +27,6 @@ export class Order {
     // tslint:disable-next-line:typedef
     public addJean(orderJean: OrderJean): void {
         this.jeansArray.push(orderJean);
-    }
+}
 
 }

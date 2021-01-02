@@ -103,6 +103,12 @@ public class OrderController {
         return orderRepository.findByQuery("Order_find_by_status", "Pending");
     }
 
+
+    @GetMapping("/orders/notpending")
+    public List<Order> getNotPendingOrders() {
+        return orderRepository.findByQuery("Order_find_by_not_pending", "Pending");
+    }
+
     @GetMapping("/orders/orderjeans/{orderId}/{page}")
     public List<OrderJean> getOrderJeanById(@PathVariable int orderId, @PathVariable int page) {
         return orderRepository.findAllByOrder(orderId, page);

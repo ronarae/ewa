@@ -25,6 +25,7 @@ public class OrderJPARepository implements JPARepositoryInterface<Order, Integer
         switch (jpqlName) {
             case "Order_find_by_status" -> query.setParameter("status", params[0]);
             case "Order_find_by_date" -> query.setParameter("date", params[0]);
+            case "Order_find_by_not_pending" -> query.setParameter("status", params[0]);
         }
 
         return query.getResultList();
