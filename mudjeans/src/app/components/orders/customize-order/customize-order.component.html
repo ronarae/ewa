@@ -64,8 +64,8 @@
                                 <td><input class="quantity" type="number" [readOnly]="readOnly" value="{{orderjean.quantity}}" (input)="orderjean.quantity = $event.target.value"></td>
                             </tr>
                         </table>
-                        <button *ngIf="count != 0" (click)="changePage('minus')">min</button>
-                        <button (click)="changePage('plus')">plus</button>
+                        <button class="buttons btn btn-primary" *ngIf="count != 0" (click)="changePage('minus')">min</button>
+                        <button class="buttons btn btn-primary" (click)="changePage('plus')">plus</button>
                     </div>
                 </form>
                 <div class="modal-footer">
