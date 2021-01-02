@@ -50,13 +50,13 @@ export class AdminpanelComponent implements OnInit {
   // tslint:disable-next-line:typedef
   onUserSelected(user: User) {
     this.currentUser = user;
-    console.log(this.currentUser);
   }
 
   // tslint:disable-next-line:typedef
   saveUser(user: User) {
     if (this.newPassword !== "") {
       user.password = this.newPassword;
+      this.newPassword = "";
     }
     this.userService.save(user);
     this.toastr.success('You have successfully saved this user', 'Successfully saved!');
