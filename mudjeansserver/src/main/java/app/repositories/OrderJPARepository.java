@@ -84,9 +84,16 @@ public class OrderJPARepository implements JPARepositoryInterface<Order, Integer
     }
 
     @Transactional
-    public List<OrderJean> findAllByOrder(int orderId) {
+    public List<OrderJean> findAllByOrder(int orderId, int pageNumber) {
         TypedQuery<OrderJean> query = this.entityManager.createNamedQuery("Get_by_order_id", OrderJean.class);
+        query.setFirstResult(pageNumber*20);
+        query.setMaxResults(20);
         return query.setParameter("order", find(orderId)).getResultList();
+    }
+
+    @Transactional
+    public OrderJean merge(OrderJean oj) {
+        return entityManager.merge(oj);
     }
 
 }
