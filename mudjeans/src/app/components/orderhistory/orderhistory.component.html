@@ -58,8 +58,10 @@
                                   <td>{{orderjean.quantity}}</td>
                               </tr>
                           </table>
-                          <button type="button" class="buttons btn btn-primary" *ngIf="count != 0" (click)="changePage('minus')">min</button>
-                          <button type="button" class="buttons btn btn-primary" (click)="changePage('plus')">plus</button>
+                          <div class="d-flex justify-content-center">
+                              <i class="fas fa-caret-left fa-2x p-3" *ngIf="count != 0" (click)="changePage('minus')"></i>
+                              <i class="fas fa-caret-right fa-2x p-3" (click)="changePage('plus')"></i>
+                          </div>
                       </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModal">Close</button>
