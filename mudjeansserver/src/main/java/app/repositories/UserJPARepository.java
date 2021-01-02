@@ -1,7 +1,9 @@
 package app.repositories;
 
 import app.models.User;
+import app.security.PasswordEncoder;
 import org.jboss.jandex.TypeTarget;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,6 +17,9 @@ import java.util.List;
 public class UserJPARepository implements JPARepositoryInterface<User, Integer> {
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
@@ -51,6 +56,8 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
         }
         if (findByQuery("user_find_by_email", user.getEmail()).get(0).getPassword().equals(user.getPassword())) {
             user.setPassword(findByQuery("user_find_by_email", user.getEmail()).get(0).getPassword());
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         return entityManager.merge(user);
     }
