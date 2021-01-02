@@ -45,30 +45,24 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title"><b> Customize Order {{currentOrder.idOrder}}</b></h5>
+                            <h5 class="modal-title"><b>Order Summary: {{currentOrder.idOrder}}</b></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <form id="form">
-                                <h5><b>Order Summary</b></h5>
-                                <h6></h6>
-                                <div class="form-group">
-                                    <label>Select a jean type to edit</label>
-                                    <table class="table table-hover">
-                                        <tr *ngFor="let orderjean of orderedJeans;" (click)="changeReadonly(false)">
-                                            <td>{{orderjean.jean.productCode}}</td>
-                                            <td>{{orderjean.jean.styleName}}</td>
-                                        </tr>
-                                    </table>
-                                    <button *ngIf="count != 0" (click)="changePage('minus')">min</button>
-                                    <button (click)="changePage('plus')">plus</button>
-                                </div>
-                            </form>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModal" (click)="changeReadonly(true)">Close</button>
-                            </div>
+                      <div class="modal-body">
+                          <table class="table table-hover">
+                              <tr *ngFor="let orderjean of orderedJeans;">
+                                  <td>{{orderjean.jean.productCode}}</td>
+                                  <td>{{orderjean.jean.styleName}}</td>
+                                  <td>{{orderjean.quantity}}</td>
+                              </tr>
+                          </table>
+                          <button type="button" class="buttons btn btn-primary" *ngIf="count != 0" (click)="changePage('minus')">min</button>
+                          <button type="button" class="buttons btn btn-primary" (click)="changePage('plus')">plus</button>
+                      </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModal">Close</button>
                         </div>
                     </div>
                 </div>

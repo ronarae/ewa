@@ -14,12 +14,13 @@ import {OrderJean} from "../../models/OrderJean";
 export class OrderhistoryComponent implements OnInit {
 
   // @ts-ignore
-  currentOrder: Order = new Order();
-  orderedJeans: OrderJean[] = [];
+    currentOrder: Order = null;
+    orderedJeans: OrderJean[] = [];
 
   displayedColumns = ['Order number', 'Date of Order', 'Placed By', 'Reviewed By', 'Note', 'Status'];
   dataSource;
   count: number;
+  readOnly = true;
 
   constructor(private toastr: ToastrService, private orderService: OrderService) {
     const array = [];
@@ -41,10 +42,11 @@ export class OrderhistoryComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onOrderSelected(order: Order): void {
-    this.currentOrder = order;
-    console.log(order);
-  }
+    onOrderSelected (order: Order) {
+        this.currentOrder = order;
+        this.count = 0;
+        this.getOrderedJeans(this.count);
+    }
 
     // tslint:disable-next-line:typedef
   hasSelection() {
@@ -52,28 +54,24 @@ export class OrderhistoryComponent implements OnInit {
     }
 
     changePage(change: string): void {
-        switch(change) {
+        switch (change) {
             case "minus": this.count--;
-                break;
+                          break;
             case "plus": this.count++;
-                break;
+                         break;
             default: break;
         }
-        this.save();
         this.getOrderedJeans(this.count);
-    }
-
-    changeReadonly(read: boolean): void{
-        this.readOnly = read;
     }
 
     public getOrderedJeans (page: number) {
         this.orderedJeans = [];
         this.orderService.getByOrderId(this.currentOrder.idOrder, page).subscribe(
             (data) => {
+                // tslint:disable-next-line:prefer-for-of
                 for (let i = 0; i < data.length; i++) {
-                    let j: Jean = Jean.trueCopy(data[i].jeans);
-                    let o: Order = Order.trueCopy(data[i].order);
+                    const j: Jean = Jean.trueCopy(data[i].jeans);
+                    const o: Order = Order.trueCopy(data[i].order);
                     this.orderedJeans.push(new OrderJean(o, j, data[i].quantity));
                 }
             },
