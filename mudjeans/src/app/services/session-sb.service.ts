@@ -98,6 +98,7 @@ export class SessionSbService {
 
       this.currentUser = new User(null, null, null, null, null, null);
       this.currentUser.email = decodedToken.sub;
+      this.currentUser.name = this.currentUser.email.split('@')[0];
       this.currentUser.role = decodedToken.role;
       this.currentUser.exp = decodedToken.exp;
     } else {
