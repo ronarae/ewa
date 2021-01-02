@@ -6,6 +6,8 @@ import {Jean} from "../../../models/Jean";
 import {MatDialog} from "@angular/material/dialog";
 // @ts-ignore
 import {Order} from "../../../models/Order";
+import {OrderJean} from "../../../models/OrderJean";
+import {OrderService} from "../../../services/order.service";
 
 @Component({
     selector: 'app-createorder',
@@ -27,7 +29,7 @@ export class CreateorderComponent implements OnInit {
     public productCodes = new Set();
 
     private jeans: Jean[];
-    private rows = [];
+    rows = [];
     public loading = true;
     public order: Order;
 
@@ -35,6 +37,7 @@ export class CreateorderComponent implements OnInit {
         private toastr: ToastrService,
         private salesService: SalesSbService,
         private dialog: MatDialog,
+        private orderService: OrderService
     ) {
         // tslint:disable-next-line:new-parens
         this.order = new Order(0, "", new Date(), sessionStorage.getItem("username"), "Pending", null);
@@ -89,12 +92,16 @@ export class CreateorderComponent implements OnInit {
         switch (input) {
             case 'category':
                 this.categories.clear();
+                break;
             case 'styleName':
                 this.styleNames.clear();
+                break;
             case 'fabric':
                 this.fabrics.clear();
+                break;
             case 'washing':
                 this.washings.clear();
+                break;
             case 'productCode':
                 this.productCodes.clear();
                 break;
@@ -173,10 +180,29 @@ export class CreateorderComponent implements OnInit {
     }
 
     // tslint:disable-next-line:typedef
-    placeNewOrder(order: Jean) {
-        // TODO change order for orderjean
-        // this.order.addJean(order);
+    placeNewOrder() {
+        let array = this.getToOrder();
+        for (let i = 0; i < array.length; i++) {
+            this.order.addToOrder(array[i]);
+        }
+        // @ts-ignore
+        this.order.note = document.getElementById("exampleFormControlTextarea1").value;
+        console.log(this.order);
+        this.orderService.addOrder(this.order).subscribe((data) => console.log(data));
         this.toastr.success('You placed your order', 'Successfully created an order');
     }
 
+    getToOrder(): OrderJean[] {
+        let array = [];
+        for (let i = 0; i < this.rows.length; i++) {
+            // @ts-ignore
+            const order: Order = new Order();
+            // @ts-ignore
+            const jean: Jean = new Jean();
+            jean.productCode = this.rows[i].productCode;
+            const oj: OrderJean = new OrderJean(order, jean, this.rows[i].amount);
+            array.push(oj);
+        }
+        return array;
+    }
 }

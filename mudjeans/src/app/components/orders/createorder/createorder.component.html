@@ -73,14 +73,13 @@
             <!-- Content Column -->
             <div class="col-lg mb-4">
                 <form>
-                    <button mat-button (click)="createRow(newRowModal)">New product</button>
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Amount</th>
-                                <th></th>
-                            </tr>
+                        <tr>
+                            <th>Product</th>
+                            <th>Amount</th>
+                            <th></th>
+                        </tr>
                         </thead>
                         <tr>
                             <td colspan="3" *ngIf="rows.length === 0">
@@ -101,7 +100,7 @@
                     </div>
                     <div class="row">
                         <div class="col-2">
-                            <button class="btn btn-info" id="addJean">Add Jean</button>
+                            <button class="btn btn-info" id="addJean" (click)="createRow(newRowModal)">Add Jean</button>
                         </div>
                         <div class="col-2">
                             <button (click)="placeNewOrder()" class="btn btn-primary" id="placeOrderBtn">Place

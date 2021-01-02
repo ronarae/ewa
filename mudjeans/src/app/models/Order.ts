@@ -25,8 +25,7 @@ export class Order {
     }
 
     // tslint:disable-next-line:typedef
-    public addJean(orderJean: OrderJean): void {
+    public addToOrder(orderJean: OrderJean): void {
         this.jeansArray.push(orderJean);
-}
-
+    }
 }

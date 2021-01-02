@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {OrderService} from '../../services/order.service';
 import {MatTableDataSource} from "@angular/material/table";
@@ -7,67 +7,67 @@ import {Jean} from "../../models/Jean";
 import {OrderJean} from "../../models/OrderJean";
 
 @Component({
-  selector: 'app-orderhistory',
-  templateUrl: './orderhistory.component.html',
-  styleUrls: ['./orderhistory.component.css']
+    selector: 'app-orderhistory',
+    templateUrl: './orderhistory.component.html',
+    styleUrls: ['./orderhistory.component.css']
 })
 export class OrderhistoryComponent implements OnInit {
 
-  // @ts-ignore
-  currentOrder: Order = new Order();
-  orderedJeans: OrderJean[] = [];
+    // @ts-ignore
+    currentOrder: Order = new Order();
+    orderedJeans: OrderJean[] = [];
 
-  displayedColumns = ['Order number', 'Date of Order', 'Placed By', 'Reviewed By', 'Note', 'Status'];
-  dataSource;
-  count: number;
+    displayedColumns = ['Order number', 'Date of Order', 'Placed By', 'Reviewed By', 'Note', 'Status'];
+    dataSource;
+    count: number;
 
-  constructor(private toastr: ToastrService, private orderService: OrderService) {
-    const array = [];
-    this.orderService.restGetOrder().subscribe((data) => {
-         console.log(data);
-          // tslint:disable-next-line:prefer-for-of
-         for (let i = 0; i < data.length; i++) {
-            // tslint:disable-next-line:max-line-length
-            const order: Order = new Order(data[i].orderId, data[i].note, data[i].date, data[i].creator.name, data[i].status, data[i].reviewer.name);
-            array.push(order);
-          }
-         this.dataSource = new MatTableDataSource<Order>(array);
-        },
-        (error) => {
-          alert('Error:' + error);
-        });
-  }
+    constructor(private toastr: ToastrService, private orderService: OrderService) {
+        const array = [];
+        this.orderService.restGetOrder().subscribe((data) => {
+                console.log(data);
+                // tslint:disable-next-line:prefer-for-of
+                for (let i = 0; i < data.length; i++) {
+                    // tslint:disable-next-line:max-line-length
+                    // @ts-ignore
+                    const order: Order = new Order(data[i].orderId, data[i].note, data[i].date, data[i].creator.name, data[i].status, data[i].reviewer.name);
+                    array.push(order);
+                }
+                this.dataSource = new MatTableDataSource<Order>(array);
+            },
+            (error) => {
+                alert('Error:' + error);
+            });
+    }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
-  onOrderSelected(order: Order): void {
-    this.currentOrder = order;
-    console.log(order);
-  }
+    onOrderSelected(order: Order): void {
+        this.currentOrder = order;
+        console.log(order);
+    }
 
     // tslint:disable-next-line:typedef
-  hasSelection() {
-      return !!this.currentOrder;
+    hasSelection() {
+        return !!this.currentOrder;
     }
 
     changePage(change: string): void {
-        switch(change) {
-            case "minus": this.count--;
+        switch (change) {
+            case "minus":
+                this.count--;
                 break;
-            case "plus": this.count++;
+            case "plus":
+                this.count++;
                 break;
-            default: break;
+            default:
+                break;
         }
-        this.save();
+
         this.getOrderedJeans(this.count);
     }
 
-    changeReadonly(read: boolean): void{
-        this.readOnly = read;
-    }
-
-    public getOrderedJeans (page: number) {
+    public getOrderedJeans(page: number) {
         this.orderedJeans = [];
         this.orderService.getByOrderId(this.currentOrder.idOrder, page).subscribe(
             (data) => {
