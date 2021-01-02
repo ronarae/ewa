@@ -29,6 +29,7 @@ export class OrderhistoryComponent implements OnInit {
                 for (let i = 0; i < data.length; i++) {
                     // tslint:disable-next-line:max-line-length
                     // @ts-ignore
+                    // tslint:disable-next-line:max-line-length
                     const order: Order = new Order(data[i].orderId, data[i].note, data[i].date, data[i].creator.name, data[i].status, data[i].reviewer.name);
                     array.push(order);
                 }
@@ -68,14 +69,14 @@ export class OrderhistoryComponent implements OnInit {
         this.getOrderedJeans(this.count);
     }
 
+    // tslint:disable-next-line:typedef
     public getOrderedJeans(page: number) {
         this.orderedJeans = [];
         this.orderService.getByOrderId(this.currentOrder.idOrder, page).subscribe(
             (data) => {
-                for (let i = 0; i < data.length; i++) {
-                    let j: Jean = Jean.trueCopy(data[i].jeans);
-                    let o: Order = Order.trueCopy(data[i].order);
-                    this.orderedJeans.push(new OrderJean(o, j, data[i].quantity));
+                for (const item of data) {
+                    const j: Jean = Jean.trueCopy(item.jeans);
+                    this.orderedJeans.push(new OrderJean(j, item.quantity));
                 }
             },
             (err) => {
