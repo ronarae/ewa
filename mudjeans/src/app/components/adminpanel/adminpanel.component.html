@@ -11,8 +11,8 @@
             </tr>
             </thead>
 
-            <tbody *ngFor="let user of users; index as i">
-            <tr data-toggle="modal" data-target="#userModal" (click)="onUserSelected(user)">
+            <tbody>
+            <tr *ngFor="let user of users; index as i" data-toggle="modal" data-target="#userModal" (click)="onUserSelected(user)">
                 <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.role}}</td>
@@ -65,4 +65,5 @@
             </div>
         </div>
     </div>
+
 </div>

@@ -14,7 +14,7 @@ import {Router} from "@angular/router";
 export class AdminpanelComponent implements OnInit {
 
   newPassword = "";
-  currentUser: User;
+  currentUser = new User(null, null, null, null, null, null);
   users = [];
 
   constructor(private userService: UserSbService, private toastr: ToastrService, private router: Router) {
@@ -24,6 +24,7 @@ export class AdminpanelComponent implements OnInit {
           for (let i = 0; i < data.length; i++) {
             this.users.push(User.trueCopy(data[i]));
           }
+          console.log(this.users);
         },
         (error) => {
           alert('Error:' + error);
