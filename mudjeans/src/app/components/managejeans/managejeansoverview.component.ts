@@ -74,6 +74,4 @@ export class ManagejeansoverviewComponent implements OnInit {
   this.jeanService.save(jean);
   this.toastr.success('You have successfully saved your changes', 'Successfully saved');
   }
-
-
 }

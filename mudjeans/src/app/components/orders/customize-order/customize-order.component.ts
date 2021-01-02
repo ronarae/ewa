@@ -4,6 +4,8 @@ import {OrderService} from "../../../services/order.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {Order} from "../../../models/Order";
 import {MatPaginator} from "@angular/material/paginator";
+import {OrderJean} from "../../../models/OrderJean";
+import {Jean} from "../../../models/Jean";
 
 @Component({
   selector: 'app-customize-order',
@@ -13,7 +15,11 @@ import {MatPaginator} from "@angular/material/paginator";
 export class CustomizeOrderComponent implements OnInit {
 
   // @ts-ignore
-  currentOrder: Order = new Order();
+  currentOrder: Order = null;
+  orderedJeans: OrderJean[] = [];
+  count: number;
+
+  readOnly: boolean = true;
 
   displayedColumns = ['Order Id', 'Order Date', 'Order Message', 'Placed By'];
   dataSource;
@@ -21,7 +27,6 @@ export class CustomizeOrderComponent implements OnInit {
   constructor(private toastr: ToastrService, private orderService: OrderService) {
     let array = [];
     this.orderService.restGetPendingOrders().subscribe((data) => {
-          console.log(data);
           for(let i = 0; i < data.length; i++) {
             let order: Order = new Order(data[i].orderId, data[i].note, data[i].date, data[i].creator.name, data[i].status, data[i].reviewer.name);
             array.push(order);
@@ -50,22 +55,60 @@ export class CustomizeOrderComponent implements OnInit {
 
   onOrderSelected(order: Order) {
     this.currentOrder = order;
+    this.count = 0;
+    this.getOrderedJeans(this.count);
   }
 
-  showAllInfo(): void {
-    const showFullOrder = document.getElementById('showFullOrder');
-    const info = document.getElementById('information');
-    const editBtn = document.getElementById('editBtn');
-    editBtn.style.display = 'block';
-    info.style.display = 'block';
-    showFullOrder.innerText = 'Hide Order';
+  hasSelection() {
+    return !!this.currentOrder;
   }
 
-  deleteInfo(): void {
-    const confirmation = confirm('Are you sure you want to delete this order? This action cannot be undone!');
-    if (confirmation === true) {
-      this.toastr.success('You have successfully deleted this order', 'Successfully deleted!');
-      document.getElementById('closeModal').click();
+  changeReadonly(read: boolean): void{
+      this.readOnly = read;
+  }
+
+
+  public getOrderedJeans(page: number) {
+    this.orderedJeans = [];
+    this.orderService.getByOrderId(this.currentOrder.idOrder, page).subscribe(
+        (data) => {
+          for (let i = 0; i < data.length; i++) {
+            let j: Jean = Jean.trueCopy(data[i].jeans);
+            let o: Order = Order.trueCopy(data[i].order);
+            this.orderedJeans.push(new OrderJean(o, j, data[i].quantity));
+          }
+        },
+        (err) => {
+          alert('Error:' + err);
+        }
+    );
+  }
+
+
+  changePage(change: string): void {
+    switch(change) {
+      case "minus": this.count--;
+      break;
+      case "plus": this.count++;
+      break;
+      default: break;
     }
+    this.save();
+    this.getOrderedJeans(this.count);
+  }
+
+  save() {
+    this.currentOrder.jeansArray = [];
+
+    if (this.orderedJeans.length < 1) {
+      return;
+    }
+
+    for(let i = 0; i < this.orderedJeans.length; i++) {
+      this.currentOrder.addJean(this.orderedJeans[i]);
+    }
+    console.log(this.currentOrder);
+
+    this.orderService.updateOrder(this.currentOrder).subscribe((data) => console.log(data));
   }
 }

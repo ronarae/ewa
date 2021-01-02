@@ -1,142 +1,78 @@
 <div class="container">
-  <h2 class="text-center">Customize Existing Order</h2>
-  <div>
+    <h2 class="text-center">Customize Existing Order</h2>
     <div>
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter"/>
-      </mat-form-field>
+        <div>
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter"/>
+            </mat-form-field>
+        </div>
+        <div class="loading-overlay" *ngIf="!dataSource">
+            <mat-progress-bar mode="buffer"></mat-progress-bar>
+        </div>
+        <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="Order Id">
+                <th mat-header-cell *matHeaderCellDef> Order Id</th>
+                <td mat-cell *matCellDef="let order"> {{order.idOrder}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Order Date">
+                <th mat-header-cell *matHeaderCellDef> Order Date</th>
+                <td mat-cell *matCellDef="let order"> {{order.date}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Order Message">
+                <th mat-header-cell *matHeaderCellDef> Order Message</th>
+                <td mat-cell *matCellDef="let order"> {{order.note}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Placed By">
+                <th mat-header-cell *matHeaderCellDef> Placed By</th>
+                <td mat-cell *matCellDef="let order"> {{order.idUser}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row (click)="onOrderSelected(row)" data-toggle="modal" data-target="#orderModal"
+                *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20, 30, 40]" showFirstLastButtons></mat-paginator>
+
     </div>
-    <div class="loading-overlay" *ngIf="!dataSource">
-      <mat-progress-bar mode="buffer"></mat-progress-bar>
-    </div>
-    <table mat-table [dataSource]="dataSource" >
-      <ng-container matColumnDef="Order Id">
-        <th mat-header-cell *matHeaderCellDef> Order Id</th>
-        <td mat-cell *matCellDef="let order"> {{order.idOrder}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Order Date">
-        <th mat-header-cell *matHeaderCellDef> Order Date</th>
-        <td mat-cell *matCellDef="let order"> {{order.date}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Order Message">
-        <th mat-header-cell *matHeaderCellDef> Order Message</th>
-        <td mat-cell *matCellDef="let order"> {{order.note}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Placed By">
-        <th mat-header-cell *matHeaderCellDef> Placed By </th>
-        <td mat-cell *matCellDef="let order"> {{order.idUser}} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row (click)="onOrderSelected(row)" data-toggle="modal" data-target="#orderModal"
-          *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 20, 30, 40]" showFirstLastButtons></mat-paginator>
-
-  </div>
 </div>
 
-<div class="modal fade bd-example-modal-lg" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModal"
+<div *ngIf="hasSelection()" class="modal fade bd-example-modal-lg" id="orderModal" tabindex="-1" role="dialog"
+     aria-labelledby="orderModal"
      aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><b> Customize Order #1</b></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="form">
-          <div class="form-group row">
-            <label for="orderNumber" class="col-lg-4 col-form-label">Order number</label>
-            <div class="col-lg-8">
-              <input type="text" readonly class="form-control" id="orderNumber" value="1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><b> Customize Order {{currentOrder.idOrder}}</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-          </div>
-          <div class="form-group row">
-            <label for="orderDate" class="col-lg-4 col-form-label">Order Date</label>
-            <div class="col-lg-8">
-              <input type="text" readonly class="form-control" id="orderDate" value="03/09/2020">
+            <div class="modal-body">
+                <form id="form">
+                    <h5><b>Order Summary</b></h5>
+                    <h6></h6>
+                    <div class="form-group">
+                        <label>Select a jean type to edit</label>
+                        <table class="table table-hover">
+                            <tr *ngFor="let orderjean of orderedJeans;" (click)="changeReadonly(false)">
+                                <td>{{orderjean.jean.productCode}}</td>
+                                <td>{{orderjean.jean.styleName}}</td>
+                                <td><input class="quantity" type="number" [readOnly]="readOnly" value="{{orderjean.quantity}}" (input)="orderjean.quantity = $event.target.value"></td>
+                            </tr>
+                        </table>
+                        <button *ngIf="count != 0" (click)="changePage('minus')">min</button>
+                        <button (click)="changePage('plus')">plus</button>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModal" (click)="changeReadonly(true)">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="save()"> Save Changes</button>
+                </div>
             </div>
-          </div>
-          <div class="form-group row">
-            <label for="orderTime" class="col-lg-4 col-form-label">Order Time</label>
-            <div class="col-lg-8">
-              <input type="text" readonly class="form-control" id="orderTime" value="16:59 PM">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="placedBy" class="col-lg-4 col-form-label">Placed By</label>
-            <div class="col-lg-8">
-              <input type="text" readonly class="form-control" id="placedBy" value="Eva">
-            </div>
-          </div>
-          <hr>
-          <h5><b>Order Summary</b></h5>
-          <h6></h6>
-          <div class="form-group">
-            <label for="selectJean">Select one or multiple jeans to edit</label>
-            <button type="button" id="showFullOrder"
-                    class="btn btn-outline-primary float-right m-2" (click)="showAllInfo()">Show full order
-            </button>
-            <select multiple class="form-control" id="selectJean" onchange="ShowInfo()">
-              <option>Slim Lassen - Strong Blue W28 L30 - 20x</option>
-              <option>Slim Lassen - Strong Blue W28 L32 - 30x</option>
-              <option>Slim Lassen - Strong Blue W29 L30 - 17x</option>
-              <option>Slim Lassen - Strong Blue W29 L32 - 23x</option>
-            </select>
-          </div>
-          <div id="information" style="display: none">
-            <div class="row" id="title">
-              <div class="col-5">
-                <b>Jean Size</b>
-              </div>
-              <div class="col-7">
-                <b>Amount</b>
-              </div>
-              <br>
-            </div>
-            <div class="form-group row">
-              <label for="W28L30" class="col-lg-5 col-form-label">Slim Lassen - Strong Blue W28 L30</label>
-              <div class="col-lg-7">
-                <input type="number" class="form-control" id="W28L30" value="20">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="W28L32" class="col-lg-5 col-form-label">Slim Lassen - Strong Blue W28 L32</label>
-              <div class="col-lg-7">
-                <input type="number" class="form-control" id="W28L32" value="30">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="W29L30" class="col-lg-5 col-form-label">Slim Lassen - Strong Blue W29 L30</label>
-              <div class="col-lg-7">
-                <input type="number" class="form-control" id="W29L30" value="17">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="W29L32" class="col-lg-5 col-form-label">Slim Lassen - Strong Blue W29 L32</label>
-              <div class="col-lg-7">
-                <input type="number" class="form-control" id="W29L32" value="23">
-              </div>
-            </div>
-          </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModal">Close</button>
-        <button type="button" class="btn btn-primary" id="editBtn"
-                style="display: none">Save Changes
-        </button>
-        <button id="deleteButton" type="button" (click)="deleteInfo()" class="btn btn-danger">Delete
-        </button>
-      </div>
+        </div>
     </div>
-  </div>
 </div>

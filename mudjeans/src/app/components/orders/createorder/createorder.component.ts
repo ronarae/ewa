@@ -174,7 +174,8 @@ export class CreateorderComponent implements OnInit {
 
     // tslint:disable-next-line:typedef
     placeNewOrder(order: Jean) {
-        this.order.addJean(order);
+        // TODO change order for orderjean
+        // this.order.addJean(order);
         this.toastr.success('You placed your order', 'Successfully created an order');
     }
 

@@ -1,4 +1,4 @@
-import {Jean} from "./Jean";
+import {OrderJean} from "./OrderJean";
 
 export class Order {
     idOrder: number;
@@ -7,7 +7,7 @@ export class Order {
     idUser: string;
     status: string;
     idReviewer: number;
-    jeansArray: Jean[];
+    jeansArray: OrderJean[];
 
     constructor(idOrder: number, note: string, date: Date, idUser: string, status: string, idReviewer: number) {
         this.idOrder = idOrder;
@@ -25,8 +25,8 @@ export class Order {
     }
 
     // tslint:disable-next-line:typedef
-    public addJean(jean: Jean): void {
-        this.jeansArray.push(jean);
+    public addJean(orderJean: OrderJean): void {
+        this.jeansArray.push(orderJean);
     }
 
 }
