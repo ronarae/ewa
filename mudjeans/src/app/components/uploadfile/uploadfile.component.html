@@ -1,35 +1,4 @@
 <div class="container">
-    <h3>Upload Sales Analysis File</h3>
-    <br>
-    <div class="row">
-        <div class="col-4">
-            <form>
-                <div class="custom-file">
-<!--                    <input type="file"  accept=".xlsx" (change)="readSalesAnalysis($event)" (change)="upload($event.target.files)" class="custom-file-input" id="salesAnalysisInput">-->
-                    <input type="file"  accept=".xlsx" (change)="upload($event.target.files)" class="custom-file-input" id="salesAnalysisInput">
-                    <label class="custom-file-label" for="salesAnalysisInput">Choose File</label>
-                </div>
-            </form>
-        </div>
-    </div>
-<br>
-
-    <!--    <input type="file" (change)="readFile($event)" multiple="false">-->
-    <div class="table">
-        <table class="table table-hover">
-            <tbody>
-            <tr *ngFor="let row of data; let i = index">
-                <td>{{i}}</td>
-                <td *ngFor="let cell of row">
-                    {{cell}}
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="container">
     <div class="row">
         <div class="col">
             <div class="card">
