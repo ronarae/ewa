@@ -2,7 +2,6 @@ package app.repositories;
 
 import app.models.User;
 import app.security.PasswordEncoder;
-import org.jboss.jandex.TypeTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -35,6 +34,9 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
             }
             case "user_find_by_email" -> {
                 return query.setParameter("email", params[0]).getResultList();
+            }
+            case "user_find_by_name" -> {
+                return query.setParameter("name", params[0]).getResultList();
             }
             default -> {
                 return null;

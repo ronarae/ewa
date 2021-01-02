@@ -11,7 +11,10 @@ import javax.persistence.*;
         query = "select u from User_table u where u.role = :role"),
 
         @NamedQuery(name = "user_find_by_email",
-        query = "select u from User_table u where u.email = :email")
+        query = "select u from User_table u where u.email = :email"),
+
+        @NamedQuery(name = "user_find_by_name",
+                query = "select u from User_table u where u.name = :name")
 })
 public class User {
     @Id
