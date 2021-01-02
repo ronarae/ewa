@@ -181,26 +181,33 @@ export class CreateorderComponent implements OnInit {
 
     // tslint:disable-next-line:typedef
     placeNewOrder() {
-        let array = this.getToOrder();
-        for (let i = 0; i < array.length; i++) {
-            this.order.addToOrder(array[i]);
+        const array = this.getToOrder();
+        for (const item of array) {
+            this.order.addToOrder(item);
         }
         // @ts-ignore
         this.order.note = document.getElementById("exampleFormControlTextarea1").value;
         console.log(this.order);
-        this.orderService.addOrder(this.order).subscribe((data) => console.log(data));
-        this.toastr.success('You placed your order', 'Successfully created an order');
+        this.orderService.addOrder(this.order).subscribe(
+            (data) => {
+                console.log(data);
+                this.toastr.success('You placed your order', 'Successfully created an order');
+                this.order = new Order(0, "", new Date(), sessionStorage.getItem("username"), "Pending", null);
+            }, (error => {
+                console.error(error);
+                this.toastr.error('Could not place your order', 'Error');
+            })
+        );
     }
 
     getToOrder(): OrderJean[] {
-        let array = [];
-        for (let i = 0; i < this.rows.length; i++) {
-            // @ts-ignore
-            const order: Order = new Order();
+        const array = [];
+        for (const item of this.rows) {
+
             // @ts-ignore
             const jean: Jean = new Jean();
-            jean.productCode = this.rows[i].productCode;
-            const oj: OrderJean = new OrderJean(order, jean, this.rows[i].amount);
+            jean.productCode = item.productCode;
+            const oj: OrderJean = new OrderJean(jean, item.amount);
             array.push(oj);
         }
         return array;

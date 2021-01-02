@@ -44,7 +44,8 @@ export class OrderhistoryComponent implements OnInit {
 
     onOrderSelected(order: Order): void {
         this.currentOrder = order;
-        console.log(order);
+        this.count = 0;
+        this.getOrderedJeans(this.count);
     }
 
     // tslint:disable-next-line:typedef

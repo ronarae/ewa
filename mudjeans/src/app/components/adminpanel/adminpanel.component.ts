@@ -14,7 +14,7 @@ import {Router} from "@angular/router";
 export class AdminpanelComponent implements OnInit {
 
   newPassword = "";
-  currentUser: User;
+  currentUser = new User(null, null, null, null, null, null);
   users = [];
 
   constructor(private userService: UserSbService, private toastr: ToastrService, private router: Router) {
@@ -24,6 +24,7 @@ export class AdminpanelComponent implements OnInit {
           for (let i = 0; i < data.length; i++) {
             this.users.push(User.trueCopy(data[i]));
           }
+          console.log(this.users);
         },
         (error) => {
           alert('Error:' + error);
@@ -33,6 +34,7 @@ export class AdminpanelComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
 
   // tslint:disable-next-line:typedef
   addUser() {
@@ -45,11 +47,17 @@ export class AdminpanelComponent implements OnInit {
       this.userService.deleteById(user.id);
       this.toastr.success('You have successfully deleted ' + user.email, 'Successfully deleted!');
     }
+    window.location.reload();
   }
 
   // tslint:disable-next-line:typedef
   onUserSelected(user: User) {
     this.currentUser = user;
+  }
+
+  // tslint:disable-next-line:typedef
+  hasSelection() {
+    return !!this.currentUser;
   }
 
   // tslint:disable-next-line:typedef
@@ -61,6 +69,7 @@ export class AdminpanelComponent implements OnInit {
     this.userService.save(user);
     this.toastr.success('You have successfully saved this user', 'Successfully saved!');
     this.router.navigate(['/adminpanel']);
+    window.location.reload();
   }
 
 }

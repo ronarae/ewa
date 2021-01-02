@@ -17,3 +17,16 @@
 table {
   width: 100%;
 }
+
+.buttons {
+ margin:5px;
+}
+
+.fas {
+  color: rgba(0,0,0,.26);
+}
+
+.fas:hover {
+  color: black;
+  cursor: pointer;
+}
