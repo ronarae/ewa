@@ -47,6 +47,7 @@ export class AdminpanelComponent implements OnInit {
       this.userService.deleteById(user.id);
       this.toastr.success('You have successfully deleted ' + user.email, 'Successfully deleted!');
     }
+    window.location.reload();
   }
 
   // tslint:disable-next-line:typedef
@@ -68,6 +69,7 @@ export class AdminpanelComponent implements OnInit {
     this.userService.save(user);
     this.toastr.success('You have successfully saved this user', 'Successfully saved!');
     this.router.navigate(['/adminpanel']);
+    window.location.reload();
   }
 
 }
