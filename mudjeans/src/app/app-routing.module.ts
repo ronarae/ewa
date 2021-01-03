@@ -6,7 +6,6 @@ import {ManagejeansoverviewComponent} from './components/managejeans/managejeans
 import {OrderhistoryComponent} from './components/orderhistory/orderhistory.component';
 import {CreateorderComponent} from './components/orders/createorder/createorder.component';
 import {CustomizeOrderComponent} from './components/orders/customize-order/customize-order.component';
-import {PendingOrderComponent} from './components/orders/pending-order/pending-order.component';
 import {HomeComponent} from './components/mainpage/home/home.component';
 import {UploadfileComponent} from './components/uploadfile/uploadfile.component';
 import {AdminpanelComponent} from "./components/adminpanel/adminpanel.component";
@@ -20,7 +19,6 @@ const routes: Routes = [{
   {path: 'orderhistory', component: OrderhistoryComponent},
   {path: 'createorder', component: CreateorderComponent},
   {path: 'customizeorder', component: CustomizeOrderComponent},
-  {path: 'pendingorder', component: PendingOrderComponent},
   {path: 'adminpanel', component: AdminpanelComponent}];
 
 @NgModule({

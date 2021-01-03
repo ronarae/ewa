@@ -24,7 +24,6 @@ export class AdminpanelComponent implements OnInit {
           for (let i = 0; i < data.length; i++) {
             this.users.push(User.trueCopy(data[i]));
           }
-          console.log(this.users);
         },
         (error) => {
           alert('Error:' + error);
