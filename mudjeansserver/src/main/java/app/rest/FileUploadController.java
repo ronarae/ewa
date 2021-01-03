@@ -12,11 +12,14 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.io.*;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -37,24 +40,24 @@ public class FileUploadController {
     private UserJPARepository userRepo;
 
     @PostMapping("/upload")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws StorageException, IOException {
-//        String fileName = storageService.storeFile(file);
-//        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path("/downloadFile/")
-//                .path(fileName)
-//                .toUriString();
-//                return new UploadFileResponse(fileName, fileDownloadUri,
-//                (file).getContentType(), (file).getSize());
+    public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file) throws StorageException, IOException {
         ArrayList<String> resultList = readFile(file);
         if (resultList != null) {
             Order createdOrder = createOrder(resultList);
             String header = "Automatic order with id " + createdOrder.getOrderId() + " has been created by the system.";
             String message = "An order has been created by the system with the following id: " + createdOrder.getOrderId() + ", please review it when you have time.";
-            Notification notification = new Notification(createdOrder.getReviewer(), header , message);
+            Notification notification = new Notification(createdOrder.getReviewer(), header, message);
             orderRepo.save(notification);
             notification.sendMail();
+            return ResponseEntity.created(getLocationURI(createdOrder.getOrderId())).body(createdOrder);
         }
-        return null;
+        return ResponseEntity.badRequest().body("Uploaded file does not meet the requirements, make sure you upload the sales analysis for the full year");
+    }
+
+    private URI getLocationURI(long id) {
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().
+                path("/{id}").buildAndExpand(id).toUri();
+        return location;
     }
 
 
@@ -82,6 +85,9 @@ public class FileUploadController {
             int numRows = xlSheet.getLastRowNum() + 1;
             int numCols = xlSheet.getRow(1).getLastCellNum();
 
+            if (numCols < 21) {
+                return null;
+            }
             // Create double array data table - rows x cols
             // We will return this data table
             data = new String[numRows][numCols];
@@ -160,7 +166,7 @@ public class FileUploadController {
     }
 
     public void addToOrder(Order order, Map<String, Integer> toOrder) {
-        for(String key : toOrder.keySet()) {
+        for (String key : toOrder.keySet()) {
             Jeans j = jeansRepo.find(key);
             OrderJean newOrder = new OrderJean(order, j, toOrder.get(key));
             orderRepo.save(newOrder);

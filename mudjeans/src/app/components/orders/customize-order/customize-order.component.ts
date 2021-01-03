@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {OrderService} from "../../../services/order.service";
 import {MatTableDataSource} from "@angular/material/table";
@@ -12,7 +12,7 @@ import {Jean} from "../../../models/Jean";
     templateUrl: './customize-order.component.html',
     styleUrls: ['./customize-order.component.css']
 })
-export class CustomizeOrderComponent implements OnInit {
+export class CustomizeOrderComponent implements OnInit, AfterViewInit {
 
     // @ts-ignore
     currentOrder: Order = null;
@@ -35,6 +35,7 @@ export class CustomizeOrderComponent implements OnInit {
                     array.push(order);
                 }
                 this.dataSource = new MatTableDataSource<Order>(array);
+                setTimeout(() => this.dataSource.paginator = this.paginator);
             },
             (error) => {
                 alert('Error:' + error);
