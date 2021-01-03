@@ -94,42 +94,15 @@
             <!-- Project Card Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Jeans stock</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Jeans stock per Style</h6>
                 </div>
                 <div class="card-body">
                     <div *ngFor="let style of allJeansPerStyle index as i">
-
-
                         <h4 class="small font-weight-bold">{{style}} <span class="float-right">{{allJeansPerStyleInStock[i]}}</span></h4>
                         <div class="progress mb-4">
-                            <div class="progress-bar {{cssColor[i%5]}}" role="progressbar" style="width: 100%"
-                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar {{cssColor[i%5]}}" role="progressbar" style="width: {{setWidth(allJeansPerStyleInStock[i]/highestJeansStockPerStyle)}}%"
+                                 aria-valuenow="{{allJeansPerStyleInStock[i]}}" aria-valuemin="0" aria-valuemax="{{highestJeansStockPerStyle}}"></div>
                         </div>
-
-
-<!--                        <h4 class="small font-weight-bold">Slim Lassen - Pure Blue <span class="float-right">40%</span></h4>-->
-<!--                        <div class="progress mb-4">-->
-<!--                            <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"-->
-<!--                                 aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                        </div>-->
-<!--                        <h4 class="small font-weight-bold">Slim Lassen - Dip Dry <span class="float-right">60%</span>-->
-<!--                        </h4>-->
-<!--                        <div class="progress mb-4">-->
-<!--                            <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60"-->
-<!--                                 aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                        </div>-->
-<!--                        <h4 class="small font-weight-bold">Slim Lassen - O3 Grey <span class="float-right">80%</span>-->
-<!--                        </h4>-->
-<!--                        <div class="progress mb-4">-->
-<!--                            <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80"-->
-<!--                                 aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                        </div>-->
-<!--                        <h4 class="small font-weight-bold">Tyler Jacket - Heavy Stone <span-->
-<!--                                class="float-right">90%</span></h4>-->
-<!--                        <div class="progress">-->
-<!--                            <div class="progress-bar bg-success" role="progressbar" style="width: 90%"-->
-<!--                                 aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                        </div>-->
                     </div>
                 </div>
             </div>

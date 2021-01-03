@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
     allJeansPerStyle: string[] = [];
     allJeansPerStyleInStock: number[] = [];
     cssColor: string[] = ["bg-danger", "bg-warning", "", "bg-info", "bg-success"];
+    highestJeansStockPerStyle = 0;
 
     constructor(private orderService: OrderService, private jeansService: SalesSbService) {
         this.orderService.restGetPendingOrders().subscribe((data) => {
@@ -42,6 +43,9 @@ export class HomeComponent implements OnInit {
                     if (currentStyle === data[i].styleName) { // if same style name --> add the stock amount
                         this.allJeansPerStyleInStock[this.allJeansPerStyleInStock.length - 1] += data[i].latestStock;
                     } else { // if there is a new style --> push new style in array
+                        if (this.allJeansPerStyleInStock[this.allJeansPerStyleInStock.length - 1] > this.highestJeansStockPerStyle) {
+                            this.highestJeansStockPerStyle = this.allJeansPerStyleInStock[this.allJeansPerStyleInStock.length - 1];
+                        }
                         currentStyle = data[i].styleName;
                         this.allJeansPerStyle.push(currentStyle);
                         this.allJeansPerStyleInStock.push(data[i].latestStock);
@@ -56,6 +60,7 @@ export class HomeComponent implements OnInit {
                         this.lowStockJeans.push(jean);
                     }
                 }
+                console.log(this.highestJeansStockPerStyle);
             },
             (error) => {
                 alert('Error:' + error);
@@ -63,6 +68,10 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
+    }
+
+    setWidth(stock: number): number {
+        return stock * 100;
     }
 
 }
