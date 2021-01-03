@@ -84,4 +84,14 @@ export class OrderhistoryComponent implements OnInit {
             }
         );
     }
+
+    public export() {
+        this.orderService.exportToCsv(this.currentOrder.idOrder)
+            .subscribe((data) =>  {
+                console.log(data);
+                const blob = new Blob([data], { type: 'text/csv' });
+                const url= window.URL.createObjectURL(blob);
+                window.open(url);
+            });
+    }
 }
