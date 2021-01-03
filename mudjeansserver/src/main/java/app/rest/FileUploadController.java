@@ -41,11 +41,6 @@ public class FileUploadController {
 
     @PostMapping("/upload")
     public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file) throws StorageException, IOException {
-//        String fileName = storageService.storeFile(file);
-//        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path("/downloadFile/")
-//                .path(fileName)
-//                .toUriString();
         ArrayList<String> resultList = readFile(file);
         if (resultList != null) {
             Order createdOrder = createOrder(resultList);
