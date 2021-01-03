@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Jean} from '../../models/Jean';
 import {SalesSbService} from '../../services/sales-sb.service';
 import {MatPaginator} from '@angular/material/paginator';
@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './managejeansoverview.component.html',
   styleUrls: ['./managejeansoverview.component.css']
 })
-export class ManagejeansoverviewComponent implements OnInit {
+export class ManagejeansoverviewComponent implements OnInit, AfterViewInit {
 
   // @ts-ignore
   currentJean: Jean = new Jean();
@@ -22,6 +22,7 @@ export class ManagejeansoverviewComponent implements OnInit {
     // inside subscribe wordt elke keer gebruikt wanneer data wordt aangepast -> direct update in view
     this.jeanService.restGetJean().subscribe((data) => {
           this.dataSource = new MatTableDataSource<Jean>(data);
+          setTimeout(() => this.dataSource.paginator = this.paginator);
         },
         (error) => {
           alert('Error:' + error);
