@@ -11,12 +11,12 @@ import {environment} from "../../environments/environment";
 })
 export class FileUploadService {
   // Pointing to the back-end endpoint
-  public readonly BACKEND_AUTH_URL = environment.apiUrl + "/upload";
+  public readonly BACKEND_URL = environment.apiUrl + "/upload";
 
   constructor(private http: HttpClient) { }
 
   uploadWithProgress(object: any): Observable<any> {
-    return this.http.post(this.BACKEND_AUTH_URL, object, {reportProgress: true, observe: 'events'})
+    return this.http.post(this.BACKEND_URL, object, {reportProgress: true, observe: 'events'})
         .pipe(
             catchError(err => this.handleError(err))
         );

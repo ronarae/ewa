@@ -9,7 +9,7 @@ import {environment} from '../../environments/environment';
     providedIn: 'root'
 })
 export class UserSbService {
-    public readonly BACKEND_AUTH_URL = environment.apiUrl + "/users";
+    public readonly BACKEND_URL = environment.apiUrl + "/users";
     public users: User[];
 
     constructor(private httpClient: HttpClient) {
@@ -55,15 +55,15 @@ export class UserSbService {
     }
 
     public restGetUser(): Observable<User[]> {
-        return this.httpClient.get<User[]>(this.BACKEND_AUTH_URL);
+        return this.httpClient.get<User[]>(this.BACKEND_URL);
     }
 
     private restPutUser(user: User): Observable<User> {
-        return this.httpClient.post<User>(this.BACKEND_AUTH_URL, user);
+        return this.httpClient.post<User>(this.BACKEND_URL, user);
     }
 
     private restDeleteUser(id: number): Observable<any> {
-        const url = `${this.BACKEND_AUTH_URL}/${id}`;
+        const url = `${this.BACKEND_URL}/${id}`;
         return this.httpClient.delete(url);
     }
 }

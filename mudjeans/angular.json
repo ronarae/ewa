@@ -103,6 +103,9 @@
           "configurations": {
             "production": {
               "browserTarget": "mudjeans:build:production"
+            },
+            "staging": {
+              "browserTarget": "mudjeans:build:staging"
             }
           }
         },

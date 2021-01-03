@@ -9,7 +9,7 @@ import {environment} from "../../environments/environment";
     providedIn: 'root'
 })
 export class SalesSbService {
-    public readonly BACKEND_AUTH_URL = environment.apiUrl + "/jeans";
+    public readonly BACKEND_URL = environment.apiUrl + "/jeans";
 
     public jeans: Jean[];
 
@@ -62,20 +62,20 @@ export class SalesSbService {
     }
 
     public restGetJean(): Observable<Jean[]> {
-        return this.httpClient.get<Jean[]>(this.BACKEND_AUTH_URL);
+        return this.httpClient.get<Jean[]>(this.BACKEND_URL);
     }
 
     private restPostJean(jean: Jean): Observable<Jean> {
-        return this.httpClient.post<Jean>(this.BACKEND_AUTH_URL, jean);
+        return this.httpClient.post<Jean>(this.BACKEND_URL, jean);
     }
 
     private restPutJean(jean: Jean): Observable<Jean> {
-        const url = this.BACKEND_AUTH_URL;
+        const url = this.BACKEND_URL;
         return this.httpClient.put<Jean>(url, jean);
     }
 
     private restDeleteJean(productcode: string): Observable<any> {
-        const url = `${this.BACKEND_AUTH_URL}/${productcode}`;
+        const url = `${this.BACKEND_URL}/${productcode}`;
         return this.httpClient.delete(url);
     }
 

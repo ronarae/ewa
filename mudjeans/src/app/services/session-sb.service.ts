@@ -10,7 +10,7 @@ import {environment} from '../../environments/environment';
   providedIn: 'root'
 })
 export class SessionSbService {
-  public readonly BACKEND_AUTH_URL = environment.apiUrl + "/auth";
+  public readonly BACKEND_URL = environment.apiUrl + "/auth";
 
   currentUser: User = null;
   jwtService = new JwtHelperService();
@@ -32,7 +32,7 @@ export class SessionSbService {
 
   logIn(email: string, password: string): Observable<any> {
     const signInRespons = this.http.post<HttpResponse<User>>(
-        this.BACKEND_AUTH_URL + '/login',
+        this.BACKEND_URL + '/login',
         {eMail: email, passWord: password},
         {observe: 'response'}).pipe(shareReplay(1));
     signInRespons.subscribe(
