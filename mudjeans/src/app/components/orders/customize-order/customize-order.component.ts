@@ -56,14 +56,16 @@ export class CustomizeOrderComponent implements OnInit {
         this.dataSource.filter = filterValue;
     }
 
+    // tslint:disable-next-line:typedef
     onOrderSelected(order: Order) {
         this.currentOrder = order;
         this.count = 0;
         this.getOrderedJeans(this.count);
     }
 
+    // tslint:disable-next-line:typedef
     hasSelection() {
-        return !!this.currentOrder;
+        return !this.currentOrder;
     }
 
     changeReadonly(read: boolean): void {
@@ -103,6 +105,7 @@ export class CustomizeOrderComponent implements OnInit {
         this.getOrderedJeans(this.count);
     }
 
+    // tslint:disable-next-line:typedef
     save() {
         this.currentOrder.jeansArray = [];
 
