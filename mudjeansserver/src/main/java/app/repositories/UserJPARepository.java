@@ -54,6 +54,7 @@ public class UserJPARepository implements JPARepositoryInterface<User, Integer> 
     @Override
     public User save(User user) {
         if (user.getId() == 0) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             return entityManager.merge(user);
         }
         if (findByQuery("user_find_by_email", user.getEmail()).get(0).getPassword().equals(user.getPassword())) {

@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Set;
 
 @Component
-public class JWTokenRequestFilter extends OncePerRequestFilter {
+public class JWTokenRequestFilter extends OncePerRequestFilter{
 
     // path prefixes that will be protected by the authentication filter
     private static final Set<String> SECURED_PATHS = Set.of("#");

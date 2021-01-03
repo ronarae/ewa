@@ -85,6 +85,12 @@ export class OrderhistoryComponent implements OnInit {
         );
     }
 
+    applyFilter(filterValue: string) {
+        filterValue = filterValue.trim(); // Remove whitespace
+        filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+        this.dataSource.filter = filterValue;
+    }
+
     public export() {
         this.orderService.exportToCsv(this.currentOrder.idOrder)
             .subscribe((data) =>  {
