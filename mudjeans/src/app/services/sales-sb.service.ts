@@ -2,12 +2,15 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Jean} from '../models/Jean';
 import {Observable} from 'rxjs';
+import {environment} from "../../environments/environment";
 
 // @ts-ignore
 @Injectable({
     providedIn: 'root'
 })
 export class SalesSbService {
+    public readonly BACKEND_AUTH_URL = environment.apiUrl + "/jeans";
+
     public jeans: Jean[];
 
     constructor(private httpClient: HttpClient) {
@@ -59,20 +62,20 @@ export class SalesSbService {
     }
 
     public restGetJean(): Observable<Jean[]> {
-        return this.httpClient.get<Jean[]>('http://localhost:8085/jeans');
+        return this.httpClient.get<Jean[]>(this.BACKEND_AUTH_URL);
     }
 
     private restPostJean(jean: Jean): Observable<Jean> {
-        return this.httpClient.post<Jean>('http://localhost:8085/jeans', jean);
+        return this.httpClient.post<Jean>(this.BACKEND_AUTH_URL, jean);
     }
 
     private restPutJean(jean: Jean): Observable<Jean> {
-        const url = `http://localhost:8085/jeans/`;
+        const url = this.BACKEND_AUTH_URL;
         return this.httpClient.put<Jean>(url, jean);
     }
 
     private restDeleteJean(productcode: string): Observable<any> {
-        const url = `http://localhost:8085/jeans/${productcode}`;
+        const url = `${this.BACKEND_AUTH_URL}/${productcode}`;
         return this.httpClient.delete(url);
     }
 

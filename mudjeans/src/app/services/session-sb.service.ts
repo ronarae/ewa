@@ -10,7 +10,7 @@ import {environment} from '../../environments/environment';
   providedIn: 'root'
 })
 export class SessionSbService {
-  public readonly BACKEND_AUTH_URL = 'http://localhost:8085/auth';
+  public readonly BACKEND_AUTH_URL = environment.apiUrl + "/auth";
 
   currentUser: User = null;
   jwtService = new JwtHelperService();

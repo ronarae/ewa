@@ -3,11 +3,13 @@ import {User} from "../models/User";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Jean} from "../models/Jean";
+import {environment} from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserSbService {
+    public readonly BACKEND_AUTH_URL = environment.apiUrl + "/users";
     public users: User[];
 
     constructor(private httpClient: HttpClient) {
@@ -53,15 +55,15 @@ export class UserSbService {
     }
 
     public restGetUser(): Observable<User[]> {
-        return this.httpClient.get<User[]>('http://localhost:8085/users');
+        return this.httpClient.get<User[]>(this.BACKEND_AUTH_URL);
     }
 
     private restPutUser(user: User): Observable<User> {
-        return this.httpClient.post<User>('http://localhost:8085/users', user);
+        return this.httpClient.post<User>(this.BACKEND_AUTH_URL, user);
     }
 
     private restDeleteUser(id: number): Observable<any> {
-        const url = `http://localhost:8085/users/${id}`;
+        const url = `${this.BACKEND_AUTH_URL}/${id}`;
         return this.httpClient.delete(url);
     }
 }
