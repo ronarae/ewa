@@ -32,4 +32,9 @@ export class OrderService {
   public restGetOrder(): Observable<Order[]> {
     return this.httpClient.get<Order[]>('http://localhost:8085/orders/notpending');
   }
+
+  public exportToCsv(id: number): any {
+    // @ts-ignore
+    return this.httpClient.get<any>(`http://localhost:8085/orders/export/${id}`, {responseType: 'text'});
+  }
 }

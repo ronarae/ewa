@@ -1,9 +1,6 @@
 package app.rest;
 
-import app.models.Notification;
-import app.models.Order;
-import app.models.OrderJean;
-import app.models.User;
+import app.models.*;
 import app.repositories.JeansJPARepository;
 import app.repositories.OrderJPARepository;
 ;
@@ -16,9 +13,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.URI;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -131,7 +136,7 @@ public class OrderController {
 
     @GetMapping("/orders/orderjeans/{orderId}/{page}")
     public List<OrderJean> getOrderJeanById(@PathVariable int orderId, @PathVariable int page) {
-        return orderRepository.findAllByOrder(orderId, page);
+        return orderRepository.findAllByOrderWithPage(orderId, page);
     }
 
     private Order createNewOrder(ObjectNode o) {
@@ -169,5 +174,32 @@ public class OrderController {
         }
 
         return savedOrder;
+    }
+
+    @GetMapping("/orders/export/{id}")
+    public void exportToCsv(@PathVariable int id, HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=order_" + id  + "_" + currentDateTime + ".csv";
+        response.setHeader(headerKey, headerValue);
+
+        List<OrderJean> orders = orderRepository.findAllByOrder(id);
+
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Order ID", "Product Code", "Quantity"};
+        String[] nameMapping = {"id_order", "productCode", "quantity"};
+
+        csvWriter.writeHeader(csvHeader);
+
+        for(OrderJean oj : orders) {
+            OrderJeansWithIds ids = new OrderJeansWithIds(oj.getOrder().getOrderId(), oj.getJeans().getProductCode(), oj.getQuantity());
+            csvWriter.write(ids, nameMapping);
+        }
+
+        csvWriter.close();
     }
 }

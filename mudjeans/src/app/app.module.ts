@@ -17,7 +17,6 @@ import {CommonModule} from '@angular/common';
 import { OrderhistoryComponent } from './components/orderhistory/orderhistory.component';
 import { CreateorderComponent } from './components/orders/createorder/createorder.component';
 import { CustomizeOrderComponent } from './components/orders/customize-order/customize-order.component';
-import { PendingOrderComponent } from './components/orders/pending-order/pending-order.component';
 import { UploadfileComponent } from './components/uploadfile/uploadfile.component';
 import {MatTableModule} from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -48,7 +47,6 @@ const appRoutes: Routes = [
     OrderhistoryComponent,
     CreateorderComponent,
     CustomizeOrderComponent,
-    PendingOrderComponent,
     UploadfileComponent,
     AdminpanelComponent,
   ],
