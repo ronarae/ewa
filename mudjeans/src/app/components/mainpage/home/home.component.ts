@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
                         this.highstStockJean = Jean.trueCopy(data[i]);
                     }
                     this.totalStock += data[i].latestStock;
-                    if (data[i].shouldOrder === true) { // if should order add to should order list
+                    if (data[i].latestStock === 0) { // if should order add to should order list
                         const jean: Jean = Jean.trueCopy(data[i]);
                         this.lowStockJeans.push(jean);
                     }
