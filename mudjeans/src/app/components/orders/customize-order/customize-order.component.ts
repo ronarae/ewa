@@ -122,6 +122,7 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
         console.log(this.currentOrder);
 
         this.orderService.updateOrder(this.currentOrder).subscribe(
+            
             (data) => {
                 if (bool) {
                     this.toastr.success("Order saved and status adjusted to Adjustment");
