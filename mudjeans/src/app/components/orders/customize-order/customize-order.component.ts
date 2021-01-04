@@ -66,7 +66,7 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
 
     // tslint:disable-next-line:typedef
     hasSelection() {
-        return !this.currentOrder;
+        return !!this.currentOrder;
     }
 
     changeReadonly(read: boolean): void {
@@ -107,7 +107,7 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
     }
 
     // tslint:disable-next-line:typedef
-    save() {
+    save(bool: boolean) {
         this.currentOrder.jeansArray = [];
         this.currentOrder.update = bool;
 
@@ -122,7 +122,7 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
         console.log(this.currentOrder);
 
         this.orderService.updateOrder(this.currentOrder).subscribe(
-            
+
             (data) => {
                 if (bool) {
                     this.toastr.success("Order saved and status adjusted to Adjustment");
