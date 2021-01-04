@@ -73,7 +73,7 @@ The server should start now and when it's finished will be available on `http://
 3. Change in the clientside the environment.staging.ts file change here the apiurl to your back-end host url.
 
 ## System Documentation
-[System Documentation](https://drive.google.com/file/d/1SnK5GqYTS8hmV8wln3N9Z-QinR5i3mdz/view?usp=sharing)  
+[System Documentation](https://docs.google.com/document/d/18zv1LI6OnQf7VBpnFglBJgUe8zol3JBnwOK9jKNPJXM/edit?usp=sharing)  
 
 
 
