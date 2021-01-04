@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Jean} from '../models/Jean';
 import {Observable} from 'rxjs';
 import {environment} from "../../environments/environment";
+import {ToastrService} from "ngx-toastr";
 
 // @ts-ignore
 @Injectable({
@@ -13,7 +14,7 @@ export class SalesSbService {
 
     public jeans: Jean[];
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private toastr: ToastrService) {
         this.jeans = [];
         this.restGetJean().subscribe(
             (data) => {
@@ -24,13 +25,13 @@ export class SalesSbService {
                 }
             },
             (error) => {
-                alert('Error:' + error);
+                this.toastr.error(error.error);
             }
         );
     }
 
     findAll(): Jean[] {
-        console.log('Jean length in function: ' + this.jeans.length);
+        // console.log('Jean length in function: ' + this.jeans.length);
         return this.jeans;
     }
 

@@ -72,6 +72,10 @@ The server should start now and when it's finished will be available on `http://
 2. Change the application-staging.properties to your database keys.
 3. Change in the clientside the environment.staging.ts file change here the apiurl to your back-end host url.
 
+## System Documentation
+[System Documentation](https://docs.google.com/document/d/18zv1LI6OnQf7VBpnFglBJgUe8zol3JBnwOK9jKNPJXM/edit?usp=sharing)  
+
+
 
 
 

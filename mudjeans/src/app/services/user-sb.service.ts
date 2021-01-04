@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Jean} from "../models/Jean";
 import {environment} from '../../environments/environment';
+import {ToastrService} from "ngx-toastr";
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ export class UserSbService {
     public readonly BACKEND_URL = environment.apiUrl + "/users";
     public users: User[];
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private toastr: ToastrService) {
         this.users = [];
         this.restGetUser().subscribe(
             (data) => {
@@ -22,7 +23,7 @@ export class UserSbService {
                 }
             },
             (error) => {
-                alert('Error:' + error);
+                this.toastr.error(error.error);
             }
         );
     }
