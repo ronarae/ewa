@@ -38,7 +38,7 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
                 setTimeout(() => this.dataSource.paginator = this.paginator);
             },
             (error) => {
-                alert('Error:' + error);
+                this.toastr.error(error.error);
             });
     }
 
@@ -85,7 +85,7 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
                 }
             },
             (err) => {
-                alert('Error:' + err);
+                this.toastr.error(err.error);
             }
         );
     }
@@ -102,13 +102,14 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
             default:
                 break;
         }
-        this.save();
+        this.save(false);
         this.getOrderedJeans(this.count);
     }
 
     // tslint:disable-next-line:typedef
     save() {
         this.currentOrder.jeansArray = [];
+        this.currentOrder.update = bool;
 
         if (this.orderedJeans.length < 1) {
             return;
@@ -120,6 +121,16 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
         }
         console.log(this.currentOrder);
 
-        this.orderService.updateOrder(this.currentOrder).subscribe((data) => console.log(data));
+        this.orderService.updateOrder(this.currentOrder).subscribe(
+            (data) => {
+                if (bool) {
+                    this.toastr.success("Order saved and status adjusted to Adjustment");
+                } else {
+                    this.toastr.success("Changes saved");
+                }
+            },
+            (err) => {
+                this.toastr.error("Could not update order");
+            });
     }
 }

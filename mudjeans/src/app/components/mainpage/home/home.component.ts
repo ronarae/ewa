@@ -5,6 +5,7 @@ import {SalesSbService} from "../../../services/sales-sb.service";
 import {Order} from "../../../models/Order";
 import {MatTableDataSource} from "@angular/material/table";
 import {OrderJean} from "../../../models/OrderJean";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'app-home',
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit {
     cssColor: string[] = ["bg-danger", "bg-warning", "", "bg-info", "bg-success"];
     highestJeansStockPerStyle = 0;
 
-    constructor(private orderService: OrderService, private jeansService: SalesSbService) {
+    constructor(private orderService: OrderService, private jeansService: SalesSbService, private toastr: ToastrService) {
         this.orderService.restGetPendingOrders().subscribe((data) => {
                 // tslint:disable-next-line:prefer-for-of
                 for (let i = 0; i < data.length; i++) {
@@ -34,7 +35,7 @@ export class HomeComponent implements OnInit {
                 }
             },
             (error) => {
-                alert('Error:' + error);
+                this.toastr.error(error.error);
             });
 
         this.jeansService.restGetJean().subscribe((data) => {
@@ -60,10 +61,10 @@ export class HomeComponent implements OnInit {
                         this.lowStockJeans.push(jean);
                     }
                 }
-                console.log(this.highestJeansStockPerStyle);
+                // console.log(this.highestJeansStockPerStyle);
             },
             (error) => {
-                alert('Error:' + error);
+                this.toastr.error(error.error);
             });
     }
 
