@@ -26,7 +26,7 @@ export class AdminpanelComponent implements OnInit {
           }
         },
         (error) => {
-          alert('Error:' + error);
+          this.toastr.error(error.error);
         }
     );
   }
@@ -70,5 +70,4 @@ export class AdminpanelComponent implements OnInit {
     this.router.navigate(['/adminpanel']);
     window.location.reload();
   }
-
 }

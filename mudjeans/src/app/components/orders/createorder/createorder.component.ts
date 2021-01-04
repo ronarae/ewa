@@ -51,7 +51,7 @@ export class CreateorderComponent implements OnInit {
                 jeans.forEach(jean => this.categories.add(jean.productCategory));
             },
             (error) => {
-                // TODO: handle error
+                this.toastr.error(error.error);
             },
         );
     }
@@ -67,13 +67,13 @@ export class CreateorderComponent implements OnInit {
     createRow(dialogRef): void {
         this.dialog.open(dialogRef).beforeClosed().subscribe((result) => {
             if (result) {
-                console.log(result, this.productCodeSelect.value, this.amountInput.value);
+                // console.log(result, this.productCodeSelect.value, this.amountInput.value);
                 this.rows.push({
                     productCode: this.productCodeSelect.value,
                     amount: this.amountInput.value,
                 });
             } else {
-                console.log("false", this.productCodeSelect.value, this.amountInput.value);
+                // console.log("false", this.productCodeSelect.value, this.amountInput.value);
             }
         });
     }
@@ -83,7 +83,7 @@ export class CreateorderComponent implements OnInit {
             // index out of bounds
             return;
         }
-        console.log(index);
+        // console.log(index);
         this.rows.splice(index, 1);
     }
 
@@ -190,11 +190,9 @@ export class CreateorderComponent implements OnInit {
         console.log(this.order);
         this.orderService.addOrder(this.order).subscribe(
             (data) => {
-                console.log(data);
                 this.toastr.success('You placed your order', 'Successfully created an order');
                 this.order = new Order(0, "", new Date(), sessionStorage.getItem("username"), "Pending", null);
             }, (error => {
-                console.error(error);
                 this.toastr.error('Could not place your order', 'Error');
             })
         );

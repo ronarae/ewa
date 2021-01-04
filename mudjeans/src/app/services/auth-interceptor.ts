@@ -4,11 +4,12 @@ import {Observable, throwError} from 'rxjs';
 import {catchError, switchMap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {SessionSbService} from "./session-sb.service";
+import {ToastrService} from "ngx-toastr";
 
 @Injectable()
 export class AuthSbInterceptor implements HttpInterceptor {
 
-    constructor(private session: SessionSbService, private router: Router) {
+    constructor(private session: SessionSbService, private router: Router, private toastr: ToastrService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -28,6 +29,7 @@ export class AuthSbInterceptor implements HttpInterceptor {
                         // Failed to refresh
                         if (req.url.endsWith('authenticate')) {
                             this.forceLogOff();
+                            this.toastr.error(error.error);
                             return throwError(error);
                         } else {
                             return this.session.refreshToken().pipe(
@@ -40,6 +42,7 @@ export class AuthSbInterceptor implements HttpInterceptor {
                             );
                         }
                     } else {
+                        this.toastr.error(error.error);
                         return throwError(error);
                     }
                 })

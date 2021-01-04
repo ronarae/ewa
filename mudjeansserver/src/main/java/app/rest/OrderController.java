@@ -108,8 +108,10 @@ public class OrderController {
                     "Orders with orderId " + o.get("idOrder").asInt() + " could not be found.");
         }
 
-        order.setStatus("Adjustment");
-        orderRepository.save(order);
+        if (o.get("update").asBoolean()) {
+            order.setStatus("Adjustment");
+            orderRepository.save(order);
+        }
 
         JsonNode arrNode = o.get("jeansArray");
         if (arrNode.isArray()) {

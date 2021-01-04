@@ -7,6 +7,7 @@ export class Order {
     idUser: string;
     status: string;
     idReviewer: string;
+    update: boolean;
     jeansArray: OrderJean[];
 
     constructor(idOrder: number, note: string, date: Date, idUser: string, status: string, idReviewer: string) {

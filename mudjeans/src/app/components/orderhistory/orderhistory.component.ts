@@ -39,7 +39,7 @@ export class OrderhistoryComponent implements OnInit, AfterViewInit {
                 setTimeout(() => this.dataSource.paginator = this.paginator);
             },
             (error) => {
-                alert('Error:' + error);
+                this.toastr.error(error.error);
             });
     }
 
@@ -88,7 +88,7 @@ export class OrderhistoryComponent implements OnInit, AfterViewInit {
                 }
             },
             (err) => {
-                alert('Error:' + err);
+                this.toastr.error(err.error);
             }
         );
     }
@@ -102,7 +102,7 @@ export class OrderhistoryComponent implements OnInit, AfterViewInit {
     public export() {
         this.orderService.exportToCsv(this.currentOrder.idOrder)
             .subscribe((data) =>  {
-                console.log(data);
+                // console.log(data);
                 const blob = new Blob([data], { type: 'text/csv' });
                 const url= window.URL.createObjectURL(blob);
                 window.open(url);

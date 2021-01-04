@@ -24,13 +24,13 @@ export class UploadfileComponent implements OnInit {
     // tslint:disable-next-line:typedef
     upload(files: File[]) {
         const file = files[0];
-        console.log('filename: ' + file.name);
+        // console.log('filename: ' + file.name);
         this.isUploaded = false;
         this.fileName = '';
         this.fileType = '';
         const formData = new FormData();
         formData.append('file', file);
-
+        this.toastr.info("File is being analyzed..")
         this.fileUploadService.uploadWithProgress(formData)
             .subscribe(event => {
                 if (event.type === HttpEventType.UploadProgress) {

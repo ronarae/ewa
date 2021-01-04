@@ -25,7 +25,7 @@ export class ManagejeansoverviewComponent implements OnInit, AfterViewInit {
           setTimeout(() => this.dataSource.paginator = this.paginator);
         },
         (error) => {
-          alert('Error:' + error);
+          this.toastr.error(error.error);
         });
   }
 
@@ -58,7 +58,7 @@ export class ManagejeansoverviewComponent implements OnInit, AfterViewInit {
 
   onJeanSelected(jean: Jean): void {
     this.currentJean = jean;
-    console.log(jean);
+    // console.log(jean);
   }
 
   // tslint:disable-next-line:typedef
