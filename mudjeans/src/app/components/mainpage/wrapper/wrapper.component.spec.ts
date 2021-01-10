@@ -2,6 +2,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WrapperComponent } from './wrapper.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {ToastrModule} from "ngx-toastr";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('WrapperComponent', () => {
   let component: WrapperComponent;
@@ -10,7 +13,8 @@ describe('WrapperComponent', () => {
   // @ts-ignore
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WrapperComponent ]
+      declarations: [ WrapperComponent ],
+      imports: [HttpClientTestingModule, ToastrModule.forRoot(), RouterTestingModule],
     })
     .compileComponents();
   });

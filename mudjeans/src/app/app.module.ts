@@ -63,7 +63,9 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatProgressBarModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    }),
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatDialogModule,

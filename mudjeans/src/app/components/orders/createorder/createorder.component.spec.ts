@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateorderComponent } from './createorder.component';
+import {HttpClient} from "@angular/common/http";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {ToastrModule} from "ngx-toastr";
+import {RouterTestingModule} from "@angular/router/testing";
+import {MatDialogModule} from "@angular/material/dialog";
 
 describe('CreateorderComponent', () => {
   let component: CreateorderComponent;
@@ -8,7 +13,8 @@ describe('CreateorderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateorderComponent ]
+      declarations: [ CreateorderComponent ],
+      imports: [HttpClientTestingModule, ToastrModule.forRoot(), RouterTestingModule, MatDialogModule],
     })
     .compileComponents();
   });

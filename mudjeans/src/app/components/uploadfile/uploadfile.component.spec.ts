@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UploadfileComponent } from './uploadfile.component';
+import {HttpClient} from "@angular/common/http";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {ToastrModule} from "ngx-toastr";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('UploadfileComponent', () => {
   let component: UploadfileComponent;
@@ -8,7 +12,8 @@ describe('UploadfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UploadfileComponent ]
+      declarations: [ UploadfileComponent ],
+      imports: [HttpClientTestingModule, ToastrModule.forRoot(), RouterTestingModule],
     })
     .compileComponents();
   });

@@ -22,6 +22,7 @@ export class ManagejeansoverviewComponent implements OnInit, AfterViewInit {
     // inside subscribe wordt elke keer gebruikt wanneer data wordt aangepast -> direct update in view
     this.jeanService.restGetJean().subscribe((data) => {
           this.dataSource = new MatTableDataSource<Jean>(data);
+          this.dataSource.paginator = this.paginator;
           setTimeout(() => this.dataSource.paginator = this.paginator);
         },
         (error) => {
@@ -31,7 +32,7 @@ export class ManagejeansoverviewComponent implements OnInit, AfterViewInit {
 
   // tslint:disable-next-line:typedef use-lifecycle-interface
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+
   }
 
   // tslint:disable-next-line:typedef
