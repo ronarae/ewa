@@ -35,6 +35,7 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
                     array.push(order);
                 }
                 this.dataSource = new MatTableDataSource<Order>(array);
+                this.dataSource.paginator = this.paginator;
                 setTimeout(() => this.dataSource.paginator = this.paginator);
             },
             (error) => {
@@ -42,12 +43,11 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
             });
     }
 
-    ngOnInit(): void {
-    }
+    ngOnInit(): void {}
 
     // tslint:disable-next-line:typedef use-lifecycle-interface
     ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
+
     }
 
     // tslint:disable-next-line:typedef
