@@ -13,7 +13,7 @@ import {ToastrService} from "ngx-toastr";
 export class SessionSbService {
     public readonly BACKEND_URL = environment.apiUrl + "/auth";
 
-    currentUser: User = null;
+    currentUser: User = new User(null, null, null, null, null, null);
     jwtService = new JwtHelperService();
 
     constructor(private http: HttpClient, private toastr: ToastrService) {
@@ -106,7 +106,7 @@ export class SessionSbService {
             this.currentUser.role = decodedToken.role;
             this.currentUser.exp = decodedToken.exp;
         } else {
-            this.currentUser = null;
+            this.currentUser = new User(null, null, null, null, null, null);
         }
     }
 }
