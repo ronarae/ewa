@@ -36,6 +36,7 @@ export class OrderhistoryComponent implements OnInit, AfterViewInit {
                     array.push(order);
                 }
                 this.dataSource = new MatTableDataSource<Order>(array);
+                this.dataSource.paginator = this.paginator;
                 setTimeout(() => this.dataSource.paginator = this.paginator);
             },
             (error) => {
@@ -48,7 +49,7 @@ export class OrderhistoryComponent implements OnInit, AfterViewInit {
 
     // tslint:disable-next-line:typedef use-lifecycle-interface
     ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
+
     }
 
     onOrderSelected(order: Order): void {
@@ -93,18 +94,20 @@ export class OrderhistoryComponent implements OnInit, AfterViewInit {
         );
     }
 
+    // tslint:disable-next-line:typedef
     applyFilter(filterValue: string) {
         filterValue = filterValue.trim(); // Remove whitespace
         filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
         this.dataSource.filter = filterValue;
     }
 
+    // tslint:disable-next-line:typedef
     public export() {
         this.orderService.exportToCsv(this.currentOrder.idOrder)
             .subscribe((data) =>  {
                 // console.log(data);
                 const blob = new Blob([data], { type: 'text/csv' });
-                const url= window.URL.createObjectURL(blob);
+                const url = window.URL.createObjectURL(blob);
                 window.open(url);
             });
     }
