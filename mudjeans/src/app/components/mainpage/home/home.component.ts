@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
 
     pendingOrders: Order[] = [];
     lowStockJeans: Jean[] = [];
-    highstStockJean: Jean = null;
+    highstStockJean: Jean = new Jean("", null, null, null, null, null, null);
     highestStock = 0;
     totalStock = 0;
 
