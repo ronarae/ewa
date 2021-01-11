@@ -52,6 +52,7 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
 
     // tslint:disable-next-line:typedef
     applyFilter(filterValue: string) {
+        console.log("row" + this.rows);
         filterValue = filterValue.trim(); // Remove whitespace
         filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
         this.dataSource.filter = filterValue;

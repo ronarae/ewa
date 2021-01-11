@@ -85,7 +85,7 @@ describe('CustomizeOrderComponent', () => {
             filterfield.nativeElement.value = "66";
             filterfield.nativeElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
-            expect(component.rows > 0);
+            expect(component.rows > 0).toBeFalse();
         });
         done();
     });
