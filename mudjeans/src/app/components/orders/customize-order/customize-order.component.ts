@@ -18,9 +18,8 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
     currentOrder: Order = null;
     orderedJeans: OrderJean[] = [];
     count: number;
-
     readOnly = true;
-
+    rows;
     displayedColumns = ['Order Id', 'Order Date', 'Order Message', 'Placed By'];
     dataSource;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -36,6 +35,7 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
                 }
                 this.dataSource = new MatTableDataSource<Order>(array);
                 this.dataSource.paginator = this.paginator;
+                this.rows = this.dataSource.data.length;
                 setTimeout(() => this.dataSource.paginator = this.paginator);
             },
             (error) => {
@@ -55,6 +55,7 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
         filterValue = filterValue.trim(); // Remove whitespace
         filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
         this.dataSource.filter = filterValue;
+
     }
 
     // tslint:disable-next-line:typedef

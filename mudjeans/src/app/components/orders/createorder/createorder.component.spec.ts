@@ -59,4 +59,12 @@ describe('CreateorderComponent', () => {
 
     expect(orderInList).toEqual(order);
   });
+
+  // Author: Wang
+  it('should render "Create Order" as title', (() => {
+    const titleDiv = fixture.debugElement.nativeElement.querySelector('h2');
+    expect(titleDiv.textContent).toContain('Create Order');
+  }));
+
+
 });

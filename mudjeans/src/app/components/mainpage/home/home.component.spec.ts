@@ -26,4 +26,10 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // Wang Di
+  it('should render "Dashboard" as title', (() => {
+    const titleDiv = fixture.debugElement.nativeElement.querySelector('h1');
+    expect(titleDiv.textContent).toContain('Dashboard');
+  }));
 });

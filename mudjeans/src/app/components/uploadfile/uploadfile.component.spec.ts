@@ -27,4 +27,10 @@ describe('UploadfileComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // Author: Wang
+  it('should render "File Upload" as title', (() => {
+    const titleDiv = fixture.debugElement.nativeElement.querySelector('h5');
+    expect(titleDiv.textContent).toContain('File Upload');
+  }));
 });

@@ -3,7 +3,7 @@
     <div>
         <div>
             <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter"/>
+                <input id="inputfield" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter"/>
             </mat-form-field>
         </div>
         <div class="loading-overlay" *ngIf="!dataSource">
