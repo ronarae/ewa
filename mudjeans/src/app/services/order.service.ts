@@ -4,15 +4,47 @@ import {Observable} from "rxjs";
 import {Order} from "../models/Order";
 import {OrderJean} from "../models/OrderJean";
 import {environment} from "../../environments/environment";
+import {Jean} from "../models/Jean";
+import {ToastrService} from "ngx-toastr";
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
+  orders: Order[];
 
   public readonly BACKEND_URL = environment.apiUrl + "/orders";
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private toastr: ToastrService) {
+    this.orders = [];
+    this.restGetPendingOrders().subscribe(
+        (data) => {
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < data.length; i++) {
+            this.orders.push(Order.trueCopy(data[i]));
+          }
+        },
+        (error) => {
+          this.toastr.error(error.error);
+        }
+    )
+  }
+
+  public findAll(): Order[] {
+    return this.orders;
+  }
+
+  save(order: Order): void {
+    const id = this.orders.findIndex((x) => x.idOrder === order.idOrder);
+    // jean not found
+    if (id === -1) {
+      this.orders.push(order);
+      this.addOrder(order).subscribe((data) => console.log(data));
+    } else {
+      this.orders[id] = order;
+      this.updateOrder(order).subscribe((data) => console.log(data));
+    }
+  }
 
   public restGetPendingOrders(): Observable<any> {
     return this.httpClient.get<any>(this.BACKEND_URL + '/pending');

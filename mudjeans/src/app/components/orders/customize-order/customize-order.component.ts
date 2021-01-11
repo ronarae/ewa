@@ -25,7 +25,7 @@ export class CustomizeOrderComponent implements OnInit, AfterViewInit {
     dataSource;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    constructor(private toastr: ToastrService, private orderService: OrderService) {
+    constructor(private toastr: ToastrService, public orderService: OrderService) {
         const array = [];
         this.orderService.restGetPendingOrders().subscribe((data) => {
                 // tslint:disable-next-line:prefer-for-of
