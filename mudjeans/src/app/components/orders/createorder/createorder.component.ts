@@ -32,6 +32,7 @@ export class CreateorderComponent implements OnInit {
     rows = [];
     public loading = true;
     public order: Order;
+    title = 'Create Order';
 
     constructor(
         private toastr: ToastrService,

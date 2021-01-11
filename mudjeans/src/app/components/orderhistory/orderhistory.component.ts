@@ -14,6 +14,7 @@ import {MatPaginator} from "@angular/material/paginator";
 })
 export class OrderhistoryComponent implements OnInit, AfterViewInit {
 
+    title = 'Order History';
     // @ts-ignore
     currentOrder: Order = new Order();
     orderedJeans: OrderJean[] = [];
