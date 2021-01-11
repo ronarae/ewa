@@ -6,6 +6,8 @@ import {ToastrModule} from "ngx-toastr";
 import {RouterTestingModule} from "@angular/router/testing";
 import {MatDialogModule} from "@angular/material/dialog";
 import {By} from "@angular/platform-browser";
+import {OrderService} from "../../../services/order.service";
+import {Order} from "../../../models/Order";
 
 describe('CreateorderComponent', () => {
   let component: CreateorderComponent;
@@ -40,4 +42,21 @@ describe('CreateorderComponent', () => {
     done();
   });
 
+  // Author: Jimi
+  it('J05: should save order',  () => {
+    const service = fixture.debugElement.injector.get(OrderService);
+    fixture.detectChanges();
+
+    const order = new Order(0, '', new Date(), 'system', 'Pending', null);
+    service.save(order);
+
+    let orderInList;
+    for (let i = 0; i < service.findAll().length; i++) {
+      if (service.findAll()[i].idOrder === order.idOrder) {
+        orderInList = service.findAll()[i];
+      }
+    }
+
+    expect(orderInList).toEqual(order);
+  });
 });
