@@ -4,6 +4,7 @@ import { HeaderComponent } from './header.component';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {ToastrModule} from "ngx-toastr";
 import {RouterTestingModule} from "@angular/router/testing";
+import {UserSbService} from "../../../services/user-sb.service";
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -25,5 +26,13 @@ describe('HeaderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  // Kaspar
+  it('should display userName ', () => {
+    component.userName = "test";
+    fixture.detectChanges();
+    const titleDiv = fixture.debugElement.nativeElement.querySelector('span');
+    expect(titleDiv.textContent).toContain('test');
   });
 });

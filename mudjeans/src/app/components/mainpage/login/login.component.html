@@ -24,7 +24,7 @@
 
               <div *ngIf="!emailComponent.valid && emailComponent.touched && !errorMessage"
                    class="alert alert-danger">Please enter a valid Email address</div>
-              <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+              <div *ngIf="errorMessage" id="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
               <div class="">
                 <button type="submit" id="login-button" class="btn btn-block button-size mb-4"

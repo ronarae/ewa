@@ -73,7 +73,7 @@ export class SessionSbService {
     }
 
     refreshToken(): Observable<any> {
-        const observable = this.http.post(`${environment.apiUrl}/refresh-token`, {},
+        const observable = this.http.post(`${this.BACKEND_URL}/refresh-token`, {},
             {headers: new HttpHeaders({Authorization: this.getToken()}), observe: 'response'}).pipe(share());
 
         observable.subscribe(data => {
