@@ -20,7 +20,7 @@ describe('NavBarComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [NavBarComponent, HomeComponent],
-            imports: [HttpClientTestingModule, ToastrModule.forRoot(), RouterTestingModule],
+            imports: [HttpClientTestingModule, ToastrModule.forRoot(), RouterTestingModule.withRoutes([{path: 'home', component: HomeComponent}])],
         })
             .compileComponents();
     });
