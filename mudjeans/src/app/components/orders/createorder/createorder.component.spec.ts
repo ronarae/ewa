@@ -12,6 +12,7 @@ import {Order} from "../../../models/Order";
 describe('CreateorderComponent', () => {
   let component: CreateorderComponent;
   let fixture: ComponentFixture<CreateorderComponent>;
+  let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,6 +24,7 @@ describe('CreateorderComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateorderComponent);
+    element = fixture.nativeElement; // The HTML reference
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -58,6 +60,18 @@ describe('CreateorderComponent', () => {
     }
 
     expect(orderInList).toEqual(order);
+  });
+
+  // TEST 4 FRONT END - RONA
+  it('should render title in a h1 tag', () => {
+    // * arrange
+    const title = 'Create Order';
+    const titleElement = element.querySelector('.title');
+    // * act
+    component.title = title;
+    fixture.detectChanges();
+    // * assert
+    expect(titleElement.textContent).toContain(title);
   });
 
   // Author: Wang
