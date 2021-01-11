@@ -26,10 +26,6 @@ import java.util.*;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class FileUploadController {
-
-    @Autowired
-    private StorageService storageService;
-
     @Autowired
     private JeansJPARepository jeansRepo;
 
@@ -41,16 +37,29 @@ public class FileUploadController {
 
     @PostMapping("/upload")
     public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file) throws StorageException, IOException {
+        // Read data from uploaded file
         ArrayList<String> resultList = readFile(file);
+
+        // Check if method actually returned list
         if (resultList != null) {
+
+            // Create new order
             Order createdOrder = createOrder(resultList);
+
+            // Create new notification and save it
             String header = "Automatic order with id " + createdOrder.getOrderId() + " has been created by the system.";
             String message = "An order has been created by the system with the following id: " + createdOrder.getOrderId() + ", please review it when you have time.";
             Notification notification = new Notification(createdOrder.getReviewer(), header, message);
             orderRepo.save(notification);
+
+            // Send notification
             notification.sendMail();
+
+            // Send creation response
             return ResponseEntity.created(getLocationURI(createdOrder.getOrderId())).body(createdOrder);
         }
+
+        // Reading the file didn't complete succesfully, so send error response back.
         return ResponseEntity.badRequest().body("Uploaded file does not meet the requirements, make sure you upload the sales analysis for the full year");
     }
 
@@ -141,7 +150,7 @@ public class FileUploadController {
         return list;
     }
 
-    public Order createOrder(ArrayList<String> list) {
+    public Order createOrder(List<String> list) {
         // Get all administrators.
         List<User> reviewers = userRepo.findByQuery("user_find_by_role", "admin");
 
@@ -173,7 +182,7 @@ public class FileUploadController {
         }
     }
 
-    public Map<String, Integer> calculateAllToOrder(ArrayList<String> list) {
+    public Map<String, Integer> calculateAllToOrder(List<String> list) {
         Map<String, Integer> totalSoldPerType = calculateTotal(list, 1);
         Map<String, Integer> toOrder = new HashMap<>();
 
@@ -202,7 +211,7 @@ public class FileUploadController {
         return toOrder;
     }
 
-    public void updateJeanStock(ArrayList<String> list) {
+    public void updateJeanStock(List<String> list) {
         for (int i = 0; i < list.size(); i += 3) {
             String productCode = list.get(i);
             Jeans j = jeansRepo.find(productCode);
@@ -216,8 +225,8 @@ public class FileUploadController {
         }
     }
 
-    public Map<String, Integer> calculateTotal(ArrayList<String> list, int loopadder) {
-        HashMap<String, Integer> toReturn = new HashMap();
+    public Map<String, Integer> calculateTotal(List<String> list, int loopadder) {
+        HashMap<String, Integer> toReturn = new HashMap<>();
         int index = 0;
         do {
             // Split the productcode
