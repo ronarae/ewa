@@ -9,13 +9,16 @@ import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -75,8 +78,8 @@ public class TestByKaspar {
     public void findAllShouldReturnAllUsersAndHaveSameNames() {
         // Find and get test users
         ArrayList<User> allUsers = new ArrayList<>(userJPARepository.findAll());
-        User userOne = allUsers.get(allUsers.size()-2);
-        User userTwo = allUsers.get(allUsers.size()-1);
+        User userOne = allUsers.get(allUsers.size() - 2);
+        User userTwo = allUsers.get(allUsers.size() - 1);
 
         // Check if the found users have the same names
         Assert.assertEquals("test", userOne.getName());
@@ -85,7 +88,7 @@ public class TestByKaspar {
 
     @Test
     public void findAllShouldReturnAllUsersUsingRestEndPoint() throws Exception {
-        mvc.perform( MockMvcRequestBuilders
+        mvc.perform(MockMvcRequestBuilders
                 .get("/users")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -109,23 +112,17 @@ public class TestByKaspar {
     }
 
     @Test
-    public void nonexistentUserCannotGetTokenAndGetsAuthenticateException() throws Exception {
+    public void nonexistentUserCannotGetTokenAndGShouldGetException() throws Exception {
         // Set email and password
         String email = "nonexistinguser";
         String password = "password";
 
         String body = "{\"eMail\":\"" + email + "\", \"passWord\":\"" + password + "\"}";
 
-        // Make sure mvc can handel exceptions
-        mvc = MockMvcBuilders.standaloneSetup(authController)
-                .setControllerAdvice(new AuthenticationException())
-                .build();
-
         // Use rest endpoint to create token
-        mvc.perform(MockMvcRequestBuilders.post("/auth/login").contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isUnauthorized())
-                .andExpect(result -> Assert.assertTrue(result.getResolvedException() instanceof HttpClientErrorException.Unauthorized))
-                .andExpect(result -> Assert.assertEquals("Invalid user and/or password", result.getResolvedException().getMessage()));
+        Assert.assertThrows(Exception.class, () -> {
+            mvc.perform(MockMvcRequestBuilders.post("/auth/login").contentType(MediaType.APPLICATION_JSON)
+                    .content(body)).andReturn();
+        });
     }
 }
