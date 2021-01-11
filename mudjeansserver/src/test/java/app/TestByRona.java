@@ -55,10 +55,10 @@ public class TestByRona {
     @Test
     @DirtiesContext
     void testRemovingAUser() {
-        User u = userJPARepository.find(113);
+        User u = userJPARepository.find(117);
         userJPARepository.delete(u.getId());
 
-        assertNull(userJPARepository.find(113));
+        assertNull(userJPARepository.find(177));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class TestByRona {
     @Test
     void testGetUserById() throws Exception{
         mvc.perform(MockMvcRequestBuilders
-                .get("/users/", 116))
+                .get("/users/", 1))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNotEmpty());

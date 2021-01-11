@@ -18,6 +18,7 @@ export class OrderhistoryComponent implements OnInit, AfterViewInit {
     // @ts-ignore
     currentOrder: Order = new Order();
     orderedJeans: OrderJean[] = [];
+    rows;
 
     displayedColumns = ['Order number', 'Date of Order', 'Placed By', 'Reviewed By', 'Note', 'Status'];
     dataSource;

@@ -2,7 +2,7 @@
     <!--  Content Row-->
     <h1 class="title text-center">{{title}}</h1>
     <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter"/>
+        <input id="inputfield" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter"/>
     </mat-form-field>
     <div class="row">
         <div class="col">

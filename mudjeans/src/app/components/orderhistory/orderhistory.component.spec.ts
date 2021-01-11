@@ -7,11 +7,13 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {MatTableModule} from "@angular/material/table";
+import {By} from "@angular/platform-browser";
 
 describe('OrderhistoryComponent', () => {
   let component: OrderhistoryComponent;
   let fixture: ComponentFixture<OrderhistoryComponent>;
   let element: HTMLElement;
+  let filterField;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,6 +28,7 @@ describe('OrderhistoryComponent', () => {
     fixture = TestBed.createComponent(OrderhistoryComponent);
     element = fixture.nativeElement; // The HTML reference
     component = fixture.componentInstance;
+    filterField = fixture.debugElement.query(By.css('#inputfield'));
     fixture.detectChanges();
   });
 
@@ -66,6 +69,17 @@ describe('OrderhistoryComponent', () => {
     fixture.detectChanges();
     // *assert
     expect(compiled.applyFilter === 0).toBeFalse();
+    done();
+  });
+
+  it("Filter on orderid", (done) => {
+    fixture.whenStable().then(() => {
+      const compiled = fixture.debugElement.nativeElement;
+      filterField.nativeElement.value = "64";
+      filterField.nativeElement.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(component.rows > 0).toBeFalse();
+    });
     done();
   });
 });

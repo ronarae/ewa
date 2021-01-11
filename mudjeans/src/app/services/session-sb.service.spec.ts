@@ -22,20 +22,4 @@ describe('SessionSbService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
-  // it('should check if the user is logged in',  () => {
-  //   const dummyData = [
-  //     {
-  //       email : 'test@test.test',
-  //       password: 'iamapassword2021!',
-  //     }
-  //   ];
-  //   service.logIn('test@test.test', 'iamapassword2021!').subscribe( (res: User) => {
-  //     expect(res.email).toEqual('test@test.test');
-  //     expect(res.password).toEqual('iamapassword2021!');
-  //   });
-  //   const req = httpMock.expectOne(
-  //       environment.apiUrl + "/auth" + "/login");
-  //   req.flush(dummyData);
-  // });
 });
