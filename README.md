@@ -75,7 +75,10 @@ The server should start now and when it's finished will be available on `http://
 ## System Documentation
 [System Documentation](https://docs.google.com/document/d/18zv1LI6OnQf7VBpnFglBJgUe8zol3JBnwOK9jKNPJXM/edit?usp=sharing)  
 
+---
+## Individual built per team member
 
+[Individual responsibility](https://docs.google.com/document/d/1RKH2FbBqpxaCZkkft_CDOe7T7XO48W9PtiBI3_wlACA/edit?usp=sharing)
 
 
 

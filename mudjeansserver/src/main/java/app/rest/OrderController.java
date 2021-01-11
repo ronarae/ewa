@@ -3,7 +3,6 @@ package app.rest;
 import app.models.*;
 import app.repositories.JeansJPARepository;
 import app.repositories.OrderJPARepository;
-;
 import app.repositories.UserJPARepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -39,6 +38,7 @@ public class OrderController {
     @Autowired
     private UserJPARepository userRepository;
 
+    // Get location URL
     private URI getLocationURI(long id) {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().
                 path("/{id}").buildAndExpand(id).toUri();
@@ -78,6 +78,7 @@ public class OrderController {
 
         Order order = createNewOrder(o);
 
+        // Check if system generated
         if (order.getCreator() != order.getReviewer()) {
             String header = "An order with id " + order.getOrderId() + " has been created by " + order.getCreator().getName();
             String message = "An order has been created by " + order.getCreator() + " with the following id: " + order.getOrderId() + ", please review it when you have time.";
