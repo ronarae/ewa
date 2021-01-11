@@ -60,7 +60,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping(path = "/rest/refresh-token", produces = "application/json")
+    @PostMapping(path = "/auth/refresh-token", produces = "application/json")
     public ResponseEntity refreshToken(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String encodedToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 
