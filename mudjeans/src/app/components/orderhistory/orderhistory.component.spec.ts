@@ -72,6 +72,7 @@ describe('OrderhistoryComponent', () => {
     done();
   });
 
+  // TEST 4 FRONT END - RONA
   it("Filter on orderid", (done) => {
     fixture.whenStable().then(() => {
       const compiled = fixture.debugElement.nativeElement;
